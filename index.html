@@ -2,21 +2,16 @@
 <html>
 <head>
 	<title>Hello world</title>
+	<style>* {padding: 0; margin: 0;}</style>
 </head>
 <body>
-	<p>Hello world!</p>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
 	<script>
-		const socket = io.connect('http://192.168.1.17:8080');
-		socket.on('client', function(data) {
-			text.setText(data.data);
-		})
-
 		const config = {
 			type: Phaser.AUTO,
-			width: 800,
-			height: 600,
+			width: window.innerWidth,
+			height: window.innerHeight,
 			scene: {
 				preload: preload,
 				create: create,
@@ -32,6 +27,11 @@
 		function create ()
 		{
 			text = this.add.text(16, 16, '.', {fontSize: '32px', fill: '#fff'});
+
+			const socket = io.connect('http://192.168.1.17:8080');
+			socket.on('client', function(data) {
+				text.setText(data.data);
+			});
 		}
 
 		function update ()

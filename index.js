@@ -24,6 +24,8 @@ app.get('/', function (req, res) {
 	res.sendFile(__dirname + "/index.html");
 });
 
+app.use('/assets', express.static('assets'));
+
 io.on('connection', function (socket) {
 	console.log("connection");
 	socket.emit('client', {data: "Data recieved!"});
