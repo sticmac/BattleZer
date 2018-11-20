@@ -35,9 +35,9 @@ io.on('connection', function (socket) {
 
 function sendUserContentSocket(socket) {
 
-	prompt.get('data', function(err, result) {
-		if (result.data !== 'exit') {
-			socket.emit('client', {data: result.data});
+	prompt.get('caseId', function(err, result) {
+		if (result.caseId !== 'exit') {
+			socket.emit('move', {caseId: result.caseId});
 			sendUserContentSocket(socket);
 		}
 	});
