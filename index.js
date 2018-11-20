@@ -28,9 +28,17 @@ io.on('connection', function (socket) {
 	console.log("connection");
 	socket.emit('client', {data: "Data recieved!"});
 	prompt.start();
+	sendUserContentSocket(socket);
+});
+
+function sendUserContentSocket(socket) {
 
 	prompt.get('data', function(err, result) {
-		socket.emit('client', {data: result.data});
+		if (result.data !== 'exit') {
+			socket.emit('client', {data: result.data});
+			sendUserContentSocket(socket);
+		}
 	});
-});
+
+}
 
