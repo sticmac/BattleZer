@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <title>BattleZer Client</title>
+    <style>
+        .btns {
+            background-color: bisque;
+            margin-top: 50px;
+        }
+
+        #messages {
+            background-color: lavenderblush;
+            margin-top: 50px;
+        }
+
+        #messages li:nth-child(odd) {
+            background-color: lavender
+        }
+
+        .btns li {
+            margin:10px 0px;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row text-center">
+        <div class="col-sm-6 btns">
+            <h4>Table</h4>
+            <ul>
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="sendSalut()">say salut</button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="connectTable('standalone')">connect as
+                        standalone
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="connectTable('distributed')">connect as
+                        distributed
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="resetGames()">reset games
+                    </button>
+                </li>
+            </ul>
+            <hr>
+            <h4>Smartphone 1</h4>
+            <ul>
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="connectPhone1()">connect to <i>gameroom#1</i>
+                    </button>
+                </li>
+            </ul>
+            <h4>Smartphone 2</h4>
+            <ul>
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="connectPhone2()">connect to <i>gameroom#1</i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul id="messages"></ul>
+        </div>
+    </div>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const table_socket = io();
+    const phone1_socket = io();
+    const phone2_socket = io();
+
+    table_socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text(msg));
+    });
+
+    function connectTable(t) {
+        table_socket.emit('start game', {players: 2, type: t})
+    }
+
+    function connectPhone1(){
+        phone1_socket.emit('join game','gameroom#1')
+    }
+
+    function connectPhone2(){
+        phone2_socket.emit('join game','gameroom#1')
+    }
+
+    function resetGames(){
+        table_socket.emit('reset games',{})
+    }
+
+    function sendSalut() {
+        table_socket.emit('chat message', 'salut')
+    }
+
+
+
+</script>
+
+</body>
+</html>
