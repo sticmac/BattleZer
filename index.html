@@ -6,11 +6,40 @@
 <body>
 	<p>Hello world!</p>
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
 	<script>
-		var socket = io.connect('http://192.168.1.17:8080');
+		const socket = io.connect('http://192.168.1.17:8080');
 		socket.on('client', function(data) {
-			console.log(data.data);
+			text.setText(data.data);
 		})
+
+		const config = {
+			type: Phaser.AUTO,
+			width: 800,
+			height: 600,
+			scene: {
+				preload: preload,
+				create: create,
+				update: update
+			}
+		};
+
+		let text;
+		function preload ()
+		{
+		}
+
+		function create ()
+		{
+			text = this.add.text(16, 16, '.', {fontSize: '32px', fill: '#fff'});
+		}
+
+		function update ()
+		{
+		}
+
+		var game = new Phaser.Game(config);
+
 	</script>
 </body>
 </html>
