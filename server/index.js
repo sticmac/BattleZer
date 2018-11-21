@@ -38,9 +38,26 @@ function onConnect(socket) {
 
     });
 
+    /**
+     * call comes from Table in Standalone
+     */
     socket.on('players picks', function(p){
-        //verif de si Game est ready et à distribué
         socket.emit('chat message',{code : '203',message : 'server gathered all players picks'})
+        let game = getGameByName(p.game);
+        if (game) {
+            p.players.forEach(player => game.setPlayerPicks(player) );
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+
+    });
+
+    /**
+     * call comes from Phone in Distributed
+     */
+    socket.on('player picks', function(p){
+        let game = getGameByName(p.game);
+        if (game) {
+             game.setPlayerPicks(p.player);
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
     });
 
 
@@ -79,18 +96,13 @@ function onConnect(socket) {
         }
     });
 
-    socket.on('close game', function (m) {
-        let game = getGameByName(m)
-        if (game) game.closeGame();
-    })
-
 
     socket.on('reset games', function (m) {
         console.log('removing all current game (' + games.length + ')');
         for (let i in games) {
             let g = games[i];
             for (let j in g.players) {
-                let p = g.players[j]
+                let p = g.players[j];
                 io.to(p.id).emit('chat message', {code: 404, message: g.name + ' is over'})
 
             }

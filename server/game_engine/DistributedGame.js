@@ -16,7 +16,10 @@ module.exports = class DistributedGame extends Game {
     addPlayer(id) {
         console.log(id + ' joining ' + this.name);
         if (this.players.length < this.playersCount) {
-            this.players.push(new Player(id, this.maxHealth, 0));
+            let team = (this.players.length) % 2;
+            let position = team === 0 ? 1 : this.fieldSize - 1;
+            this.players.push(new Player(id, this.maxHealth, position, team));
+
             this.io.to(id).emit('chat message', {code: 202, message: 'successfully joined game'});
 
             if (this.players.length === this.playersCount) {
@@ -29,7 +32,7 @@ module.exports = class DistributedGame extends Game {
 
     setReady() {
         this.isReady = true;
-        console.log(this.name + " is ready to start")
+        console.log(this.name + " is ready to start");
 
         let players_data = [];
         this.players.forEach(a => {
@@ -37,31 +40,42 @@ module.exports = class DistributedGame extends Game {
             obj['id'] = a.id;
             obj['position'] = a.position;
             obj['health'] = a.health;
-            players_data.push(obj)
+            obj['team'] = a.team;
+            obj['round'] = this.currentRound;
+            players_data.push(obj);
             this.io.to(a.id).emit('ready to start', {game: this.name, player: obj})
         });
         this.io.to(this.tableId).emit('ready to start', {game: this.name, players: players_data})
     }
 
-    distributeCards(){
+    distributeCards() {
         this.cardsManager.distribute(this.players);
-        this.io.to(this.tableId).emit('card distribution', 'ntm')
+        this.io.to(this.tableId).emit('card distribution', 'ntm');
         let players_data = [];
         this.players.forEach(a => {
             let obj = {};
             obj['id'] = a.id;
             obj['styleCards'] = a.styleCards;
             obj['hitCards'] = a.hitCards;
-            players_data.push(obj)
+            players_data.push(obj);
             this.io.to(a.id).emit('card distribution', {game: this.name, player: obj})
         });
         this.io.to(this.tableId).emit('card distribution', {game: this.name, players: players_data})
     }
 
-    sendToAllPlayer(t,m) {
-        for (let i in this.players) {
-            this.io.to(this.players[i].id).emit(t, m)
+    setPlayerPicks(u) {
+        let p = this.getPlayerById(u.id);
+        if (p) {
+            p.hitPick = u.hitPick;
+            p.stylePick = u.stylePick;
+            p.hasPicked = true;
+            console.log(p.id, p.hitPick.title, p.stylePick.title)
+            this.io.to(p.id).emit('chat message', {code : 204, message : 'card picks received'})
+        } else {
+            console.log('unrecognized player ', u.id, ' for picks')
         }
+        //check if all players have picked, then go to next state
+
     }
 
 

@@ -7,7 +7,12 @@ module.exports = class Player {
         this.position = position;
         this.styleCards = [];
         this.hitCards = [];
+        this.stylePick = null;
+        this.hitPick = null;
+        this.hasPicked = false;
     }
+
+
 
     giveStyleCard(c){
         this.styleCards.push(c)

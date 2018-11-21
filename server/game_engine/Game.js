@@ -12,16 +12,13 @@ module.exports = class Game {
         this.type = null;
         this.io = io;
         this.isReady = false;
+        this.currentRound = 0;
 
         this.cardsManager = new CardsManager(2);
 
         this.fieldSize = 9;
         this.maxHealth = 20;
     }
-
-
-
-
 
     sendToTable(m){
         this.io.to(this.tableId).emit('chat message',m)
@@ -33,6 +30,7 @@ module.exports = class Game {
             if(p.id === id) return p;
         } return null;
     }
+
 
 
 

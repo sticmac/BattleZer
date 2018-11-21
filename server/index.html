@@ -8,6 +8,10 @@
             margin-top: 50px;
         }
 
+        button{
+            width:80%;
+        }
+
         #messages {
             background-color: lavenderblush;
             margin-top: 50px;
@@ -51,92 +55,119 @@
 
 <div class="container">
 
-    <div class="row text-center">
-        <div class="col-sm-6 btns">
-            <h4>Table</h4>
-            <ul>
-                <li>
-                    <button type="button" class="btn btn-primary" onclick="sendSalut()">say salut</button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-secondary" onclick="connectTable('standalone')">connect as
-                        standalone
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-primary" onclick="connectTable('distributed')">connect as
-                        distributed
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-primary" onclick="resetGames()">reset games
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-secondary" onclick="distribute('gameroom#1')">distribute cards
-                        <i>gameroom#1</i>
-                    </button>
-                </li>
 
-                <li>
-                    <button type="button" class="btn btn-secondary" onclick="sendAllPicks()">send picks <i>(only
-                        standalone)</i>
-                    </button>
-                </li>
-            </ul>
+    <div class="row text-center">
+
+        <div class="col-sm-6 btns">
+            <div style="padding: 15px 0">
+                <button type="button" class="btn btn-danger" onclick="resetGames()">reset games
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 standalone">
+                    <h4>Standalone scénario</h4>
+                    <ol>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="connectTable('standalone')">connect
+                                as
+                                standalone
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="distribute('gameroom#1')">
+                                distribute cards
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="sendAllPicks()">send picks
+                            </button>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="col-sm-6 distributed-scenario">
+                    <h4>Distributed scénario</h4>
+                    <ol>
+                        <li>
+                            <button type="button" class="btn btn-primary" onclick="connectTable('distributed')">connect
+                                as
+                                distributed
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" onclick="connectPhone1('gameroom#1')">connect
+                                Phone 1
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" onclick="connectPhone2('gameroom#1')">connect
+                                Phone 2
+                            </button>
+                        </li>
+
+                        <li>
+                            <button type="button" class="btn btn-primary" onclick="distribute('gameroom#1')">distribute
+                                cards
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" onclick="sendPhone1Picks()">send picks Phone 1
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" onclick="sendPhone2Picks()">send picks Phone 2
+                            </button>
+                        </li>
+                    </ol>
+
+                </div>
+
+            </div>
+
+
             <hr>
             <h4>Smartphone 1</h4>
-            <ul>
-                <li>
-                    <button type="button" class="btn btn-primary" onclick="connectPhone1('gameroom#1')">connect to <i>gameroom#1</i>
-                    </button>
-                </li>
-                <table>
-                    <tr class="hit">
-                        <td id="hcard1">hit carte 1</td>
-                        <td id="hcard2">hit carte 2</td>
-                        <td id="hcard3">hit carte 3</td>
-                        <td id="hcard4">hit carte 4</td>
-                        <td id="hcard5">hit carte 5</td>
-                    </tr>
-                    <tr class="style">
-                        <td id="scard1">style carte 1</td>
-                        <td id="scard2">style carte 2</td>
-                        <td id="scard3">style carte 3</td>
-                        <td id="scard4">style carte 4</td>
-                        <td id="scard5">style carte 5</td>
-                    </tr>
+
+            <table>
+                <tr class="hit">
+                    <td id="hcard1">hit carte 1</td>
+                    <td id="hcard2">hit carte 2</td>
+                    <td id="hcard3">hit carte 3</td>
+                    <td id="hcard4">hit carte 4</td>
+                    <td id="hcard5">hit carte 5</td>
+                </tr>
+                <tr class="style">
+                    <td id="scard1">style carte 1</td>
+                    <td id="scard2">style carte 2</td>
+                    <td id="scard3">style carte 3</td>
+                    <td id="scard4">style carte 4</td>
+                    <td id="scard5">style carte 5</td>
+                </tr>
 
 
-                    </tr>
-                </table>
-            </ul>
+                </tr>
+            </table>
             <h4>Smartphone 2</h4>
-            <ul>
-                <li>
-                    <button type="button" class="btn btn-primary" onclick="connectPhone2('gameroom#1')">connect to <i>gameroom#1</i>
-                    </button>
-                </li>
-                <table>
-                    <tr class="hit2">
-                        <td id="hcard21">hit carte 1</td>
-                        <td id="hcard22">hit carte 2</td>
-                        <td id="hcard23">hit carte 3</td>
-                        <td id="hcard24">hit carte 4</td>
-                        <td id="hcard25">hit carte 5</td>
-                    </tr>
-                    <tr class="style2">
-                        <td id="scard21">style carte 1</td>
-                        <td id="scard22">style carte 2</td>
-                        <td id="scard23">style carte 3</td>
-                        <td id="scard24">style carte 4</td>
-                        <td id="scard25">style carte 5</td>
-                    </tr>
+
+            <table>
+                <tr class="hit2">
+                    <td id="hcard21">hit carte 1</td>
+                    <td id="hcard22">hit carte 2</td>
+                    <td id="hcard23">hit carte 3</td>
+                    <td id="hcard24">hit carte 4</td>
+                    <td id="hcard25">hit carte 5</td>
+                </tr>
+                <tr class="style2">
+                    <td id="scard21">style carte 1</td>
+                    <td id="scard22">style carte 2</td>
+                    <td id="scard23">style carte 3</td>
+                    <td id="scard24">style carte 4</td>
+                    <td id="scard25">style carte 5</td>
+                </tr>
 
 
-                    </tr>
-                </table>
-            </ul>
+                </tr>
+            </table>
         </div>
         <div class="col-sm-6">
             <ul id="messages"></ul>
@@ -236,15 +267,98 @@
             players: [
                 {
                     id: 'player 1',
-                    hitPick: {title : 'hit card 1'},
-                    stylePick : {title : 'style card 1'}
+                    hitPick: {
+                        "title": "Fusil à canon scié",
+                        "type": "Coup",
+                        "priority": "2",
+                        "power": "7",
+                        "range": "2",
+                        "attack": "",
+                        "flavor": "à la mafioso"
+                    },
+                    stylePick: {
+                        "title": "sprinté",
+                        "type": "Style",
+                        "priority": "3",
+                        "power": "0",
+                        "range": "5",
+                        "flavor": "\n"
+                    }
                 },
                 {
                     id: 'player 2',
-                    hitPick: {title : 'hit card 2'},
-                    stylePick : {title : 'style card 2'}
+                    hitPick: {
+                        "title": "Coudasse",
+                        "type": "Coup",
+                        "priority": "7",
+                        "power": "3",
+                        "range": "1",
+                        "attack": "",
+                        "flavor": "LA COUDASSE"
+                    },
+                    stylePick: {
+                        "title": "défensif",
+                        "type": "Style",
+                        "priority": "7",
+                        "power": "0",
+                        "range": "0",
+                        "flavor": "on monte la garde"
+                    }
                 }
             ]
+        })
+    }
+
+    function sendPhone1Picks() {
+        phone1_socket.emit('player picks', {
+            game: 'gameroom#1',
+            player:
+                {
+                    id: phone1_socket.id,
+                    hitPick: {
+                        "title": "Fusil à canon scié",
+                        "type": "Coup",
+                        "priority": "2",
+                        "power": "7",
+                        "range": "2",
+                        "attack": "",
+                        "flavor": "à la mafioso"
+                    },
+                    stylePick: {
+                        "title": "sprinté",
+                        "type": "Style",
+                        "priority": "3",
+                        "power": "0",
+                        "range": "5",
+                        "flavor": "\n"
+                    }
+                }
+        })
+    }
+
+    function sendPhone2Picks() {
+        phone2_socket.emit('player picks', {
+            game: 'gameroom#1',
+            player: {
+                id: phone2_socket.id,
+                hitPick: {
+                    "title": "Coudasse",
+                    "type": "Coup",
+                    "priority": "7",
+                    "power": "3",
+                    "range": "1",
+                    "attack": "",
+                    "flavor": "LA COUDASSE"
+                },
+                stylePick: {
+                    "title": "défensif",
+                    "type": "Style",
+                    "priority": "7",
+                    "power": "0",
+                    "range": "0",
+                    "flavor": "on monte la garde"
+                }
+            }
         })
     }
 
@@ -267,10 +381,6 @@
 
     function resetGames() {
         table_socket.emit('reset games', {})
-    }
-
-    function sendSalut() {
-        table_socket.emit('chat message', 'salut')
     }
 
 
