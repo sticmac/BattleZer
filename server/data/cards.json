@@ -1,0 +1,239 @@
+[
+  {
+    "title":"Grosse gifle",
+    "type":"Coup",
+    "priority":"10",
+    "power":"1",
+    "range":"2",
+    "attack":"",
+    "flavor":"\"parle mieux\" - Batman"
+  },
+  {
+    "title":"Cyber bully",
+    "type":"Coup",
+    "priority":"4",
+    "power":"1",
+    "range":"10",
+    "attack":"",
+    "flavor":"(20:12) DamienDu12: ton père le chauve"
+  },
+  {
+    "title":"High Kick",
+    "type":"Coup",
+    "priority":"5",
+    "power":"2",
+    "range":"2",
+    "attack":"",
+    "flavor":"coup d'pied dans les dents"
+  },
+  {
+    "title":"Spécial Jean Claude",
+    "type":"Coup",
+    "priority":"5",
+    "power":"2",
+    "range":"2",
+    "attack":"attaque dans les deux directions",
+    "flavor":"la botte secrète de JCVD"
+  },
+  {
+    "title":"Télékinésie",
+    "type":"Coup",
+    "priority":"4",
+    "power":"2",
+    "range":"3",
+    "attack":"déplace un adversaire jusqu'à 2 cases dans une direction",
+    "flavor":"OH BOSETTI VIENS LA"
+  },
+  {
+    "title":"Cocktail Molotov",
+    "type":"Coup",
+    "priority":"5",
+    "power":"3",
+    "range":"4",
+    "attack":"inflige des dégats à tous les ennemis sur la case ciblée",
+    "flavor":"\"для родины\" (dlya rodiny) - Vladimir K."
+  },
+  {
+    "title":"Airstrike",
+    "type":"Coup",
+    "priority":"6",
+    "power":"3",
+    "range":"5",
+    "attack":"inflige des dégats à tous les ennemis sur la case ciblée",
+    "flavor":"Airstrike on the way"
+  },
+  {
+    "title":"Coudasse",
+    "type":"Coup",
+    "priority":"7",
+    "power":"3",
+    "range":"1",
+    "attack":"",
+    "flavor":"LA COUDASSE"
+  },
+  {
+    "title":"Coup de poing américain",
+    "type":"Coup",
+    "priority":"4",
+    "power":"4",
+    "range":"1",
+    "attack":"",
+    "flavor":"l'équipe est gantée"
+  },
+  {
+    "title":"Machette",
+    "type":"Coup",
+    "priority":"3",
+    "power":"4",
+    "range":"2",
+    "attack":"",
+    "flavor":"mange tes fajitas"
+  },
+  {
+    "title":"Coup de boule",
+    "type":"Coup",
+    "priority":"3",
+    "power":"5",
+    "range":"1",
+    "attack":"",
+    "flavor":"coup de tête à la zizou"
+  },
+  {
+    "title":"Spécial Josu ",
+    "type":"Coup",
+    "priority":"1",
+    "power":"5",
+    "range":"10",
+    "attack":"inflige des dégâts au premier ennemi rencontré dans une direction",
+    "flavor":"power of css master"
+  },
+  {
+    "title":"Fusil à canon scié",
+    "type":"Coup",
+    "priority":"2",
+    "power":"7",
+    "range":"2",
+    "attack":"",
+    "flavor":"à la mafioso"
+  },
+  {
+    "title":"défensive",
+    "type":"Style",
+    "priority":"7",
+    "power":"0",
+    "range":"0",
+    "flavor":"on monte la garde"
+  },
+  {
+    "title":"avec protège-dents",
+    "type":"Style",
+    "priority":"7",
+    "power":"0",
+    "range":"0",
+    "flavor":"Première règle de Battlezer : Il n'y a pas de Battlezer"
+  },
+  {
+    "title":"en TMAX",
+    "type":"Style",
+    "priority":"2",
+    "power":"0",
+    "range":"5",
+    "flavor":"téma le style bro"
+  },
+  {
+    "title":"sprinté",
+    "type":"Style",
+    "priority":"3",
+    "power":"0",
+    "range":"5",
+    "flavor":"\n"
+  },
+  {
+    "title":"revigorant",
+    "type":"Style",
+    "priority":"3",
+    "power":"0",
+    "range":"0",
+    "flavor":"\n"
+  },
+  {
+    "title":"et promenade ressourçante",
+    "type":"Style",
+    "priority":"4",
+    "power":"0",
+    "range":"2",
+    "flavor":"un brin d'air ça fait du bien"
+  },
+  {
+    "title":"pétrifiant",
+    "type":"Style",
+    "priority":"4",
+    "power":"0",
+    "range":"0",
+    "flavor":""
+  },
+  {
+    "title":"empoisoné",
+    "type":"Style",
+    "priority":"4",
+    "power":"0",
+    "range":"1",
+    "flavor":"\n"
+  },
+  {
+    "title":"téléporteur",
+    "type":"Style",
+    "priority":"5",
+    "power":"0",
+    "range":"0",
+    "flavor":"\n"
+  },
+  {
+    "title":"camouflé",
+    "type":"Style",
+    "priority":"5",
+    "power":"0",
+    "range":"2",
+    "flavor":" invisible jusqu'à la fin du round"
+  },
+  {
+    "title":"évadé",
+    "type":"Style",
+    "priority":"6",
+    "power":"0",
+    "range":"2",
+    "flavor":"\n"
+  },
+  {
+    "title":"cafeiné",
+    "type":"Style",
+    "priority":"5",
+    "power":"1",
+    "range":"3",
+    "flavor":"un ptit coup de speed"
+  },
+  {
+    "title":"vampire",
+    "type":"Style",
+    "priority":"4",
+    "power":"1",
+    "range":"0",
+    "flavor":"\n"
+  },
+  {
+    "title":"vengeur",
+    "type":"Style",
+    "priority":"2",
+    "power":"3",
+    "range":"0",
+    "flavor":"\n"
+  },
+  {
+    "title":"enflammé",
+    "type":"Style",
+    "priority":"3",
+    "power":"3",
+    "range":"0",
+    "flavor":""
+  }
+]

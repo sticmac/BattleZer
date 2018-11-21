@@ -30,8 +30,12 @@ module.exports = class StandaloneGame extends Game {
            obj['health'] = a.health;
            players_data.push(obj);
         });
-        this.io.to(this.name).emit('ready to start', players_data);
+        this.io.to(this.name).emit('ready to start', {game : this.name, players : players_data});
         console.log(this.name + " is ready to start")
+    }
+
+    distributeCards(){
+
     }
 
 

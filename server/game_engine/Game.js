@@ -1,4 +1,5 @@
 const Player = require('./Player');
+const CardsManager = require('./CardsManager');
 
 module.exports = class Game {
 
@@ -10,6 +11,8 @@ module.exports = class Game {
         this.tableId = tableId;
         this.type = null;
         this.io = io;
+
+        this.cardsManager = new CardsManager(2);
 
         this.battlefieldSize = 9;
         this.maxHealth = 20;

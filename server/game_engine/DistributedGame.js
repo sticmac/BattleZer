@@ -7,7 +7,10 @@ module.exports = class DistributedGame extends Game {
     constructor(name, nb, tableId, io) {
         super(name, nb, tableId, io);
         this.type = "distributed";
-        this.io.to(this.tableId).emit('chat message', {code : 100, message : this.name + ' - ' + this.type + ' (' + this.playersCount + ' joueurs)'});
+        this.io.to(this.tableId).emit('chat message', {
+            code: 100,
+            message: this.name + ' - ' + this.type + ' (' + this.playersCount + ' joueurs)'
+        });
     }
 
     addPlayer(id) {
@@ -34,11 +37,10 @@ module.exports = class DistributedGame extends Game {
             obj['position'] = a.position;
             obj['health'] = a.health;
             players_data.push(obj)
-            this.io.to(a.id).emit('ready to start', obj)
+            this.io.to(a.id).emit('ready to start', {game: this.name, player: obj})
         });
-        this.io.to(this.tableId).emit('ready to start', players_data)
+        this.io.to(this.tableId).emit('ready to start', {game: this.name, players: players_data})
     }
-
 
 
     sendToAllPlayer(m) {

@@ -4,5 +4,10 @@ module.exports = class Player {
         this.id = id;
         this.health = health;
         this.position = position;
+        this.cards = [];
+    }
+
+    giveCard(c){
+        this.cards.push(c)
     }
 }

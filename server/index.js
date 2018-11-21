@@ -38,6 +38,12 @@ function onConnect(socket) {
 
     });
 
+
+    socket.on('send cards', function(a){
+        //get game by name
+        //call distributeCards
+    });
+
     socket.on('join game', function (m) {
         if (socket.rooms.hasOwnProperty(m.game)) {
             //le socket est deja dans une game
