@@ -1,6 +1,7 @@
 const Phaser = require('phaser');
 const Player = require('../model/Player');
 const Grid = require('../containers/Grid.js');
+const Bar = require('../containers/Bar.js');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
     constructor() {
@@ -24,6 +25,8 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
 
         const colors = [0x2222ee, 0xee2222];
         let players = {};
+
+        const bar = new Bar(this.game.config.width / 2, this.game.config.height - 25, this.game.config.width / 5, 20, this);
 
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
