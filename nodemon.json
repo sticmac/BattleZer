@@ -1,3 +1,4 @@
 {
-	"ext": "js,ts,html"
+	"ext": "js,ts",
+	"ignore": ["client/*"]
 }

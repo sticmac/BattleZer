@@ -5,17 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "client:run": "nodemon index.js",
+    "client:watch-js": "watchify ./client/client.js -o client/bundle.js -v",
+    "start": "npm run client:watch-js & npm run client:run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "browserify": "^16.2.3",
     "express": "^4.16.4",
+    "phaser": "^3.15.1",
     "prompt": "^1.0.0",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.6"
+    "nodemon": "^1.18.6",
+    "watchify": "^3.11.0"
   }
 }

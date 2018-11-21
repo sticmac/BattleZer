@@ -25,6 +25,7 @@ app.get('/', function (req, res) {
 });
 
 app.use('/assets', express.static('assets'));
+app.use('/client', express.static('client'));
 
 io.on('connection', function (socket) {
 	console.log("connection");

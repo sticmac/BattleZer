@@ -5,70 +5,7 @@
 	<style>* {padding: 0; margin: 0;}</style>
 </head>
 <body>
+	<script src="./client/bundle.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="//cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
-	<script>
-		const config = {
-			type: Phaser.AUTO,
-			width: window.innerWidth,
-			height: window.innerHeight,
-			scene: {
-				preload: preload,
-				create: create,
-				update: update
-			}
-		};
-
-		let text;
-		const gridLength = 9;
-		function preload ()
-		{
-			this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
-		}
-
-		function create ()
-		{
-			this.add.image(0,0,'sky').setOrigin(0,0).setScale(3.0, 2.0);
-			text = this.add.text(16, 16, '.', {fontSize: '32px', fill: '#fff'});
-
-			const gridContainer = this.add.container(0, this.game.config.height / 2);
-			
-			const gridCaseWidth = this.game.config.width / gridLength;
-			for (let i = 0 ; i < gridLength ; i++) {
-				const container = this.add.container(i * (parseInt(this.game.config.width / gridLength) + 5), 0);
-				const rect = this.add.rectangle(0, 0,
-						parseInt(gridCaseWidth), parseInt(this.game.config.height / 3), 0xdddddd)
-					.setOrigin(0, 0.5);
-				container.add(rect);
-				gridContainer.add(container);
-			}
-
-			const player = this.add.circle(gridCaseWidth / 2, 0, 30, 0x2222ee);
-			gridContainer.list[2].add(player);
-			let lastPlayerPosition = 2;
-
-			const socket = io.connect('http://192.168.0.19:8080');
-			socket.on('client', function(data) {
-				text.setText(data.data);
-			});
-			socket.on('move', function(data) {
-				console.log(data);
-				const caseId = parseInt(data.caseId);
-				console.log(caseId);
-				if (caseId != NaN) {
-					gridContainer.list[lastPlayerPosition].remove(player);
-					gridContainer.list[caseId].add(player);
-					lastPlayerPosition = caseId;
-				}
-			})
-		}
-
-		function update ()
-		{
-		}
-
-		var game = new Phaser.Game(config);
-
-	</script>
 </body>
 </html>
