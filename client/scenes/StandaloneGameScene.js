@@ -1,4 +1,5 @@
 const Phaser = require('phaser');
+const Player = require('../model/Player');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
     constructor() {
@@ -31,15 +32,20 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             gridContainer.add(container);
         }
 
-        const player = this.add.circle(gridCaseWidth / 2, 0, 30, 0x2222ee);
-        gridContainer.list[2].add(player);
-        let lastPlayerPosition = 2;
+        const colors = [0x2222ee, 0xee2222];
+        let players = {};
 
         const socket = io.connect('http://192.168.1.17:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
-        socket.on("ready to start", function(players) {
-            console.log(players);
-        })
+        socket.on("ready to start", (data) => {
+            const sentPlayers = data.players;
+            for (let i = 0 ; i < sentPlayers.length ; i++) {
+                const element = sentPlayers[i];
+                players[element.id] = {player: new Player(element.id, element.position, element.health),
+                    token: this.add.circle(gridCaseWidth / 2, 0, 30, colors[i]) };
+                gridContainer.list[element.position].add(players[element.id].token);
+            }
+        });
 
     }
 

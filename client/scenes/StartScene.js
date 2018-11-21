@@ -33,7 +33,6 @@ module.exports = class StartScene extends Phaser.Scene {
                 bg.setFillStyle(bg.fillColor, 1.0);
             })
             .on("pointerdown", () => {
-                console.log("hey");
                 this.scene.start('standalone_game');
             })
     }
