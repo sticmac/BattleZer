@@ -9,7 +9,8 @@ module.exports = class Game {
             type: Phaser.AUTO,
             width: window.innerWidth * window.devicePixelRatio,
             height: window.innerHeight * window.devicePixelRatio,
-            scene: [StartScene, StandaloneGameScene]
+            scene: [StartScene, StandaloneGameScene],
+            autoResize: true
         };
 
         this.game = new Phaser.Game(config);
