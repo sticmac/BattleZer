@@ -7,8 +7,8 @@ module.exports = class Game {
     constructor() {
         const config = {
             type: Phaser.AUTO,
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width: window.innerWidth * window.devicePixelRatio,
+            height: window.innerHeight * window.devicePixelRatio,
             scene: [StartScene, StandaloneGameScene]
         };
 
