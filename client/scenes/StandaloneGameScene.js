@@ -50,6 +50,5 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
      * Returns function to update scene
      */
     update() {
-
     }
 }
