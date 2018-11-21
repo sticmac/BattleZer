@@ -5,8 +5,8 @@ const Phaser = require('phaser');
 module.exports = class Game {
     constructor() {
         this.sceneManager = new SceneManager();
-        this.sceneManager.addScene(new StandaloneGameScene())
-        this.sceneManager.changeScene(0);
+        this.sceneManager.addScene("standalone_game", new StandaloneGameScene());
+        this.sceneManager.changeScene("standalone_game");
 
         const config = {
             type: Phaser.AUTO,
