@@ -1,7 +1,8 @@
 module.exports = class Player {
 
-    constructor(id){
+    constructor(id, health, position){
         this.id = id;
-        this.life = 20;
+        this.health = health;
+        this.position = position;
     }
 }

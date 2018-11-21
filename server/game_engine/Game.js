@@ -11,28 +11,22 @@ module.exports = class Game {
         this.type = null;
         this.io = io;
 
-        this.io.to(this.tableId).emit('chat message','bonjour madame la table')
+        this.battlefieldSize = 9;
+        this.maxHealth = 20;
     }
 
-    isReady(){
-        this.io.to(this.name).emit('we are ready bois')
-    }
 
     sendToTable(m){
         this.io.to(this.tableId).emit('chat message',m)
     }
 
-
-
-    removePlayer(id){
-
+    getPlayerById(id){
+        for(let i in this.players){
+            let p = this.players[i];
+            if(p.id === id) return p;
+        } return null;
     }
 
 
-
-    sayWelcome(io){
-        this.io.emit('chat message',"TOUT LE MONDE EST LA")
-        console.log(JSON.stringify(this.players))
-    }
 
 }

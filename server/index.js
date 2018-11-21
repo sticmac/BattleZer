@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connect', onConnect);
+io.on('connection', onConnect);
 
 
 let games = [];
@@ -37,33 +37,44 @@ function onConnect(socket) {
 
     });
 
-    socket.on('join game', function(m){
-
-        //todo : test if already in game
-        //todo first : fix join problem (socket.emit not working)
-        let id = socket.id;
-        let game = null;
-        for(let i in games){
-            if(games[i].name === m){
-              game = games[i];
-            }
+    socket.on('join game', function (m) {
+        if (socket.rooms.hasOwnProperty(m.game)) {
+            //le socket est deja dans une game
+            socket.emit('chat message', {code: 401, message: 'client already associated to a game'})
+        } else {
+            //le socket n'est pas encore dans une game
+            let game = getGameByName(m.game);
+            if (game) {
+                if (game.type === 'standalone') {
+                    socket.emit('chat message', {
+                        code: 402,
+                        message: 'game is standalone mode, no other client allowed'
+                    });
+                } else {
+                    socket.join(m.game);
+                    game.addPlayer(socket.id)
+                }
+            } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
         }
-
-        if(game){
-            if(game.type === 'standalone'){
-                console.log('game not accepting smartphone client');
-                game.sendToTable("game not accepting smartphone client")
-            } else {
-                console.log(id+' joining '+game.name+' - '+game.type);
-                game.addPlayer(id);
-            }
-        }
-
     });
+
+    socket.on('close game', function (m) {
+        let game = getGameByName(m)
+        if (game) game.closeGame();
+    })
 
 
     socket.on('reset games', function (m) {
-        console.log('removing all current game ('+games.length+')');
+        console.log('removing all current game (' + games.length + ')');
+        for (let i in games) {
+            let g = games[i];
+            for (let j in g.players) {
+                let p = g.players[j]
+                io.to(p.id).emit('chat message', {code: 404, message: g.name + ' is over'})
+
+            }
+            io.to(g.tableId).emit('chat message', {code: 404, message: g.name + ' is over'})
+        }
         games = [];
     });
 
@@ -72,19 +83,26 @@ function onConnect(socket) {
     });
 }
 
+
+function getGameByName(n) {
+    let game = null;
+    for (let i in games) {
+        if (games[i].name === n) {
+            game = games[i];
+        }
+    }
+    return game;
+}
+
 function isAlreadyInGame(id) {
     for (let i in games) {
         if (games[i].tableId === id) {
-            io.to(id).emit('chat message', 'tu as deja commencé une game pd')
+            io.to(id).emit('chat message', 'tu as deja commencé une game');
             return true;
         } else return false;
     }
 }
 
-
-io.on('connection', function (socket) {
-
-});
 
 http.listen(2727, function () {
     console.log('listening on *:2727');

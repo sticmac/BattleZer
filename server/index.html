@@ -18,7 +18,7 @@
         }
 
         .btns li {
-            margin:10px 0px;
+            margin: 10px 0px;
         }
     </style>
     <meta charset="utf-8">
@@ -57,14 +57,18 @@
             <h4>Smartphone 1</h4>
             <ul>
                 <li>
-                    <button type="button" class="btn btn-primary" onclick="connectPhone1()">connect to <i>gameroom#1</i>
+                    <button type="button" class="btn btn-primary" onclick="connectPhone1('gameroom#1')">connect to <i>gameroom#1</i>
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="connectPhone1('gameroom#2')">connect to <i>gameroom#2</i>
                     </button>
                 </li>
             </ul>
             <h4>Smartphone 2</h4>
             <ul>
                 <li>
-                    <button type="button" class="btn btn-primary" onclick="connectPhone2()">connect to <i>gameroom#1</i>
+                    <button type="button" class="btn btn-primary" onclick="connectPhone2('gameroom#1')">connect to <i>gameroom#1</i>
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="connectPhone2('gameroom#2')">connect to <i>gameroom#2</i>
                     </button>
                 </li>
             </ul>
@@ -83,29 +87,47 @@
     const phone2_socket = io();
 
     table_socket.on('chat message', function (msg) {
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>').text('TABLE : ' + msg.message));
     });
+    phone1_socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text('PHONE1 : ' + msg.message));
+    });
+    phone2_socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text('PHONE2 : ' + msg.message));
+    });
+
+    table_socket.on('ready to start', function (o) {
+        console.log('table ready to start : ', JSON.stringify(o))
+    });
+
+    phone1_socket.on('ready to start', function (o) {
+        console.log('phone 1 ready to start : ', JSON.stringify(o))
+    });
+
+    phone2_socket.on('ready to start', function (o) {
+        console.log('phone 2 ready to start : ', JSON.stringify(o))
+    });
+
 
     function connectTable(t) {
         table_socket.emit('start game', {players: 2, type: t})
     }
 
-    function connectPhone1(){
-        phone1_socket.emit('join game','gameroom#1')
+    function connectPhone1(o) {
+        phone1_socket.emit('join game', {game: o})
     }
 
-    function connectPhone2(){
-        phone2_socket.emit('join game','gameroom#1')
+    function connectPhone2(o) {
+        phone2_socket.emit('join game', {game: o})
     }
 
-    function resetGames(){
-        table_socket.emit('reset games',{})
+    function resetGames() {
+        table_socket.emit('reset games', {})
     }
 
     function sendSalut() {
         table_socket.emit('chat message', 'salut')
     }
-
 
 
 </script>
