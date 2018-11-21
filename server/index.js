@@ -4,6 +4,7 @@ const io = require('socket.io')(http);
 const Game = require('./game_engine/Game');
 const StandaloneGame = require('./game_engine/StandaloneGame');
 const DistributedGame = require('./game_engine/DistributedGame');
+const os = require('os');	
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -105,6 +106,15 @@ function isAlreadyInGame(id) {
 
 
 http.listen(2727, function () {
-    console.log('listening on *:2727');
+	const ifaces = os.networkInterfaces();
+	console.log("Running server");
+	console.log("Available on:");
+	Object.keys(ifaces).forEach(function (dev) {
+		ifaces[dev].forEach(function (details) {
+			if (details.family === 'IPv4') {
+				console.log(('  http://' + details.address + ':2727'));
+			}
+		});
+	});
 });
 
