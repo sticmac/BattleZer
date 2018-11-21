@@ -20,14 +20,15 @@ module.exports = class DistributedGame extends Game {
             this.io.to(id).emit('chat message', {code: 202, message: 'successfully joined game'});
 
             if (this.players.length === this.playersCount) {
-                this.isReady();
+                this.setReady();
             }
         } else {
             this.io.to(id).emit('chat message', {code: 405, message: 'game is full'})
         }
     }
 
-    isReady() {
+    setReady() {
+        this.isReady = true;
         console.log(this.name + " is ready to start")
 
         let players_data = [];
@@ -42,10 +43,24 @@ module.exports = class DistributedGame extends Game {
         this.io.to(this.tableId).emit('ready to start', {game: this.name, players: players_data})
     }
 
+    distributeCards(){
+        this.cardsManager.distribute(this.players);
+        this.io.to(this.tableId).emit('card distribution', 'ntm')
+        let players_data = [];
+        this.players.forEach(a => {
+            let obj = {};
+            obj['id'] = a.id;
+            obj['styleCards'] = a.styleCards;
+            obj['hitCards'] = a.hitCards;
+            players_data.push(obj)
+            this.io.to(a.id).emit('card distribution', {game: this.name, player: obj})
+        });
+        this.io.to(this.tableId).emit('card distribution', {game: this.name, players: players_data})
+    }
 
-    sendToAllPlayer(m) {
+    sendToAllPlayer(t,m) {
         for (let i in this.players) {
-            this.io.to(this.players[i].id).emit('chat message', m)
+            this.io.to(this.players[i].id).emit(t, m)
         }
     }
 

@@ -16,8 +16,8 @@ module.exports = class CardsManager {
     distribute(players){
         for (let i = 0; i < 10; i++) {
             players.forEach(p => {
-                p.giveCard(this.hitDeck.pop());
-                p.giveCard(this.styleDeck.pop());
+                p.giveHitCard(this.hitDeck.pop());
+                p.giveStyleCard(this.styleDeck.pop());
             })
         }
     }

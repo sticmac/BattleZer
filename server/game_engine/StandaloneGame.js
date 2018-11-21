@@ -18,10 +18,11 @@ module.exports = class StandaloneGame extends Game {
         for (let i = 1; i <= this.playersCount; i++) {
             this.players.push(new Player("player " + i, this.maxHealth, 0))
         }
-        this.isReady();
+        this.setReady();
     }
 
-    isReady() {
+    setReady() {
+        this.isReady = true;
         let players_data = [];
         this.players.forEach(a => {
            let obj = {};
@@ -35,8 +36,17 @@ module.exports = class StandaloneGame extends Game {
     }
 
     distributeCards(){
+        this.cardsManager.distribute(this.players);
+        let players_data = [];
+        this.players.forEach(a => {
+            let obj = {};
+            obj['id'] = a.id;
+            obj['styleCards'] = a.styleCards;
+            obj['hitCards'] = a.hitCards;
+            players_data.push(obj);
+        });
 
+        this.io.to(this.tableId).emit('card distribution', {game : this.name, players : players_data})
     }
-
 
 };

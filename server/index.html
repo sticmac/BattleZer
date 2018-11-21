@@ -52,6 +52,11 @@
                     <button type="button" class="btn btn-primary" onclick="resetGames()">reset games
                     </button>
                 </li>
+
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="distribute('gameroom#1')">distribute cards <i>gameroom#1</i>
+                    </button>
+                </li>
             </ul>
             <hr>
             <h4>Smartphone 1</h4>
@@ -96,9 +101,24 @@
         $('#messages').append($('<li>').text('PHONE2 : ' + msg.message));
     });
 
+
+    table_socket.on('card distribution', function (o) {
+        console.log('table got all cards : ', JSON.stringify(o))
+    });
+
+
+    phone1_socket.on('card distribution', function (o) {
+        console.log('phone 1 got his cards : ', JSON.stringify(o))
+    });
+
+    phone2_socket.on('card distribution', function (o) {
+        console.log('phone 2 got his cards : ', JSON.stringify(o))
+    });
+
     table_socket.on('ready to start', function (o) {
         console.log('table ready to start : ', JSON.stringify(o))
     });
+
 
     phone1_socket.on('ready to start', function (o) {
         console.log('phone 1 ready to start : ', JSON.stringify(o))
@@ -107,6 +127,10 @@
     phone2_socket.on('ready to start', function (o) {
         console.log('phone 2 ready to start : ', JSON.stringify(o))
     });
+
+    function distribute(o){
+        table_socket.emit('send cards', {game : o})
+    }
 
 
     function connectTable(t) {
@@ -128,6 +152,7 @@
     function sendSalut() {
         table_socket.emit('chat message', 'salut')
     }
+
 
 
 </script>
