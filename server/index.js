@@ -38,6 +38,11 @@ function onConnect(socket) {
 
     });
 
+    socket.on('players picks', function(p){
+        //verif de si Game est ready et à distribué
+        socket.emit('chat message',{code : '203',message : 'server gathered all players picks'})
+    });
+
 
     socket.on('send cards', function (a) {
         let game = getGameByName(a.game);

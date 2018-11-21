@@ -15,7 +15,7 @@ module.exports = class Game {
 
         this.cardsManager = new CardsManager(2);
 
-        this.battlefieldSize = 9;
+        this.fieldSize = 9;
         this.maxHealth = 20;
     }
 

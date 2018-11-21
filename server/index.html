@@ -20,6 +20,26 @@
         .btns li {
             margin: 10px 0px;
         }
+
+        .hit td {
+            border: 1px solid #970aa3;
+            padding: 10px 5px;
+        }
+
+        .style td {
+            border: 1px solid #238f23;
+            padding: 10px 5px;
+        }
+
+        .hit2 td {
+            border: 1px solid #970aa3;
+            padding: 10px 5px;
+        }
+
+        .style2 td {
+            border: 1px solid #238f23;
+            padding: 10px 5px;
+        }
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +59,7 @@
                     <button type="button" class="btn btn-primary" onclick="sendSalut()">say salut</button>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-primary" onclick="connectTable('standalone')">connect as
+                    <button type="button" class="btn btn-secondary" onclick="connectTable('standalone')">connect as
                         standalone
                     </button>
                 </li>
@@ -52,9 +72,15 @@
                     <button type="button" class="btn btn-primary" onclick="resetGames()">reset games
                     </button>
                 </li>
+                <li>
+                    <button type="button" class="btn btn-secondary" onclick="distribute('gameroom#1')">distribute cards
+                        <i>gameroom#1</i>
+                    </button>
+                </li>
 
                 <li>
-                    <button type="button" class="btn btn-primary" onclick="distribute('gameroom#1')">distribute cards <i>gameroom#1</i>
+                    <button type="button" class="btn btn-secondary" onclick="sendAllPicks()">send picks <i>(only
+                        standalone)</i>
                     </button>
                 </li>
             </ul>
@@ -64,18 +90,52 @@
                 <li>
                     <button type="button" class="btn btn-primary" onclick="connectPhone1('gameroom#1')">connect to <i>gameroom#1</i>
                     </button>
-                    <button type="button" class="btn btn-primary" onclick="connectPhone1('gameroom#2')">connect to <i>gameroom#2</i>
-                    </button>
                 </li>
+                <table>
+                    <tr class="hit">
+                        <td id="hcard1">hit carte 1</td>
+                        <td id="hcard2">hit carte 2</td>
+                        <td id="hcard3">hit carte 3</td>
+                        <td id="hcard4">hit carte 4</td>
+                        <td id="hcard5">hit carte 5</td>
+                    </tr>
+                    <tr class="style">
+                        <td id="scard1">style carte 1</td>
+                        <td id="scard2">style carte 2</td>
+                        <td id="scard3">style carte 3</td>
+                        <td id="scard4">style carte 4</td>
+                        <td id="scard5">style carte 5</td>
+                    </tr>
+
+
+                    </tr>
+                </table>
             </ul>
             <h4>Smartphone 2</h4>
             <ul>
                 <li>
                     <button type="button" class="btn btn-primary" onclick="connectPhone2('gameroom#1')">connect to <i>gameroom#1</i>
                     </button>
-                    <button type="button" class="btn btn-primary" onclick="connectPhone2('gameroom#2')">connect to <i>gameroom#2</i>
-                    </button>
                 </li>
+                <table>
+                    <tr class="hit2">
+                        <td id="hcard21">hit carte 1</td>
+                        <td id="hcard22">hit carte 2</td>
+                        <td id="hcard23">hit carte 3</td>
+                        <td id="hcard24">hit carte 4</td>
+                        <td id="hcard25">hit carte 5</td>
+                    </tr>
+                    <tr class="style2">
+                        <td id="scard21">style carte 1</td>
+                        <td id="scard22">style carte 2</td>
+                        <td id="scard23">style carte 3</td>
+                        <td id="scard24">style carte 4</td>
+                        <td id="scard25">style carte 5</td>
+                    </tr>
+
+
+                    </tr>
+                </table>
             </ul>
         </div>
         <div class="col-sm-6">
@@ -91,6 +151,11 @@
     const phone1_socket = io();
     const phone2_socket = io();
 
+    $('.hit').hide();
+    $('.style').hide();
+    $('.hit2').hide();
+    $('.style2').hide();
+
     table_socket.on('chat message', function (msg) {
         $('#messages').append($('<li>').text('TABLE : ' + msg.message));
     });
@@ -103,16 +168,53 @@
 
 
     table_socket.on('card distribution', function (o) {
-        console.log('table got all cards : ', JSON.stringify(o))
+        $('.hit').show();
+        $('.style').show();
+        $('.hit2').show();
+        $('.style2').show();
+
+        let s1 = o.players[0].styleCards;
+        let h1 = o.players[0].hitCards;
+        let s2 = o.players[1].styleCards;
+        let h2 = o.players[1].hitCards;
+
+        for (let i = 1; i <= 5; i++) {
+            let id = '#scard' + i;
+            let id2 = '#hcard' + i;
+            let id3 = '#scard2' + i;
+            let id4 = '#hcard2' + i;
+            $(id).text(s1[i].title);
+            $(id2).text(h1[i].title);
+            $(id3).text(s2[i].title);
+            $(id4).text(h2[i].title);
+        }
     });
 
 
     phone1_socket.on('card distribution', function (o) {
-        console.log('phone 1 got his cards : ', JSON.stringify(o))
+        $('.hit').show();
+        $('.style').show();
+        let s = o.player.styleCards;
+        let h = o.player.hitCards;
+        for (let i = 1; i <= 5; i++) {
+            let id = '#scard' + i;
+            let id2 = '#hcard' + i;
+            $(id).text(s[i].title);
+            $(id2).text(h[i].title);
+        }
     });
 
     phone2_socket.on('card distribution', function (o) {
-        console.log('phone 2 got his cards : ', JSON.stringify(o))
+        $('.hit2').show();
+        $('.style2').show();
+        let s = o.player.styleCards;
+        let h = o.player.hitCards;
+        for (let i = 1; i <= 5; i++) {
+            let id = '#scard2' + i;
+            let id2 = '#hcard2' + i;
+            $(id).text(s[i].title);
+            $(id2).text(h[i].title);
+        }
     });
 
     table_socket.on('ready to start', function (o) {
@@ -128,8 +230,26 @@
         console.log('phone 2 ready to start : ', JSON.stringify(o))
     });
 
-    function distribute(o){
-        table_socket.emit('send cards', {game : o})
+    function sendAllPicks() {
+        table_socket.emit('players picks', {
+            game: 'gameroom#1',
+            players: [
+                {
+                    id: 'player 1',
+                    hitPick: {title : 'hit card 1'},
+                    stylePick : {title : 'style card 1'}
+                },
+                {
+                    id: 'player 2',
+                    hitPick: {title : 'hit card 2'},
+                    stylePick : {title : 'style card 2'}
+                }
+            ]
+        })
+    }
+
+    function distribute(o) {
+        table_socket.emit('send cards', {game: o})
     }
 
 
@@ -152,7 +272,6 @@
     function sendSalut() {
         table_socket.emit('chat message', 'salut')
     }
-
 
 
 </script>

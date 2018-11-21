@@ -1,7 +1,8 @@
 module.exports = class Player {
 
-    constructor(id, health, position){
+    constructor(id, health, position, team){
         this.id = id;
+        this.team = team;
         this.health = health;
         this.position = position;
         this.styleCards = [];
