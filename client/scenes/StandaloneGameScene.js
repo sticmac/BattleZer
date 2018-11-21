@@ -33,7 +33,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                 const element = sentPlayers[i];
                 players[element.id] = {player: new Player(element.id, element.position, element.health),
                     token: this.add.circle((this.game.config.width / 9) / 2, 0, 30, colors[i]) };
-                grid.addToken(players[element.id].token, element.position);
+                grid.addToken("player" + i, players[element.id].token, element.position);
             }
         });
 

@@ -34,7 +34,7 @@ module.exports = class StartScene extends Phaser.Scene {
             })
             .on("pointerdown", () => {
                 this.scene.start('standalone_game');
-            })
+            });
     }
 
     /**
