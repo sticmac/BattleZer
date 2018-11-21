@@ -4,7 +4,7 @@ const io = require('socket.io')(http);
 const Game = require('./game_engine/Game');
 const StandaloneGame = require('./game_engine/StandaloneGame');
 const DistributedGame = require('./game_engine/DistributedGame');
-const os = require('os');	
+const os = require('os');
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -38,10 +38,24 @@ function onConnect(socket) {
 
     });
 
+    socket.on('players picks', function(p){
+        //verif de si Game est ready et à distribué
+        socket.emit('chat message',{code : '203',message : 'server gathered all players picks'})
+    });
 
-    socket.on('send cards', function(a){
-        //get game by name
-        //call distributeCards
+
+    socket.on('send cards', function (a) {
+        let game = getGameByName(a.game);
+        if (game) {
+            if (game.isReady) {
+                game.distributeCards();
+            } else {
+                socket.emit('chat message', {
+                    code: 406, message: 'game is not ready for this operation'
+                })
+            }
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+
     });
 
     socket.on('join game', function (m) {
@@ -104,7 +118,7 @@ function getGameByName(n) {
 function isAlreadyInGame(id) {
     for (let i in games) {
         if (games[i].tableId === id) {
-            io.to(id).emit('chat message', 'tu as deja commencé une game');
+            io.to(id).emit('chat message', {code: 401, message: 'client already associated to a game'});
             return true;
         } else return false;
     }
@@ -112,15 +126,15 @@ function isAlreadyInGame(id) {
 
 
 http.listen(2727, function () {
-	const ifaces = os.networkInterfaces();
-	console.log("Running server");
-	console.log("Available on:");
-	Object.keys(ifaces).forEach(function (dev) {
-		ifaces[dev].forEach(function (details) {
-			if (details.family === 'IPv4') {
-				console.log(('  http://' + details.address + ':2727'));
-			}
-		});
-	});
+    const ifaces = os.networkInterfaces();
+    console.log("Running server");
+    console.log("Available on:");
+    Object.keys(ifaces).forEach(function (dev) {
+        ifaces[dev].forEach(function (details) {
+            if (details.family === 'IPv4') {
+                console.log(('  http://' + details.address + ':2727'));
+            }
+        });
+    });
 });
 

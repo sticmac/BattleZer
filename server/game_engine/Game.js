@@ -11,12 +11,16 @@ module.exports = class Game {
         this.tableId = tableId;
         this.type = null;
         this.io = io;
+        this.isReady = false;
 
         this.cardsManager = new CardsManager(2);
 
-        this.battlefieldSize = 9;
+        this.fieldSize = 9;
         this.maxHealth = 20;
     }
+
+
+
 
 
     sendToTable(m){
