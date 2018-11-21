@@ -36,14 +36,11 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         let lastPlayerPosition = 2;
 
         const socket = io.connect('http://192.168.1.17:8080');
-        socket.on('move', function(data) {
-            const caseId = parseInt(data.caseId);
-            if (caseId != NaN) {
-                gridContainer.list[lastPlayerPosition].remove(player);
-                gridContainer.list[caseId].add(player);
-                lastPlayerPosition = caseId;
-            }
+        socket.emit("start game", {players: 2, type: "standalone"});
+        socket.on("ready to start", function(players) {
+            console.log(players);
         })
+
     }
 
     /**
