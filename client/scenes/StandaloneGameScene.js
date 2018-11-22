@@ -45,6 +45,11 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const cardExample = new Card(cardModelExample, scene_width / 2, scene_height / 2, scene_width / 12, scene_height / 4, this, 'card_back');
         cardExample.draw();
 
+        setTimeout(() => {
+            cardExample.flip();
+            cardExample.draw();
+        }, 2000);
+
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
