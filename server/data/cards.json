@@ -6,7 +6,12 @@
     "power":"1",
     "range":"2",
     "attack":"",
-    "flavor":"\"parle mieux\" - Batman"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"\"\"\"parle mieux\"\" - Batman\"\n"
   },
   {
     "title":"Cyber bully",
@@ -15,7 +20,12 @@
     "power":"1",
     "range":"10",
     "attack":"",
-    "flavor":"(20:12) DamienDu12: ton père le chauve"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"(20:12) DamienDu12: ton père le chauve\n"
   },
   {
     "title":"High Kick",
@@ -24,7 +34,12 @@
     "power":"2",
     "range":"2",
     "attack":"",
-    "flavor":"coup d'pied dans les dents"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"coup d'pied dans les dents\n"
   },
   {
     "title":"Spécial Jean Claude",
@@ -33,7 +48,12 @@
     "power":"2",
     "range":"2",
     "attack":"attaque dans les deux directions",
-    "flavor":"la botte secrète de JCVD"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"la botte secrète de JCVD\n"
   },
   {
     "title":"Télékinésie",
@@ -42,7 +62,12 @@
     "power":"2",
     "range":"3",
     "attack":"déplace un adversaire jusqu'à 2 cases dans une direction",
-    "flavor":"OH BOSETTI VIENS LA"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"OH BOSETTI VIENS LA\n"
   },
   {
     "title":"Cocktail Molotov",
@@ -51,7 +76,12 @@
     "power":"3",
     "range":"4",
     "attack":"inflige des dégats à tous les ennemis sur la case ciblée",
-    "flavor":"\"для родины\" (dlya rodiny) - Vladimir K."
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"\"\"\"для родины\"\" (dlya rodiny) - Vladimir K.\"\n"
   },
   {
     "title":"Airstrike",
@@ -60,7 +90,12 @@
     "power":"3",
     "range":"5",
     "attack":"inflige des dégats à tous les ennemis sur la case ciblée",
-    "flavor":"Airstrike on the way"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"Airstrike on the way\n"
   },
   {
     "title":"Coudasse",
@@ -69,7 +104,12 @@
     "power":"3",
     "range":"1",
     "attack":"",
-    "flavor":"LA COUDASSE"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"LA COUDASSE\n"
   },
   {
     "title":"Coup de poing américain",
@@ -78,7 +118,12 @@
     "power":"4",
     "range":"1",
     "attack":"",
-    "flavor":"l'équipe est gantée"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"l'équipe est gantée\n"
   },
   {
     "title":"Machette",
@@ -87,7 +132,12 @@
     "power":"4",
     "range":"2",
     "attack":"",
-    "flavor":"mange tes fajitas"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"mange tes fajitas\n"
   },
   {
     "title":"Coup de boule",
@@ -96,7 +146,12 @@
     "power":"5",
     "range":"1",
     "attack":"",
-    "flavor":"coup de tête à la zizou"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"coup de tête à la zizou\n"
   },
   {
     "title":"Spécial Josu ",
@@ -105,7 +160,12 @@
     "power":"5",
     "range":"10",
     "attack":"inflige des dégâts au premier ennemi rencontré dans une direction",
-    "flavor":"power of css master"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"power of css master\n"
   },
   {
     "title":"Fusil à canon scié",
@@ -114,15 +174,26 @@
     "power":"7",
     "range":"2",
     "attack":"",
-    "flavor":"à la mafioso"
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
+    "flavor":"à la mafioso\n"
   },
   {
-    "title":"défensif",
+    "title":"défensive",
     "type":"Style",
     "priority":"7",
     "power":"0",
     "range":"0",
-    "flavor":"on monte la garde"
+    "attack":"",
+    "effect":{
+      "before":"protection +5",
+      "during":"",
+      "after":""
+    },
+    "flavor":"on monte la garde\n"
   },
   {
     "title":"avec protège-dents",
@@ -130,7 +201,13 @@
     "priority":"7",
     "power":"0",
     "range":"0",
-    "flavor":"Première règle de Battlezer : Il n'y a pas de Battlezer"
+    "attack":"",
+    "effect":{
+      "before":"protège des attaques de portée 1",
+      "during":"",
+      "after":""
+    },
+    "flavor":"Première règle de Battlezer : Il n'y a pas de Battlezer\n"
   },
   {
     "title":"en TMAX",
@@ -138,7 +215,13 @@
     "priority":"2",
     "power":"0",
     "range":"5",
-    "flavor":"téma le style bro"
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":"déplacement"
+    },
+    "flavor":"téma le style bro\n"
   },
   {
     "title":"sprinté",
@@ -146,6 +229,12 @@
     "priority":"3",
     "power":"0",
     "range":"5",
+    "attack":"",
+    "effect":{
+      "before":"déplacement",
+      "during":"",
+      "after":""
+    },
     "flavor":"\n"
   },
   {
@@ -154,6 +243,12 @@
     "priority":"3",
     "power":"0",
     "range":"0",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":"soin +3"
+    },
     "flavor":"\n"
   },
   {
@@ -162,7 +257,13 @@
     "priority":"4",
     "power":"0",
     "range":"2",
-    "flavor":"un brin d'air ça fait du bien"
+    "attack":"",
+    "effect":{
+      "before":"déplacement",
+      "during":"",
+      "after":""
+    },
+    "flavor":"un brin d'air ça fait du bien\n"
   },
   {
     "title":"pétrifiant",
@@ -170,6 +271,12 @@
     "priority":"4",
     "power":"0",
     "range":"0",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"\"immobilise l'adversaire",
+      "after":" qui ne peut plus se déplacer ce tour-ci\""
+    },
     "flavor":""
   },
   {
@@ -178,6 +285,12 @@
     "priority":"4",
     "power":"0",
     "range":"1",
+    "attack":"",
+    "effect":{
+      "before":"déplacement",
+      "during":"inflige 1 dégat à la fin de chaque tour pour 3 tours",
+      "after":""
+    },
     "flavor":"\n"
   },
   {
@@ -186,6 +299,12 @@
     "priority":"5",
     "power":"0",
     "range":"0",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":"inverse votre position et celle de votre allié"
+    },
     "flavor":"\n"
   },
   {
@@ -194,6 +313,12 @@
     "priority":"5",
     "power":"0",
     "range":"2",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":"\"déplacement"
+    },
     "flavor":" invisible jusqu'à la fin du round"
   },
   {
@@ -202,6 +327,12 @@
     "priority":"6",
     "power":"0",
     "range":"2",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":"déplacement"
+    },
     "flavor":"\n"
   },
   {
@@ -210,7 +341,13 @@
     "priority":"5",
     "power":"1",
     "range":"3",
-    "flavor":"un ptit coup de speed"
+    "attack":"",
+    "effect":{
+      "before":"déplacement",
+      "during":"",
+      "after":""
+    },
+    "flavor":"un ptit coup de speed\n"
   },
   {
     "title":"vampire",
@@ -218,6 +355,12 @@
     "priority":"4",
     "power":"1",
     "range":"0",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":"soigne de la moitié des dégâts infligés (arrondi supérieur)"
+    },
     "flavor":"\n"
   },
   {
@@ -226,6 +369,12 @@
     "priority":"2",
     "power":"3",
     "range":"0",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"augmente vos dégâts seulement si vous avez subit des dégats ce tour-ci",
+      "after":"soin +1"
+    },
     "flavor":"\n"
   },
   {
@@ -234,6 +383,12 @@
     "priority":"3",
     "power":"3",
     "range":"0",
+    "attack":"",
+    "effect":{
+      "before":"",
+      "during":"",
+      "after":""
+    },
     "flavor":""
   }
 ]

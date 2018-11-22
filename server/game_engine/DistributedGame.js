@@ -1,5 +1,7 @@
 const Player = require('./Player');
 const Game = require('./Game');
+const ConnectionState = require('./states/ConnectionState');
+
 
 module.exports = class DistributedGame extends Game {
 
@@ -11,6 +13,7 @@ module.exports = class DistributedGame extends Game {
             code: 100,
             message: this.name + ' - ' + this.type + ' (' + this.playersCount + ' joueurs)'
         });
+        this.state = new ConnectionState(this);
     }
 
     addPlayer(id) {
@@ -23,6 +26,7 @@ module.exports = class DistributedGame extends Game {
             this.io.to(id).emit('chat message', {code: 202, message: 'successfully joined game'});
 
             if (this.players.length === this.playersCount) {
+                this.state.next();
                 this.setReady();
             }
         } else {
@@ -31,9 +35,6 @@ module.exports = class DistributedGame extends Game {
     }
 
     setReady() {
-        this.isReady = true;
-        console.log(this.name + " is ready to start");
-
         let players_data = [];
         this.players.forEach(a => {
             let obj = {};
@@ -74,9 +75,18 @@ module.exports = class DistributedGame extends Game {
         } else {
             console.log('unrecognized player ', u.id, ' for picks')
         }
-        //check if all players have picked, then go to next state
+        if(this.allPlayersHavePicked()){
+            this.state.next();
+        }
 
     }
 
+    allPlayersHavePicked(){
+        for(let i in this.players){
+            if(!this.players[i].hasPicked) return false;
+        }
+        return true;
+    }
 
-}
+
+};

@@ -1,5 +1,7 @@
 const Player = require('./Player');
 const Game = require('./Game');
+const ConnectionState = require('./states/ConnectionState');
+
 
 module.exports = class StandaloneGame extends Game {
 
@@ -14,6 +16,8 @@ module.exports = class StandaloneGame extends Game {
             code: 100,
             message: this.name + ' - ' + this.type + ' (' + this.playersCount + ' joueurs)'
         });
+
+        this.state = new ConnectionState(this)
         this.initPlayers();
     }
 
@@ -23,11 +27,13 @@ module.exports = class StandaloneGame extends Game {
             let position = team === 0 ? 1 : this.fieldSize - 2;
             this.players.push(new Player("player " + i, this.maxHealth, position, team));
         }
+        this.state.next();
         this.setReady();
     }
 
 
     startRound(){
+
         //préparer les attaques pour chaque joueur
         //ordonner les joueurs par priorité
         //envoyer à la table les infos
@@ -41,7 +47,6 @@ module.exports = class StandaloneGame extends Game {
 
 
     setReady() {
-        this.isReady = true;
         let players_data = [];
         this.players.forEach(a => {
             let obj = {};
@@ -53,7 +58,6 @@ module.exports = class StandaloneGame extends Game {
             players_data.push(obj);
         });
         this.io.to(this.name).emit('ready to start', {game: this.name, players: players_data});
-        console.log(this.name + " is ready to start")
     }
 
     distributeCards() {
@@ -80,7 +84,17 @@ module.exports = class StandaloneGame extends Game {
             } else {
                 console.log('unrecognized player ',u.id,' for picks')
             }
-        //check if all players have picked, then go to next state
+            if(this.allPlayersHavePicked()){
+                this.state.next();
+                this.startRound();
+            }
+    }
+
+    allPlayersHavePicked(){
+        for(let i in this.players){
+            if(!this.players[i].hasPicked) return false;
+        }
+        return true;
     }
 
 };
