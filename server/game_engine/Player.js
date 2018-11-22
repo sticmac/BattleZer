@@ -12,6 +12,10 @@ module.exports = class Player {
         this.hasPicked = false;
     }
 
+    generateAttack(){
+        //todo
+    }
+
 
 
     giveStyleCard(c){

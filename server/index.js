@@ -41,11 +41,15 @@ function onConnect(socket) {
     /**
      * call comes from Table in Standalone
      */
-    socket.on('players picks', function(p){
-        socket.emit('chat message',{code : '203',message : 'server gathered all players picks'})
+    socket.on('players picks', function (p) {
+        socket.emit('chat message', {code: '203', message: 'server gathered all players picks'})
         let game = getGameByName(p.game);
         if (game) {
-            p.players.forEach(player => game.setPlayerPicks(player) );
+            if (game.state.value === 'picks') {
+                p.players.forEach(player => game.setPlayerPicks(player));
+            } else {
+                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
+            }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
 
     });
@@ -53,10 +57,14 @@ function onConnect(socket) {
     /**
      * call comes from Phone in Distributed
      */
-    socket.on('player picks', function(p){
+    socket.on('player picks', function (p) {
         let game = getGameByName(p.game);
         if (game) {
-             game.setPlayerPicks(p.player);
+            if (game.state.value === 'picks') {
+                game.setPlayerPicks(p.player);
+            } else {
+                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
+            }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
     });
 
@@ -64,7 +72,8 @@ function onConnect(socket) {
     socket.on('send cards', function (a) {
         let game = getGameByName(a.game);
         if (game) {
-            if (game.isReady) {
+            if (game.state.value === 'distribution') {
+                game.state.next();
                 game.distributeCards();
             } else {
                 socket.emit('chat message', {
