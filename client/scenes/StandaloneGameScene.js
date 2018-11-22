@@ -3,6 +3,7 @@ const PlayerModel = require('../model/PlayerModel');
 const Grid = require('../components/Grid.js');
 const Bar = require('../components/Bar.js');
 const Card = require('../components/Card.js');
+const CardZone = require('../components/CardZone.js');
 const CardModel = require('../model/CardModel.js');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
@@ -33,22 +34,38 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const colors = [0x2222ee, 0xee2222];
         let players = {};
 
-        const cardModelExample = new CardModel({
-            "title":"Grosse gifle",
-            "type":"Coup",
-            "priority":"10",
-            "power":"1",
-            "range":"2",
-            "attack":"",
-            "flavor":"\"parle mieux\" - Batman"
-        })
-        const cardExample = new Card(cardModelExample, scene_width / 2, scene_height / 2, scene_width / 12, scene_height / 4, this, 'card_back');
-        cardExample.draw();
+        const cardModelsExample = [
+            new CardModel({
+                "title":"Grosse gifle",
+                "type":"Coup",
+                "priority":"10",
+                "power":"1",
+                "range":"2",
+                "attack":"",
+                "flavor":"\"parle mieux\" - Batman"
+            }),
+            new CardModel({
+                "title":"Grosse gifle",
+                "type":"Coup",
+                "priority":"10",
+                "power":"1",
+                "range":"2",
+                "attack":"",
+                "flavor":"\"parle mieux\" - Batman"
+            }),
+            new CardModel({
+                "title":"Grosse gifle",
+                "type":"Coup",
+                "priority":"10",
+                "power":"1",
+                "range":"2",
+                "attack":"",
+                "flavor":"\"parle mieux\" - Batman"
+            })
+        ];
 
-        setTimeout(() => {
-            cardExample.flip();
-            cardExample.draw();
-        }, 2000);
+        const cardZone = new CardZone(cardModelsExample, [], scene_width / 8, scene_height * (13/16), scene_width / 10, scene_height / 4, this);
+        cardZone.draw();
 
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});

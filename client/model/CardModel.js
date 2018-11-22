@@ -5,5 +5,6 @@ module.exports = class CardModel {
         this.priority = data.priority;
         this.power = data.power;
         this.range = data.range;
+        this.effect = data.effect;
     }
 }
