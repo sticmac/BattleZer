@@ -27,8 +27,8 @@ module.exports = class Card {
             bg.strokeRoundedRect(0, 0, this.width-2, this.height-2, 10);
             this.container.add(bg);
 
-            this.container.add(this.createInfoContainer(-this.width/2, 0, false));
-            this.container.add(this.createInfoContainer(this.width / 2, 0, true).setScale(-1.0, -1.0));
+            this.container.add(this.createInfoContainer(this.width / 2, 0).setScale(-1.0, -1.0));
+            this.container.add(this.createInfoContainer(-this.width / 2, 0));
         } else {
             const image = this.scene.add.image(0, 0, this.back);
             image.setDisplaySize(this.width, this.height);
@@ -36,7 +36,7 @@ module.exports = class Card {
         }
     }
 
-    createInfoContainer(x, y, reverse) {
+    createInfoContainer(x, y) {
         const infos = this.scene.add.container(x, y);
 
         const range = this.scene.add.container(this.width, 10);
@@ -54,7 +54,7 @@ module.exports = class Card {
         priority.add(this.scene.add.text(0, 0, this.cardModel.priority, {fontFamily: 'Arial Black', fontSize: 20, color: "#fff"}).setOrigin(0.5));
         infos.add(priority);
 
-        const title = this.scene.add.text(this.width / 2 - 10, this.height / 2 - 15, this.cardModel.title,
+        const title = this.scene.add.text(this.width / 2 + 10, - this.height / 2 + 15, this.cardModel.title,
             {fontFamily: 'Arial Black', fontSize: 20, color: "#000"}).setOrigin(0.5);
         title.setScale(-1.0, -1.0);
         infos.add(title);
