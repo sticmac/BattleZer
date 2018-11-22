@@ -20,7 +20,7 @@ module.exports = class StandaloneGame extends Game {
     initPlayers() {
         for (let i = 1; i <= this.playersCount; i++) {
             let team = (i - 1) % 2;
-            let position = team === 0 ? 1 : this.fieldSize - 1;
+            let position = team === 0 ? 1 : this.fieldSize - 2;
             this.players.push(new Player("player " + i, this.maxHealth, position, team));
         }
         this.setReady();
