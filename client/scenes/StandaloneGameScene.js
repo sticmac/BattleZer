@@ -26,7 +26,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const colors = [0x2222ee, 0xee2222];
         let players = {};
 
-        const bar = new Bar(this.game.config.width / 2, this.game.config.height - 25, this.game.config.width / 5, 20, this);
+        const bar = new Bar(this.game.config.width / 2 - this.game.config.width / 10, this.game.config.height - 25, this.game.config.width / 5, 20, this);
 
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
