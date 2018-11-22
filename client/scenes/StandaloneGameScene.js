@@ -1,7 +1,9 @@
 const Phaser = require('phaser');
-const Player = require('../model/Player');
-const Grid = require('../containers/Grid.js');
-const Bar = require('../containers/Bar.js');
+const PlayerModel = require('../model/PlayerModel');
+const Grid = require('../components/Grid.js');
+const Bar = require('../components/Bar.js');
+const Card = require('../components/Card.js');
+const CardModel = require('../model/CardModel.js');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
     constructor() {
@@ -13,20 +15,35 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
      */
     preload() {
         this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
+        this.load.image('card_back', 'assets/card_back.jpg');
     }
 
     /**
      * Create scene
      */
     create() {
-        this.add.image(0,0,'sky').setOrigin(0,0).setScale(3.0, 2.0);
+
+        const scene_width = this.game.config.width;
+        const scene_height = this.game.config.height;
+
+        this.add.image(0,0,'sky').setOrigin(0,0).setDisplaySize(scene_width, scene_height);
 
         const grid = new Grid(9, this);
 
         const colors = [0x2222ee, 0xee2222];
         let players = {};
 
-        const bar = new Bar(this.game.config.width / 2 - this.game.config.width / 10, this.game.config.height - 25, this.game.config.width / 5, 20, this);
+        const cardModelExample = new CardModel({
+            "title":"Grosse gifle",
+            "type":"Coup",
+            "priority":"10",
+            "power":"1",
+            "range":"2",
+            "attack":"",
+            "flavor":"\"parle mieux\" - Batman"
+        })
+        const cardExample = new Card(cardModelExample, scene_width / 2, scene_height / 2, scene_width / 12, scene_height / 4, this, 'card_back');
+        cardExample.draw();
 
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
@@ -34,13 +51,13 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             const sentPlayers = data.players;
             for (let i = 0 ; i < sentPlayers.length ; i++) {
                 const element = sentPlayers[i];
-                players[element.id] = {player: new Player(element.id, element.position, element.health),
-                    token: this.add.circle((this.game.config.width / 9) / 2, 0, 30, colors[i]),
-                    bar: new Bar(this.game.config.width / 2 - this.game.config.width / 10, (i * (this.game.config.height - 25)), this.game.config.width / 5, 20, this) };
+                players[element.id] = {player: new PlayerModel(element.id, element.position, element.health),
+                    token: this.add.circle((scene_width / 9) / 2, 0, 30, colors[i]),
+                    bar: new Bar(scene_width / 2 - scene_width / 10, (i * (scene_height - 25)), scene_width / 5, 20, this) };
                 grid.addToken("player" + i, players[element.id].token, element.position);
             }
         });
-
+        
     }
 
     /**

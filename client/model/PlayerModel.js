@@ -1,4 +1,4 @@
-module.exports = class Player {
+module.exports = class PlayerModel {
     constructor(id, initPosition, health) {
         this.id = id;
         this.position = initPosition;
