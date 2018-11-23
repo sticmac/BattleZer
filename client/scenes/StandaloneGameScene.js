@@ -16,6 +16,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
     preload() {
         this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
         this.load.image('card_back', 'assets/card_back.jpg');
+
     }
 
     /**
@@ -33,37 +34,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const colors = [0x2222ee, 0xee2222];
         let players = {};
 
-        const cardModelsExample = [
-            new CardModel({
-                "title":"Grosse gifle",
-                "type":"Coup",
-                "priority":"10",
-                "power":"1",
-                "range":"2",
-                "attack":"",
-                "flavor":"\"parle mieux\" - Batman"
-            }),
-            new CardModel({
-                "title":"Grosse gifle",
-                "type":"Coup",
-                "priority":"10",
-                "power":"1",
-                "range":"2",
-                "attack":"",
-                "flavor":"\"parle mieux\" - Batman"
-            }),
-            new CardModel({
-                "title":"Grosse gifle",
-                "type":"Coup",
-                "priority":"10",
-                "power":"1",
-                "range":"2",
-                "attack":"",
-                "flavor":"\"parle mieux\" - Batman"
-            })
-        ];
-
-        const socket = io.connect('http://localhost:8080');
+        const socket = io();
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
             this.game = data.game;
@@ -106,4 +77,4 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
      */
     update() {
     }
-}
+};

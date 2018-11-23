@@ -7,7 +7,7 @@ module.exports = class CardsManager {
      * @param i : le nombre de fois où chaque carte est présente
      */
     constructor(i) {
-        this.cards = JSON.parse(fs.readFileSync('data/cards.json', 'utf8'));
+        this.cards = JSON.parse(fs.readFileSync('server/data/cards.json', 'utf8'));
 
         this.styleDeck = this.generateStyleDeck(i);
         this.hitDeck = this.generateHitDeck(i);
@@ -51,7 +51,7 @@ module.exports = class CardsManager {
     }
 
     distribute(players) {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 5; i++) {
             players.forEach(p => {
                 p.giveHitCard(this.hitDeck.pop());
                 p.giveStyleCard(this.styleDeck.pop());
