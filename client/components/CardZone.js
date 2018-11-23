@@ -35,13 +35,13 @@ module.exports = class CardZone {
         this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container);
 
 
-        let btn1 = this.scene.add.rectangle(20, 0, 80, 150, 0xff0000).setOrigin(0.5);
-        btn1.setInteractive();
-        this.cardsContainer.add(btn1);
+        let hitNextButton = this.scene.add.rectangle(20, 0, 80, 150, 0xff0000).setOrigin(0.5);
+        hitNextButton.setInteractive();
+        this.cardsContainer.add(hitNextButton);
 
-        let btn2 = this.scene.add.rectangle((250 + 2 * this.cardWidth), 0, 80, 150, 0x00ff00).setOrigin(0.5);
-        btn2.setInteractive();
-        this.cardsContainer.add(btn2);
+        let styleNextButton = this.scene.add.rectangle((250 + 2 * this.cardWidth), 0, 80, 150, 0x00ff00).setOrigin(0.5);
+        styleNextButton.setInteractive();
+        this.cardsContainer.add(styleNextButton);
 
 
         this.readyButton = this.scene.add.rectangle(4 * this.cardWidth + 80, 0, 200, 80, 0x00f6f0).setOrigin(0.5);
@@ -51,9 +51,9 @@ module.exports = class CardZone {
 
         let barX = 0;
         let barY = -(this.cardHeight / 2)-50;
-        let btnbar = this.scene.add.rectangle(barX, barY, this.cardWidth * 3, 40, 0xffd852).setOrigin(0, 0);
-        btnbar.setInteractive();
-        this.cardsContainer.add(btnbar)
+        let hideBar = this.scene.add.rectangle(barX, barY, this.cardWidth * 3, 40, 0xffd852).setOrigin(0, 0);
+        hideBar.setInteractive();
+        this.cardsContainer.add(hideBar)
 
         this.cardsContainer.add(this.scene.add.text(barX+barX/2, barY, "click to show", {
             fontFamily: 'Arial Black',
@@ -62,15 +62,15 @@ module.exports = class CardZone {
         }));
 
 
-        btn1.on('pointerdown', () => {
+        hitNextButton.on('pointerdown', () => {
             this.showNextHit();
         });
 
-        btn2.on('pointerdown', () => {
+        styleNextButton.on('pointerdown', () => {
             this.showNextStyle()
         });
 
-        btnbar.on('pointerdown', () => {
+        hideBar.on('pointerdown', () => {
             this.showBack = !this.showBack;
             this.flip()
         });
