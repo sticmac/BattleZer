@@ -2,7 +2,6 @@ const Phaser = require('phaser');
 const PlayerModel = require('../model/PlayerModel');
 const Grid = require('../components/Grid.js');
 const Bar = require('../components/Bar.js');
-const Card = require('../components/Card.js');
 const CardZone = require('../components/CardZone.js');
 const CardModel = require('../model/CardModel.js');
 
@@ -70,6 +69,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
+            this.game = data.game;
             const sentPlayers = data.players;
             for (let i = 0 ; i < sentPlayers.length ; i++) {
                 const element = sentPlayers[i];
@@ -78,7 +78,18 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                     bar: new Bar(scene_width / 2 - scene_width / 10, (i * (scene_height - 25)), scene_width / 5, 20, this) };
                 grid.addToken("player" + i, players[element.id].token, element.position);
             }
+            socket.emit('send cards', {game: this.game});
         });
+
+        socket.on("card distribution", (data) => {
+            const players = data.players;
+
+            console.log(players);
+        });
+
+        socket.on("chat message", (data) => {
+            console.error(data);
+        })
         
     }
 

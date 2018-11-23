@@ -31,7 +31,6 @@ app.use('/client', express.static('client'));
 
 io.on('connection', onConnect);
 
-
 let games = [];
 
 
@@ -57,6 +56,52 @@ function onConnect(socket) {
 
     });
 
+    /**
+     * call comes from Table in Standalone
+     */
+    socket.on('players picks', function (p) {
+        socket.emit('chat message', {code: '203', message: 'server gathered all players picks'})
+        let game = getGameByName(p.game);
+        if (game) {
+            if (game.state.value === 'picks') {
+                p.players.forEach(player => game.setPlayerPicks(player));
+            } else {
+                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
+            }
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+
+    });
+
+    /**
+     * call comes from Phone in Distributed
+     */
+    socket.on('player picks', function (p) {
+        let game = getGameByName(p.game);
+        if (game) {
+            if (game.state.value === 'picks') {
+                game.setPlayerPicks(p.player);
+            } else {
+                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
+            }
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+    });
+
+
+    socket.on('send cards', function (a) {
+        let game = getGameByName(a.game);
+        if (game) {
+            if (game.state.value === 'distribution') {
+                game.state.next();
+                game.distributeCards();
+            } else {
+                socket.emit('chat message', {
+                    code: 406, message: 'game is not ready for this operation'
+                })
+            }
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+
+    });
+
     socket.on('join game', function (m) {
         if (socket.rooms.hasOwnProperty(m.game)) {
             //le socket est deja dans une game
@@ -78,18 +123,13 @@ function onConnect(socket) {
         }
     });
 
-    socket.on('close game', function (m) {
-        let game = getGameByName(m)
-        if (game) game.closeGame();
-    })
-
 
     socket.on('reset games', function (m) {
         console.log('removing all current game (' + games.length + ')');
         for (let i in games) {
             let g = games[i];
             for (let j in g.players) {
-                let p = g.players[j]
+                let p = g.players[j];
                 io.to(p.id).emit('chat message', {code: 404, message: g.name + ' is over'})
 
             }
@@ -117,7 +157,7 @@ function getGameByName(n) {
 function isAlreadyInGame(id) {
     for (let i in games) {
         if (games[i].tableId === id) {
-            io.to(id).emit('chat message', 'tu as deja commencé une game');
+            io.to(id).emit('chat message', {code: 401, message: 'client already associated to a game'});
             return true;
         } else return false;
     }
