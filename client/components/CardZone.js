@@ -23,18 +23,8 @@ module.exports = class CardZone {
         }
     }
 
-    draw() {
 
-
-        this.cardsContainer.removeAll();
-
-        this.hitCards[this.selectedHitCard].draw(this.showBack);
-        this.cardsContainer.add(this.hitCards[this.selectedHitCard].container);
-
-        this.styleCards[this.selectedStyleCard].draw(this.showBack);
-        this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container);
-
-
+    drawInterface(){
         let hitNextButton = this.scene.add.rectangle(20, 0, 80, 150, 0xff0000).setOrigin(0.5);
         hitNextButton.setInteractive();
         this.cardsContainer.add(hitNextButton);
@@ -55,11 +45,8 @@ module.exports = class CardZone {
         hideBar.setInteractive();
         this.cardsContainer.add(hideBar)
 
-        this.cardsContainer.add(this.scene.add.text(barX+barX/2, barY, "click to show", {
-            fontFamily: 'Arial Black',
-            fontSize: 20,
-            color: "#1e3045"
-        }));
+        this.addText(barX + barX / 2, barY,"click to show",20);
+        this.addText(4 * this.cardWidth + 80, 0, "ready", 25);
 
 
         hitNextButton.on('pointerdown', () => {
@@ -83,15 +70,40 @@ module.exports = class CardZone {
 
     }
 
+    draw() {
+        this.cardsContainer.removeAll();
+
+        this.drawCards();
+        this.drawInterface();
+    }
+
+
+    drawCards(){
+
+        this.hitCards[this.selectedHitCard].draw(this.showBack);
+        this.cardsContainer.add(this.hitCards[this.selectedHitCard].container);
+
+        this.styleCards[this.selectedStyleCard].draw(this.showBack);
+        this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container);
+    }
+
 
     showNextHit() {
         this.selectedHitCard = (this.selectedHitCard + 1) % this.hitCards.length;
-        this.draw(this.showBack);
+        this.drawCards()
     }
 
     showNextStyle() {
         this.selectedStyleCard = (this.selectedStyleCard + 1) % this.styleCards.length;
-        this.draw(this.showBack);
+        this.drawCards();
+    }
+
+    addText(x, y, t, s) {
+        this.cardsContainer.add(this.scene.add.text(x, y, t, {
+            fontFamily: 'Arial Black',
+            fontSize: s,
+            color: "#1e3045"
+        }));
     }
 
 

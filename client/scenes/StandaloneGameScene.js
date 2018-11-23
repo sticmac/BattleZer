@@ -75,7 +75,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                 console.log('player 2 picked : ');
                 console.log(this.cardZones[1].hitCards[this.cardZones[1].selectedStyleCard].cardModel.title)
                 console.log(this.cardZones[1].styleCards[this.cardZones[1].selectedHitCard].cardModel.title)
-            });
+            })
 
             /*
             setTimeout(() => {
