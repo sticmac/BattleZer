@@ -54,11 +54,7 @@ module.exports = class Game {
 
 
     comparePriority(a, b) {
-        if (a.priority < b.priority)
-            return -1;
-        if (a.last_nom > b.last_nom)
-            return 1;
-        return 0;
+        return b.attack.priority - a.attack.priority;
     }
 
 }

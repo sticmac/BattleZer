@@ -86,19 +86,22 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
 
         socket.on("start round", (data) => {
             const dataPlayers = data.players;
-            console.log(data);
+            console.log(dataPlayers);
             for (let i = 0 ; i < dataPlayers.length ; ++i) {
                 // set choice section invisible, now that choice is made
                 this.cardZones[i].cardsContainer.setVisible(false);
 
                 const id = dataPlayers[i].id;
-                console.log(dataPlayers[i]);
 
                 //and show attack of related player
                 players[id].showAttack.setHitCard(dataPlayers[i].hitCard);
                 players[id].showAttack.setStyleCard(dataPlayers[i].styleCard);
                 players[id].showAttack.draw();
             }
+
+            // Shows who plays first
+            const text = this.add.text(scene_width / 2, scene_height / 2, dataPlayers[0].id + " joue en premier.",
+                {backgroundColor: "#fff", padding: 20, color: "#000", fontFamily: 'Arial', fontSize: 30}).setOrigin(0.5);
         });
 
         socket.on("chat message", (data) => {
