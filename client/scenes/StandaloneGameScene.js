@@ -63,9 +63,6 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             })
         ];
 
-        const cardZone = new CardZone(cardModelsExample, [], scene_width / 8, scene_height * (13/16), scene_width / 10, scene_height / 4, this);
-        cardZone.draw();
-
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
@@ -84,7 +81,18 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         socket.on("card distribution", (data) => {
             const players = data.players;
 
-            console.log(players);
+            const cardZones = [];
+            cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, scene_width / 8, scene_height * (13/16),
+                scene_width / 10, scene_height / 4, this));
+            cardZones[0].flip();
+            cardZones[0].draw();
+
+            cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, scene_width * (7/8), scene_height * (3/16),
+                scene_width / 10, scene_height / 4, this));
+            cardZones[1].flip();
+            cardZones[1].draw();
+            cardZones[1].cardsContainer.setScale(-1.0, -1.0);
+
         });
 
         socket.on("chat message", (data) => {

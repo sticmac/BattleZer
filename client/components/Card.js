@@ -21,7 +21,7 @@ module.exports = class Card {
         this.container.removeAll();
         if (this.shown) {
             const bg = this.scene.add.graphics({x: - this.width / 2, y: - this.height / 2});
-            bg.fillStyle(0xf4ddbb, 1);
+            bg.fillStyle(this.cardModel.type == "Coup" ? 0xbbbcf4 : 0xdef4bb, 1);
             bg.fillRoundedRect(0, 0, this.width-2, this.height-2, 10);
             bg.lineStyle(2, 0x000000, 1);
             bg.strokeRoundedRect(0, 0, this.width-2, this.height-2, 10);
