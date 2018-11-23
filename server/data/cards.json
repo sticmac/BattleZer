@@ -1,730 +1,521 @@
 [
   {
-    "title":"Grosse gifle",
-    "type":"Coup",
-    "priority":"10",
-    "power":"1",
-    "range":"2",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Grosse gifle",
+    "type": "Coup",
+    "priority": 10,
+    "power": 1,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"\"\"\"parle mieux\"\" - Batman\"\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "\"\"\"parle mieux\"\" - Batman\"\n"
   },
   {
-    "title":"Cyber bully",
-    "type":"Coup",
-    "priority":"4",
-    "power":"1",
-    "range":"10",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Cyber bully",
+    "type": "Coup",
+    "priority": 4,
+    "power": 1,
+    "range": 10,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"(20:12) DamienDu12: ton père le chauve\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "(20:12) DamienDu12: ton père le chauve\n"
   },
   {
-    "title":"High Kick",
-    "type":"Coup",
-    "priority":"5",
-    "power":"2",
-    "range":"2",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "High Kick",
+    "type": "Coup",
+    "priority": 5,
+    "power": 2,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"coup d'pied dans les dents\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "coup d'pied dans les dents\n"
   },
   {
-    "title":"Spécial Jean Claude",
-    "type":"Coup",
-    "priority":"5",
-    "power":"2",
-    "range":"2",
-    "attack":{
-      "action":"bidirectionnal",
-      "desc":"attaque dans les deux directions"
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Spécial Jean Claude",
+    "type": "Coup",
+    "priority": 5,
+    "power": 2,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "bidirectionnal",
+        "value": 0
       }
-    },
-    "flavor":"la botte secrète de JCVD\n"
+    ],
+    "before": "",
+    "during": "attaque dans les deux directions",
+    "after": "",
+    "flavor": "la botte secrète de JCVD\n"
   },
   {
-    "title":"Télékinésie",
-    "type":"Coup",
-    "priority":"4",
-    "power":"2",
-    "range":"3",
-    "attack":{
-      "action":"move-enemy",
-      "desc":"déplace un adversaire jusqu'à 2 cases dans une direction"
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Télékinésie",
+    "type": "Coup",
+    "priority": 4,
+    "power": 2,
+    "range": 3,
+    "actions": [
+      {
+        "time": "during",
+        "action": "telekinesis",
+        "value": 0
       }
-    },
-    "flavor":"OH BOSETTI VIENS LA\n"
+    ],
+    "before": "",
+    "during": "déplace un adversaire jusqu'à 2 cases dans une direction",
+    "after": "",
+    "flavor": "OH BOSETTI VIENS LA\n"
   },
   {
-    "title":"Cocktail Molotov",
-    "type":"Coup",
-    "priority":"5",
-    "power":"3",
-    "range":"4",
-    "attack":{
-      "action":"long-range",
-      "desc":"inflige des dégats à tous les ennemis sur la case ciblée"
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Cocktail Molotov",
+    "type": "Coup",
+    "priority": 5,
+    "power": 3,
+    "range": 4,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"\"\"\"для родины\"\" (dlya rodiny) - Vladimir K.\"\n"
+    ],
+    "before": "",
+    "during": "inflige des dégats à tous les ennemis sur la case ciblée",
+    "after": "",
+    "flavor": "\"\"\"для родины\"\" (dlya rodiny) - Vladimir K.\"\n"
   },
   {
-    "title":"Airstrike",
-    "type":"Coup",
-    "priority":"6",
-    "power":"3",
-    "range":"5",
-    "attack":{
-      "action":"long-range",
-      "desc":"inflige des dégats à tous les ennemis sur la case ciblée"
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Airstrike",
+    "type": "Coup",
+    "priority": 6,
+    "power": 3,
+    "range": 5,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"Airstrike on the way\n"
+    ],
+    "before": "",
+    "during": "inflige des dégats à tous les ennemis sur la case ciblée",
+    "after": "",
+    "flavor": "Airstrike on the way\n"
   },
   {
-    "title":"Coudasse",
-    "type":"Coup",
-    "priority":"7",
-    "power":"3",
-    "range":"1",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Coudasse",
+    "type": "Coup",
+    "priority": 7,
+    "power": 3,
+    "range": 1,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"LA COUDASSE\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "LA COUDASSE\n"
   },
   {
-    "title":"Coup de poing américain",
-    "type":"Coup",
-    "priority":"4",
-    "power":"4",
-    "range":"1",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Coup de poing américain",
+    "type": "Coup",
+    "priority": 4,
+    "power": 4,
+    "range": 1,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"l'équipe est gantée\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "l'équipe est gantée\n"
   },
   {
-    "title":"Machette",
-    "type":"Coup",
-    "priority":"3",
-    "power":"4",
-    "range":"2",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Machette",
+    "type": "Coup",
+    "priority": 3,
+    "power": 4,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"mange tes fajitas\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "mange tes fajitas\n"
   },
   {
-    "title":"Coup de boule",
-    "type":"Coup",
-    "priority":"3",
-    "power":"5",
-    "range":"1",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Coup de boule",
+    "type": "Coup",
+    "priority": 3,
+    "power": 5,
+    "range": 1,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"coup de tête à la zizou\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "coup de tête à la zizou\n"
   },
   {
-    "title":"Spécial Josu ",
-    "type":"Coup",
-    "priority":"1",
-    "power":"5",
-    "range":"10",
-    "attack":{
-      "action":"laser",
-      "desc":"inflige des dégâts au premier ennemi rencontré dans une direction"
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Spécial Josu ",
+    "type": "Coup",
+    "priority": 1,
+    "power": 5,
+    "range": 10,
+    "actions": [
+      {
+        "time": "during",
+        "action": "laser",
+        "value": 0
       }
-    },
-    "flavor":"power of css master\n"
+    ],
+    "before": "",
+    "during": "inflige des dégâts au premier ennemi rencontré dans une direction",
+    "after": "",
+    "flavor": "power of css master\n"
   },
   {
-    "title":"Fusil à canon scié",
-    "type":"Coup",
-    "priority":"2",
-    "power":"7",
-    "range":"2",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "Fusil à canon scié",
+    "type": "Coup",
+    "priority": 2,
+    "power": 7,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
       }
-    },
-    "flavor":"à la mafioso\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "à la mafioso\n"
   },
   {
-    "title":"défensive",
-    "type":"Style",
-    "priority":"7",
-    "power":"0",
-    "range":"0",
-    "attack":{
-      "action":"protect-5",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":"protection +5"
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "défensive",
+    "type": "Style",
+    "priority": 7,
+    "power": 0,
+    "range": 0,
+    "actions": [
+      {
+        "time": "before",
+        "action": "protect",
+        "value": 5
       }
-    },
-    "flavor":"on monte la garde\n"
+    ],
+    "before": "protection +5",
+    "during": "",
+    "after": "",
+    "flavor": "on monte la garde\n"
   },
   {
-    "title":"avec protège-dents",
-    "type":"Style",
-    "priority":"7",
-    "power":"0",
-    "range":"0",
-    "attack":{
-      "action":"close-protect",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":"protège des attaques de portée 1"
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "avec protège-dents",
+    "type": "Style",
+    "priority": 7,
+    "power": 0,
+    "range": 0,
+    "actions": [
+      {
+        "time": "before",
+        "action": "closeprotect",
+        "value": 1
       }
-    },
-    "flavor":"Première règle de Battlezer : Il n'y a pas de Battlezer\n"
+    ],
+    "before": "protège des attaques de portée 1",
+    "during": "",
+    "after": "",
+    "flavor": "Première règle de Battlezer : Il n'y a pas de Battlezer\n"
   },
   {
-    "title":"en TMAX",
-    "type":"Style",
-    "priority":"2",
-    "power":"0",
-    "range":"5",
-    "attack":{
-      "action":"movement",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":"déplacement"
+    "title": "en TMAX",
+    "type": "Style",
+    "priority": 2,
+    "power": 0,
+    "range": 5,
+    "actions": [
+      {
+        "time": "after",
+        "action": "movement",
+        "value": 5
       }
-    },
-    "flavor":"téma le style bro\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "déplacement",
+    "flavor": "téma le style bro\n"
   },
   {
-    "title":"sprinté",
-    "type":"Style",
-    "priority":"3",
-    "power":"0",
-    "range":"5",
-    "attack":{
-      "action":"movement",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":"déplacement"
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "sprinté",
+    "type": "Style",
+    "priority": 3,
+    "power": 0,
+    "range": 5,
+    "actions": [
+      {
+        "time": "before",
+        "action": "movement",
+        "value": 5
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "déplacement",
+    "during": "",
+    "after": "",
+    "flavor": "\n"
   },
   {
-    "title":"revigorant",
-    "type":"Style",
-    "priority":"3",
-    "power":"0",
-    "range":"0",
-    "attack":{
-      "action":"movement-heal-3",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":"soin +3"
+    "title": "revigorant",
+    "type": "Style",
+    "priority": 5,
+    "power": 0,
+    "range": 0,
+    "actions": [
+      {
+        "time": "after",
+        "action": "heal",
+        "value": 3
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "soin +3",
+    "flavor": "\n"
   },
   {
-    "title":"et promenade ressourçante",
-    "type":"Style",
-    "priority":"4",
-    "power":"0",
-    "range":"2",
-    "attack":{
-      "action":"movement-heal-2",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":"déplacement"
+    "title": "et promenade ressourçante",
+    "type": "Style",
+    "priority": 4,
+    "power": 0,
+    "range": 2,
+    "actions": [
+      {
+        "time": "before",
+        "action": "movement",
+        "value": 2
       },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":"soin +2"
+      {
+        "time": "after",
+        "action": "heal",
+        "value": 2
       }
-    },
-    "flavor":"un brin d'air ça fait du bien\n"
+    ],
+    "before": "déplacement",
+    "during": "",
+    "after": "soin +2",
+    "flavor": "un brin d'air ça fait du bien\n"
   },
   {
-    "title":"pétrifiant",
-    "type":"Style",
-    "priority":"4",
-    "power":"0",
-    "range":"0",
-    "attack":{
-      "action":"stone",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":"immobilise votre cible. Elle ne peut pas se déplacer jusqu'à la fin du round"
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "pétrifiant",
+    "type": "Style",
+    "priority": 4,
+    "power": 0,
+    "range": 0,
+    "actions": [
+      {
+        "time": "during",
+        "action": "stone",
+        "value": 0
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "",
+    "during": "immobilise votre cible. Elle ne peut pas se déplacer jusqu'à la fin du round",
+    "after": "",
+    "flavor": "\n"
   },
   {
-    "title":"empoisoné",
-    "type":"Style",
-    "priority":"4",
-    "power":"0",
-    "range":"1",
-    "attack":{
-      "action":"poison",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":"déplacement"
-      },
-      "during":{
-        "action":"",
-        "desc":"inflige 1 dégat à la fin de chaque tour pour 3 tours"
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "empoisoné",
+    "type": "Style",
+    "priority": 4,
+    "power": 0,
+    "range": 1,
+    "actions": [
+      {
+        "time": "during",
+        "action": "poison",
+        "value": 3
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "déplacement",
+    "during": "inflige 1 dégat à la fin de chaque tour pour 3 tours",
+    "after": "",
+    "flavor": "\n"
   },
   {
-    "title":"téléporteur",
-    "type":"Style",
-    "priority":"5",
-    "power":"0",
-    "range":"0",
-    "attack":{
-      "action":"teleport",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":"inverse votre position et celle de votre allié"
+    "title": "téléporteur",
+    "type": "Style",
+    "priority": 5,
+    "power": 0,
+    "range": 0,
+    "actions": [
+      {
+        "time": "after",
+        "action": "teleport",
+        "value": 0
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "inverse votre position et celle de votre allié",
+    "flavor": "\n"
   },
   {
-    "title":"camouflé",
-    "type":"Style",
-    "priority":"5",
-    "power":"0",
-    "range":"2",
-    "attack":{
-      "action":"movement-invisible",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
+    "title": "camouflé",
+    "type": "Style",
+    "priority": 5,
+    "power": 0,
+    "range": 2,
+    "actions": [
+      {
+        "time": "after",
+        "action": "movement",
+        "value": 2
       },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":"\"déplacement"
+      {
+        "time": "after",
+        "action": "invisible",
+        "value": 0
       }
-    },
-    "flavor":" invisible jusqu'à la fin du round"
+    ],
+    "before": "",
+    "during": "",
+    "after": "\"déplacement",
+    "flavor": " invisible jusqu'à la fin du round"
   },
   {
-    "title":"évadé",
-    "type":"Style",
-    "priority":"6",
-    "power":"0",
-    "range":"2",
-    "attack":{
-      "action":"movement",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":"déplacement"
+    "title": "évadé",
+    "type": "Style",
+    "priority": 6,
+    "power": 0,
+    "range": 2,
+    "actions": [
+      {
+        "time": "after",
+        "action": "movement",
+        "value": 2
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "déplacement",
+    "flavor": "\n"
   },
   {
-    "title":"cafeiné",
-    "type":"Style",
-    "priority":"5",
-    "power":"1",
-    "range":"3",
-    "attack":{
-      "action":"movement",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":"déplacement"
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "cafeiné",
+    "type": "Style",
+    "priority": 5,
+    "power": 1,
+    "range": 3,
+    "actions": [
+      {
+        "time": "before",
+        "action": "movement",
+        "value": 2
       }
-    },
-    "flavor":"un ptit coup de speed\n"
+    ],
+    "before": "déplacement",
+    "during": "",
+    "after": "",
+    "flavor": "un ptit coup de speed\n"
   },
   {
-    "title":"vampire",
-    "type":"Style",
-    "priority":"4",
-    "power":"1",
-    "range":"0",
-    "attack":{
-      "action":"vampire",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":"soigne de la moitié des dégâts infligés (arrondi supérieur)"
+    "title": "vampire",
+    "type": "Style",
+    "priority": 4,
+    "power": 1,
+    "range": 0,
+    "actions": [
+      {
+        "time": "after",
+        "action": "vampire",
+        "value": 0
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "",
+    "during": "",
+    "after": "soigne de la moitié des dégâts infligés (arrondi supérieur)",
+    "flavor": "\n"
   },
   {
-    "title":"vengeur",
-    "type":"Style",
-    "priority":"2",
-    "power":"3",
-    "range":"0",
-    "attack":{
-      "action":"avenger-heal-1",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
+    "title": "vengeur",
+    "type": "Style",
+    "priority": 2,
+    "power": 3,
+    "range": 0,
+    "actions": [
+      {
+        "time": "during",
+        "action": "avenger",
+        "value": 3
       },
-      "during":{
-        "action":"",
-        "desc":"augmente vos dégâts seulement si vous avez subit des dégats ce tour-ci"
-      },
-      "after":{
-        "action":"",
-        "desc":"soin +1"
+      {
+        "time": "after",
+        "action": "heal",
+        "value": 1
       }
-    },
-    "flavor":"\n"
+    ],
+    "before": "",
+    "during": "augmente vos dégâts seulement si vous avez subit des dégats ce tour-ci",
+    "after": "soin +1",
+    "flavor": "\n"
   },
   {
-    "title":"enflammé",
-    "type":"Style",
-    "priority":"3",
-    "power":"3",
-    "range":"0",
-    "attack":{
-      "action":"basic",
-      "desc":""
-    },
-    "effects":{
-      "before":{
-        "action":"",
-        "desc":""
-      },
-      "during":{
-        "action":"",
-        "desc":""
-      },
-      "after":{
-        "action":"",
-        "desc":""
+    "title": "enflammé",
+    "type": "Style",
+    "priority": 3,
+    "power": 3,
+    "range": 0,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 3
       }
-    },
-    "flavor":""
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": ""
   }
 ]

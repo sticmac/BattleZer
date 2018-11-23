@@ -8,8 +8,8 @@
             margin-top: 50px;
         }
 
-        button{
-            width:80%;
+        button {
+            width: 80%;
         }
 
         #messages {
@@ -248,17 +248,21 @@
         }
     });
 
+    table_socket.on('start round', function (o) {
+        console.log(JSON.stringify(o))
+    });
+
     table_socket.on('ready to start', function (o) {
-        console.log('table ready to start : ', JSON.stringify(o))
+        console.log('table ready to start ')//, JSON.stringify(o))
     });
 
 
     phone1_socket.on('ready to start', function (o) {
-        console.log('phone 1 ready to start : ', JSON.stringify(o))
+        console.log('phone 1 ready to start')//, JSON.stringify(o))
     });
 
     phone2_socket.on('ready to start', function (o) {
-        console.log('phone 2 ready to start : ', JSON.stringify(o))
+        console.log('phone 2 ready to start ')//, JSON.stringify(o))
     });
 
     function sendAllPicks() {
@@ -268,42 +272,80 @@
                 {
                     id: 'player 1',
                     hitPick: {
-                        "title": "Fusil à canon scié",
-                        "type": "Coup",
-                        "priority": "2",
-                        "power": "7",
-                        "range": "2",
-                        "attack": "",
-                        "flavor": "à la mafioso"
-                    },
-                    stylePick: {
-                        "title": "sprinté",
-                        "type": "Style",
-                        "priority": "3",
-                        "power": "0",
-                        "range": "5",
-                        "flavor": "\n"
-                    }
-                },
-                {
-                    id: 'player 2',
-                    hitPick: {
                         "title": "Coudasse",
                         "type": "Coup",
                         "priority": "7",
                         "power": "3",
                         "range": "1",
-                        "attack": "",
-                        "flavor": "LA COUDASSE"
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "LA COUDASSE\n"
                     },
                     stylePick: {
-                        "title": "défensif",
+                        "title": "empoisoné",
                         "type": "Style",
-                        "priority": "7",
+                        "priority": "4",
+                        "power": "0",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "poison",
+                                "value": "3"
+                            }
+                        ],
+                        "before": "déplacement",
+                        "during": "inflige 1 dégat à la fin de chaque tour pour 3 tours",
+                        "after": "",
+                        "flavor": "\n"
+                    },
+                },
+                {
+                    id: 'player 2',
+                    hitPick: {
+                        "title": "Coup de poing américain",
+                        "type": "Coup",
+                        "priority": "4",
+                        "power": "4",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "l'équipe est gantée\n"
+                    },
+                    stylePick: {
+                        "title": "revigorant",
+                        "type": "Style",
+                        "priority": "5",
                         "power": "0",
                         "range": "0",
-                        "flavor": "on monte la garde"
-                    }
+                        "actions": [
+                            {
+                                "time": "after",
+                                "action": "heal",
+                                "value": "3"
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "soin +3",
+                        "flavor": "\n"
+                    },
                 }
             ]
         })
@@ -316,22 +358,41 @@
                 {
                     id: phone1_socket.id,
                     hitPick: {
-                        "title": "Fusil à canon scié",
+                        "title": "Coudasse",
                         "type": "Coup",
-                        "priority": "2",
-                        "power": "7",
-                        "range": "2",
-                        "attack": "",
-                        "flavor": "à la mafioso"
+                        "priority": "7",
+                        "power": "3",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "LA COUDASSE\n"
                     },
                     stylePick: {
-                        "title": "sprinté",
+                        "title": "empoisoné",
                         "type": "Style",
-                        "priority": "3",
+                        "priority": "4",
                         "power": "0",
-                        "range": "5",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "poison",
+                                "value": "3"
+                            }
+                        ],
+                        "before": "déplacement",
+                        "during": "inflige 1 dégat à la fin de chaque tour pour 3 tours",
+                        "after": "",
                         "flavor": "\n"
-                    }
+                    },
                 }
         })
     }
@@ -342,22 +403,41 @@
             player: {
                 id: phone2_socket.id,
                 hitPick: {
-                    "title": "Coudasse",
+                    "title": "Coup de poing américain",
                     "type": "Coup",
-                    "priority": "7",
-                    "power": "3",
+                    "priority": "4",
+                    "power": "4",
                     "range": "1",
-                    "attack": "",
-                    "flavor": "LA COUDASSE"
+                    "actions": [
+                        {
+                            "time": "during",
+                            "action": "basic",
+                            "value": 0
+                        }
+                    ],
+                    "before": "",
+                    "during": "",
+                    "after": "",
+                    "flavor": "l'équipe est gantée\n"
                 },
                 stylePick: {
-                    "title": "défensif",
+                    "title": "revigorant",
                     "type": "Style",
-                    "priority": "7",
+                    "priority": "5",
                     "power": "0",
                     "range": "0",
-                    "flavor": "on monte la garde"
-                }
+                    "actions": [
+                        {
+                            "time": "after",
+                            "action": "heal",
+                            "value": "3"
+                        }
+                    ],
+                    "before": "",
+                    "during": "",
+                    "after": "soin +3",
+                    "flavor": "\n"
+                },
             }
         })
     }

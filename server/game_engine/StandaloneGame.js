@@ -32,15 +32,8 @@ module.exports = class StandaloneGame extends Game {
     }
 
 
-    startRound(){
 
-        //préparer les attaques pour chaque joueur
-        //ordonner les joueurs par priorité
-        //envoyer à la table les infos
-        // next state --> attente des attack actions
-    }
-
-    newRound(){
+    newRound() {
         //remise des cartes dans le paquet + shuffle
         //distribuer a nouveau
     }
@@ -74,25 +67,25 @@ module.exports = class StandaloneGame extends Game {
         this.io.to(this.tableId).emit('card distribution', {game: this.name, players: players_data})
     }
 
-    setPlayerPicks(u){
-            let p = this.getPlayerById(u.id);
-            if(p){
-                p.hitPick = u.hitPick;
-                p.stylePick = u.stylePick;
-                p.hasPicked = true;
-                console.log(p.id,p.hitPick.title,p.stylePick.title)
-            } else {
-                console.log('unrecognized player ',u.id,' for picks')
-            }
-            if(this.allPlayersHavePicked()){
-                this.state.next();
-                this.startRound();
-            }
+    setPlayerPicks(u) {
+        let p = this.getPlayerById(u.id);
+        if (p) {
+            p.hitPick = u.hitPick;
+            p.stylePick = u.stylePick;
+            p.hasPicked = true;
+            console.log(p.id, p.hitPick.title, p.stylePick.title)
+        } else {
+            console.log('unrecognized player ', u.id, ' for picks')
+        }
+        if (this.allPlayersHavePicked()) {
+            this.state.next();
+            this.startRound();
+        }
     }
 
-    allPlayersHavePicked(){
-        for(let i in this.players){
-            if(!this.players[i].hasPicked) return false;
+    allPlayersHavePicked() {
+        for (let i in this.players) {
+            if (!this.players[i].hasPicked) return false;
         }
         return true;
     }
