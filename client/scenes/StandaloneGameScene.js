@@ -34,7 +34,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         let players = {};
 
 
-        const socket = io.connect('http://localhost:8080');
+        const socket = io();
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
             this.game = data.game;
