@@ -33,7 +33,6 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const colors = [0x2222ee, 0xee2222];
         let players = {};
 
-        this.showAttack = new ShowAttack(scene_width / 2, scene_height / 2, scene_width / 10, scene_height / 4, this);
 
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
@@ -44,7 +43,8 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                 const element = sentPlayers[i];
                 players[element.id] = {player: new PlayerModel(element.id, element.position, element.health),
                     token: this.add.circle((scene_width / 9) / 2, 0, 30, colors[i]),
-                    bar: new Bar(scene_width / 2 - scene_width / 10, (i * (scene_height - 25)), scene_width / 5, 20, this) };
+                    bar: new Bar(scene_width / 2 - scene_width / 10, (i * (scene_height - 25)), scene_width / 5, 20, this),
+                    showAttack: new ShowAttack((i * 2 + 1) * scene_width / 4, scene_height / 2, scene_width / 10, scene_height / 4, this)};
                 grid.addToken("player" + i, players[element.id].token, element.position);
             }
             socket.emit('send cards', {game: this.game});
@@ -85,18 +85,20 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         });
 
         socket.on("start round", (data) => {
-            // set choice section invisible, now that choice is made
-            const players = data.players;
+            const dataPlayers = data.players;
             console.log(data);
-            for (let i = 0 ; i < this.cardZones.length ; ++i) {
+            for (let i = 0 ; i < dataPlayers.length ; ++i) {
+                // set choice section invisible, now that choice is made
                 this.cardZones[i].cardsContainer.setVisible(false);
+
+                const id = dataPlayers[i].id;
+                console.log(dataPlayers[i]);
+
+                //and show attack of related player
+                players[id].showAttack.setHitCard(dataPlayers[i].hitCard);
+                players[id].showAttack.setStyleCard(dataPlayers[i].styleCard);
+                players[id].showAttack.draw();
             }
-
-            this.showAttack.setHitCard(players[0].hitCard);
-            this.showAttack.setStyleCard(players[0].styleCard);
-
-            this.showAttack.draw();
-
         });
 
         socket.on("chat message", (data) => {
