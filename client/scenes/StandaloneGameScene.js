@@ -16,6 +16,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
     preload() {
         this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
         this.load.image('card_back', 'assets/card_back.jpg');
+
     }
 
     /**
@@ -32,7 +33,6 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
 
         const colors = [0x2222ee, 0xee2222];
         let players = {};
-
 
         const socket = io();
         socket.emit("start game", {players: 2, type: "standalone"});
@@ -117,4 +117,4 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
      */
     update() {
     }
-}
+};

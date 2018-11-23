@@ -82,7 +82,7 @@ function onConnect(socket) {
             if (game.state.value === 'picks') {
                 game.setPlayerPicks(p.player);
             } else {
-                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
+                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
             }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
     });
