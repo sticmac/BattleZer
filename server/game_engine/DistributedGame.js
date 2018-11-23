@@ -77,6 +77,7 @@ module.exports = class DistributedGame extends Game {
         }
         if(this.allPlayersHavePicked()){
             this.state.next();
+            this.startRound();
         }
 
     }

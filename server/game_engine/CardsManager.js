@@ -13,7 +13,44 @@ module.exports = class CardsManager {
         this.hitDeck = this.generateHitDeck(i);
     }
 
-    distribute(players){
+
+    generateAttack(player) {
+
+        let h = player.hitPick;
+        let s = player.stylePick;
+
+
+        let actions = {};
+        actions['before'] = [];
+        actions['during'] = [];
+        actions['after'] = [];
+
+        h.actions.forEach(a => {
+            actions[a.time].push({
+                action: a.action,
+                type: h.type,
+                value: a.value
+            });
+        });
+
+        s.actions.forEach(a => {
+            actions[a.time].push({
+                action: a.action,
+                type: h.type,
+                value: parseInt(a.value)
+            });
+        });
+
+
+        return {
+            power: parseInt(h.power) + parseInt(s.power),
+            priority: parseInt(h.priority) + parseInt(s.priority),
+            range : parseInt(h.range),
+            actions: actions
+        }
+    }
+
+    distribute(players) {
         for (let i = 0; i < 10; i++) {
             players.forEach(p => {
                 p.giveHitCard(this.hitDeck.pop());
