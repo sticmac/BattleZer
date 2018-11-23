@@ -1,9 +1,9 @@
 const Phaser = require('phaser');
 const PlayerModel = require('../model/PlayerModel');
-const Grid = require('../components/Grid.js');
-const Bar = require('../components/Bar.js');
-const CardZone = require('../components/CardZone.js');
-const CardModel = require('../model/CardModel.js');
+const Grid = require('../components/Grid');
+const Bar = require('../components/Bar');
+const CardZone = require('../components/CardZone');
+const ShowAttack = require('../components/ShowAttack');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
     constructor() {
@@ -33,6 +33,8 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const colors = [0x2222ee, 0xee2222];
         let players = {};
 
+        this.showAttack = new ShowAttack(scene_width / 2, scene_height / 2, scene_width / 10, scene_height / 4, this);
+
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
@@ -51,40 +53,50 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         socket.on("card distribution", (data) => {
             const players = data.players;
 
-            const cardZones = [];
-            cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, scene_width / 8, scene_height * (13/16),
+            this.cardZones = [];
+            this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, scene_width / 8, scene_height * (3/4),
                 scene_width / 10, scene_height / 4, this));
-            cardZones[0].flip();
-            cardZones[0].draw();
+            this.cardZones[0].flip();
+            this.cardZones[0].draw();
 
-            cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, scene_width * (7/8), scene_height * (3/16),
+            this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, scene_width * (7/8), scene_height * (3/16),
                 scene_width / 10, scene_height / 4, this));
-            cardZones[1].flip();
-            cardZones[1].draw();
-            cardZones[1].cardsContainer.setScale(-1.0, -1.0);
+            this.cardZones[1].flip();
+            this.cardZones[1].draw();
+            this.cardZones[1].cardsContainer.setScale(-1.0, -1.0);
 
-            socket.emit("players picks", {
-                game: this.game, 
-                players: [
-                    {
-                        id: players[0].id,
-                        stylePick: players[0].styleCards[0],
-                        hitPick: players[0].hitCards[0]
-                    },
-                    {
-                        id: players[1].id,
-                        stylePick: players[1].styleCards[0],
-                        hitPick: players[1].hitCards[0]
-                    }
-                ]
-            });
+            setTimeout(() => {
+                socket.emit("players picks", {
+                    game: this.game, 
+                    players: [
+                        {
+                            id: players[0].id,
+                            stylePick: players[0].styleCards[0],
+                            hitPick: players[0].hitCards[0]
+                        },
+                        {
+                            id: players[1].id,
+                            stylePick: players[1].styleCards[0],
+                            hitPick: players[1].hitCards[0]
+                        }
+                    ]
+                });
+            }, 2000);
         });
 
         socket.on("start round", (data) => {
-            data.players.sort((a,b) => {
-                return a.rank - b.rank;
-            });
+            // set choice section invisible, now that choice is made
+            const players = data.players;
             console.log(data);
+            for (let i = 0 ; i < this.cardZones.length ; ++i) {
+                this.cardZones[i].cardsContainer.setVisible(false);
+            }
+
+            this.showAttack.setHitCard(players[0].hitCard);
+            this.showAttack.setStyleCard(players[0].styleCard);
+
+            this.showAttack.draw();
+
         });
 
         socket.on("chat message", (data) => {
