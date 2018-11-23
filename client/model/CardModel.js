@@ -5,6 +5,9 @@ module.exports = class CardModel {
         this.priority = data.priority;
         this.power = data.power;
         this.range = data.range;
-        this.effect = data.effect;
+        this.actions = data.actions;
+        this.before = data.before;
+        this.during = data.during;
+        this.after = data.after;
     }
 }
