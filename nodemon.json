@@ -1,4 +1,4 @@
 {
 	"ext": "js,ts",
-	"ignore": ["client/*"]
+	"ignore": ["client/bundle.js"]
 }

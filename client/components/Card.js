@@ -9,29 +9,39 @@ module.exports = class Card {
         this.scene = scene;
 
         this.back = back;
-        this.shown = true;
         this.container = scene.add.container(x, y);
     }
 
-    flip() {
-        this.shown = !this.shown;
-    }
 
-    draw() {
+    draw(showBack) {
         this.container.removeAll();
-        const bg = this.scene.add.graphics({x: -this.width / 2, y: -this.height / 2});
-        bg.fillStyle(this.cardModel.type === "Coup" ? 0xbbbcf4 : 0xdef4bb, 1);
-        bg.fillRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
-        bg.lineStyle(2, 0x000000, 1);
-        bg.strokeRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
-        this.container.add(bg);
 
-        this.container.add(this.createInfoContainer(this.width / 2, 0).setScale(-1.0, -1.0));
-        this.container.add(this.createInfoContainer(-this.width / 2, 0));
+        if (!showBack) {
+            const bg = this.scene.add.graphics({x: -this.width / 2, y: -this.height / 2});
+            bg.fillStyle(this.cardModel.type === "Coup" ? 0xbbbcf4 : 0xdef4bb, 1);
+            bg.fillRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
+            bg.lineStyle(2, 0x000000, 1);
+            bg.strokeRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
+            this.container.add(bg);
+
+            this.container.add(this.createInfoContainer(this.width / 2, 0).setScale(-1.0, -1.0));
+            this.container.add(this.createInfoContainer(-this.width / 2, 0));
+
+        } else {
+
+            const bg = this.scene.add.graphics({x: -this.width / 2, y: -this.height / 2});
+            bg.fillStyle(0x232323);
+            bg.fillRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
+            bg.lineStyle(2, 0x000000, 1);
+            bg.strokeRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
+            this.container.add(bg);
+
+            //this.container.add(this.scene.add.image(this.width,this.height,this.back))
+        }
 
     }
 
-
+    /*
     drawBehind() {
         this.container.removeAll();
         let width = this.width * 1.5;
@@ -46,6 +56,7 @@ module.exports = class Card {
         this.container.add(this.createInfoContainer(width / 2, 0).setScale(-1.0, -1.0));
         this.container.add(this.createInfoContainer(-width / 2, 0));
     }
+    */
 
     createInfoContainer(x, y) {
         const infos = this.scene.add.container(x, y);
@@ -59,7 +70,7 @@ module.exports = class Card {
         }).setOrigin(0.5));
         infos.add(range);
 
-        const power = this.scene.add.container(0,  -40);
+        const power = this.scene.add.container(0, -40);
         power.add(this.scene.add.circle(0, 0, 20, 0x71221b));
         power.add(this.scene.add.text(0, 0, this.cardModel.power, {
             fontFamily: 'Arial Black',

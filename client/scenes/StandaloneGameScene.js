@@ -54,17 +54,30 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             const players = data.players;
 
             this.cardZones = [];
-            this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, scene_width / 8, scene_height * (3/4),
+            this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, scene_width / 8, scene_height * (14/16),
                 scene_width / 10, scene_height / 4, this));
             this.cardZones[0].flip();
             this.cardZones[0].draw();
 
-            this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, scene_width * (7/8), scene_height * (3/16),
+            this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, scene_width * (7/8), scene_height * (2/16),
                 scene_width / 10, scene_height / 4, this));
             this.cardZones[1].flip();
             this.cardZones[1].draw();
             this.cardZones[1].cardsContainer.setScale(-1.0, -1.0);
 
+            this.cardZones[0].readyButton.on('pointerdown', () => {
+                console.log('player 2 picked : ');
+                console.log(this.cardZones[0].hitCards[this.cardZones[0].selectedStyleCard].cardModel.title)
+                console.log(this.cardZones[0].styleCards[this.cardZones[0].selectedHitCard].cardModel.title)
+            });
+
+            this.cardZones[1].readyButton.on('pointerdown', () => {
+                console.log('player 2 picked : ');
+                console.log(this.cardZones[1].hitCards[this.cardZones[1].selectedStyleCard].cardModel.title)
+                console.log(this.cardZones[1].styleCards[this.cardZones[1].selectedHitCard].cardModel.title)
+            });
+
+            /*
             setTimeout(() => {
                 socket.emit("players picks", {
                     game: this.game, 
@@ -82,6 +95,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                     ]
                 });
             }, 2000);
+            */
         });
 
         socket.on("start round", (data) => {
