@@ -33,36 +33,6 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const colors = [0x2222ee, 0xee2222];
         let players = {};
 
-        const cardModelsExample = [
-            new CardModel({
-                "title":"Grosse gifle",
-                "type":"Coup",
-                "priority":"10",
-                "power":"1",
-                "range":"2",
-                "attack":"",
-                "flavor":"\"parle mieux\" - Batman"
-            }),
-            new CardModel({
-                "title":"Grosse gifle",
-                "type":"Coup",
-                "priority":"10",
-                "power":"1",
-                "range":"2",
-                "attack":"",
-                "flavor":"\"parle mieux\" - Batman"
-            }),
-            new CardModel({
-                "title":"Grosse gifle",
-                "type":"Coup",
-                "priority":"10",
-                "power":"1",
-                "range":"2",
-                "attack":"",
-                "flavor":"\"parle mieux\" - Batman"
-            })
-        ];
-
         const socket = io.connect('http://localhost:8080');
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
@@ -93,12 +63,33 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             cardZones[1].draw();
             cardZones[1].cardsContainer.setScale(-1.0, -1.0);
 
+            socket.emit("players picks", {
+                game: this.game, 
+                players: [
+                    {
+                        id: players[0].id,
+                        stylePick: players[0].styleCards[0],
+                        hitPick: players[0].hitCards[0]
+                    },
+                    {
+                        id: players[1].id,
+                        stylePick: players[1].styleCards[0],
+                        hitPick: players[1].hitCards[0]
+                    }
+                ]
+            });
+        });
+
+        socket.on("start round", (data) => {
+            data.players.sort((a,b) => {
+                return a.rank - b.rank;
+            });
+            console.log(data);
         });
 
         socket.on("chat message", (data) => {
-            console.error(data);
-        })
-        
+            console.info(data)
+        });
     }
 
     /**

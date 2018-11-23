@@ -60,11 +60,12 @@ function onConnect(socket) {
      * call comes from Table in Standalone
      */
     socket.on('players picks', function (p) {
+        console.log(p);
         socket.emit('chat message', {code: '203', message: 'server gathered all players picks'})
         let game = getGameByName(p.game);
         if (game) {
             if (game.state.value === 'picks') {
-                p.players.forEach(player => game.setPlayerPicks(player));
+                p.players.forEach(player => {game.setPlayerPicks(player);});
             } else {
                 socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
             }
