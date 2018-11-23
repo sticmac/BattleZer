@@ -4,7 +4,8 @@ module.exports = class CardZone {
 
 
     constructor(hitCardsModels, styleCardsModels, x, y, cardWidth, cardHeight, scene) {
-        this.cardsContainer = scene.add.container(x, y);
+        this.container = scene.add.container(x, y);
+        this.cardsContainer = scene.add.container(0, 0);
         this.scene = scene;
 
         this.cardHeight = cardHeight;
@@ -25,25 +26,26 @@ module.exports = class CardZone {
 
 
     drawInterface(){
+        this.container.removeAll();
         let hitNextButton = this.scene.add.rectangle(20, 0, 80, 150, 0xff0000).setOrigin(0.5);
         hitNextButton.setInteractive();
-        this.cardsContainer.add(hitNextButton);
+        this.container.add(hitNextButton);
 
         let styleNextButton = this.scene.add.rectangle((250 + 2 * this.cardWidth), 0, 80, 150, 0x00ff00).setOrigin(0.5);
         styleNextButton.setInteractive();
-        this.cardsContainer.add(styleNextButton);
+        this.container.add(styleNextButton);
 
 
         this.readyButton = this.scene.add.rectangle(4 * this.cardWidth + 80, 0, 200, 80, 0x00f6f0).setOrigin(0.5);
         this.readyButton.setInteractive();
-        this.cardsContainer.add(this.readyButton);
+        this.container.add(this.readyButton);
 
 
         let barX = 0;
         let barY = -(this.cardHeight / 2)-50;
         let hideBar = this.scene.add.rectangle(barX, barY, this.cardWidth * 3, 40, 0xffd852).setOrigin(0, 0);
         hideBar.setInteractive();
-        this.cardsContainer.add(hideBar)
+        this.container.add(hideBar)
 
         this.addText(barX + barX / 2, barY,"click to show",20);
         this.addText(4 * this.cardWidth + 80, 0, "ready", 25);
@@ -62,29 +64,26 @@ module.exports = class CardZone {
             this.flip()
         });
 
-        /*
-        btnbar.on('pointerup', () => {
-        })
-        */
-
-
     }
 
     draw() {
-        this.cardsContainer.removeAll();
+        this.container.removeAll();
 
-        this.drawCards();
         this.drawInterface();
+        this.drawCards();
     }
 
 
     drawCards(){
+        this.cardsContainer.removeAll();
 
         this.hitCards[this.selectedHitCard].draw(this.showBack);
         this.cardsContainer.add(this.hitCards[this.selectedHitCard].container);
 
         this.styleCards[this.selectedStyleCard].draw(this.showBack);
         this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container);
+
+        this.container.add(this.cardsContainer);
     }
 
 
@@ -99,7 +98,7 @@ module.exports = class CardZone {
     }
 
     addText(x, y, t, s) {
-        this.cardsContainer.add(this.scene.add.text(x, y, t, {
+        this.container.add(this.scene.add.text(x, y, t, {
             fontFamily: 'Arial Black',
             fontSize: s,
             color: "#1e3045"
@@ -108,7 +107,6 @@ module.exports = class CardZone {
 
 
     flip() {
-
         this.hitCards[this.selectedHitCard].draw(this.showBack);
 
         this.styleCards[this.selectedStyleCard].draw(this.showBack);

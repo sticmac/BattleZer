@@ -63,39 +63,34 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                 scene_width / 10, scene_height / 4, this));
             this.cardZones[1].flip();
             this.cardZones[1].draw();
-            this.cardZones[1].cardsContainer.setScale(-1.0, -1.0);
+            this.cardZones[1].container.setScale(-1.0, -1.0);
 
-            this.cardZones[0].readyButton.on('pointerdown', () => {
-                console.log('player 2 picked : ');
-                console.log(this.cardZones[0].hitCards[this.cardZones[0].selectedStyleCard].cardModel.title)
-                console.log(this.cardZones[0].styleCards[this.cardZones[0].selectedHitCard].cardModel.title)
-            });
+            let counter = 0;
 
-            this.cardZones[1].readyButton.on('pointerdown', () => {
-                console.log('player 2 picked : ');
-                console.log(this.cardZones[1].hitCards[this.cardZones[1].selectedStyleCard].cardModel.title)
-                console.log(this.cardZones[1].styleCards[this.cardZones[1].selectedHitCard].cardModel.title)
-            })
+            for (let i = 0 ; i < this.cardZones.length ; ++i) {
+                this.cardZones[i].readyButton.on('pointerdown', () => {
+                    console.log('player ' + (i + 1) + ' picked : ');
+                    console.log(this.cardZones[i].hitCards[this.cardZones[i].selectedStyleCard].cardModel.title)
+                    console.log(this.cardZones[i].styleCards[this.cardZones[i].selectedHitCard].cardModel.title)
+                    
+                    counter++;
 
-            /*
-            setTimeout(() => {
-                socket.emit("players picks", {
-                    game: this.game, 
-                    players: [
-                        {
-                            id: players[0].id,
-                            stylePick: players[0].styleCards[0],
-                            hitPick: players[0].hitCards[0]
-                        },
-                        {
-                            id: players[1].id,
-                            stylePick: players[1].styleCards[0],
-                            hitPick: players[1].hitCards[0]
+                    if (counter == this.cardZones.length) {
+                        const toSendPlayers = [];
+                        for (let i = 0 ; i < this.cardZones.length ; ++i) {
+                            toSendPlayers.push({
+                                id: players[i].id,
+                                stylePick: this.cardZones[i].styleCards[this.cardZones[i].selectedStyleCard].cardModel,
+                                hitPick: this.cardZones[i].hitCards[this.cardZones[i].selectedHitCard].cardModel
+                            })
                         }
-                    ]
+                        socket.emit("players picks", {
+                            game: this.game,
+                            players: toSendPlayers
+                        })
+                    }
                 });
-            }, 2000);
-            */
+            }
         });
 
         socket.on("start round", (data) => {
@@ -103,7 +98,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             console.log(dataPlayers);
             for (let i = 0 ; i < dataPlayers.length ; ++i) {
                 // set choice section invisible, now that choice is made
-                this.cardZones[i].cardsContainer.setVisible(false);
+                this.cardZones[i].container.setVisible(false);
 
                 const id = dataPlayers[i].id;
 

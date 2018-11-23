@@ -25,7 +25,6 @@ module.exports = class ShowAttack {
         ];
 
         for (let i = 0 ; i < cards.length ; i++) {
-            cards[i].flip();
             cards[i].draw();
             this.container.add(cards[i].container);
         }
