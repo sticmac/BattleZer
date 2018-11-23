@@ -100,8 +100,11 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             }
 
             // Shows who plays first
-            const text = this.add.text(scene_width / 2, scene_height / 2, dataPlayers[0].id + " joue en premier.",
+            this.add.text(scene_width * (1/3), scene_height / 2, dataPlayers[0].id + " joue en premier.",
                 {backgroundColor: "#fff", padding: 20, color: "#000", fontFamily: 'Arial', fontSize: 30}).setOrigin(0.5);
+            this.add.text(scene_width * (2/3), scene_height / 2, dataPlayers[0].id + " joue en premier.",
+                {backgroundColor: "#fff", padding: 20, color: "#000", fontFamily: 'Arial', fontSize: 30})
+                .setOrigin(0.5).setScale(-1.0, -1.0);
         });
 
         socket.on("chat message", (data) => {
