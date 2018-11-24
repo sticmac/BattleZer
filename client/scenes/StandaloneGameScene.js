@@ -4,6 +4,7 @@ const Grid = require('../components/Grid');
 const Bar = require('../components/Bar');
 const CardZone = require('../components/CardZone');
 const ShowAttack = require('../components/ShowAttack');
+const DisplayText = require('../components/DisplayText');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
     constructor() {
@@ -37,7 +38,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const socket = io();
         socket.emit("start game", {players: 2, type: "standalone"});
         socket.on("ready to start", (data) => {
-            this.game = data.game;
+            this.gameId = data.game;
             const sentPlayers = data.players;
             for (let i = 0 ; i < sentPlayers.length ; i++) {
                 const element = sentPlayers[i];
@@ -47,7 +48,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                     showAttack: new ShowAttack(scene_width / 2, scene_height - ( (i * 2 + 1) * scene_height / 4 ), scene_width / 10, scene_height / 4, this)};
                 grid.addToken("player" + i, players[element.id].token, element.position);
             }
-            socket.emit('send cards', {game: this.game});
+            socket.emit('send cards', {game: this.gameId});
         });
 
         socket.on("card distribution", (data) => {
@@ -85,7 +86,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                             })
                         }
                         socket.emit("players picks", {
-                            game: this.game,
+                            game: this.gameId,
                             players: toSendPlayers
                         })
                     }
@@ -95,7 +96,6 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
 
         socket.on("start round", (data) => {
             const dataPlayers = data.players;
-            console.log(dataPlayers);
             for (let i = 0 ; i < dataPlayers.length ; ++i) {
                 // set choice section invisible, now that choice is made
                 this.cardZones[i].container.setVisible(false);
@@ -109,11 +109,10 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             }
 
             // Shows who plays first
-            this.add.text(scene_width * (1/3), scene_height / 2, dataPlayers[0].id + " joue en premier.",
-                {backgroundColor: "#fff", padding: 20, color: "#000", fontFamily: 'Arial', fontSize: 30}).setOrigin(0.5);
-            this.add.text(scene_width * (2/3), scene_height / 2, dataPlayers[0].id + " joue en premier.",
-                {backgroundColor: "#fff", padding: 20, color: "#000", fontFamily: 'Arial', fontSize: 30})
-                .setOrigin(0.5).setScale(-1.0, -1.0);
+            const text = new DisplayText(dataPlayers[0].id + " joue en premier", scene_width * (1/3), scene_height * (1/2), this);
+            text.draw();
+
+
         });
 
         socket.on("chat message", (data) => {
