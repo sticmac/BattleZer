@@ -6,6 +6,7 @@ const CardZone = require('../components/CardZone');
 const ShowAttack = require('../components/ShowAttack');
 const DisplayText = require('../components/DisplayText');
 const Round = require('../Round');
+const io = require('socket.io-client');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
     constructor() {
