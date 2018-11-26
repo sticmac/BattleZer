@@ -14,11 +14,14 @@ module.exports = class Round {
     }
 
     start() {
-        this.socket.emit('player effect', {
-            game: this.game,
-            player: this.data[0].id,
-            action: 'movement',
-            value: 3
-        })
+        console.log(this.data);
+        if (this.data[0].attack.actions.before.length > 0) {
+            this.socket.emit('player effect', {
+                game: this.game,
+                player: this.data[0].id,
+                action: this.data[0].attack.actions.before[0].action,
+                value: this.data[0].attack.actions.before[0].value
+            })
+        }
     }
 }
