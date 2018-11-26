@@ -82,6 +82,14 @@
                             <button type="button" class="btn btn-secondary" onclick="sendAllPicks()">send picks
                             </button>
                         </li>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="sendEffect1('gameroom#1',3)">player 1 <i>moves to #3</i>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="sendEffect2('gameroom#1',5)">player 2 <i>protect 5</i>
+                            </button>
+                        </li>
                     </ol>
                 </div>
 
@@ -197,6 +205,14 @@
         $('#messages').append($('<li>').text('PHONE2 : ' + msg.message));
     });
 
+    table_socket.on('update player', function (o) {
+        let p1 = o['players'][0].id + ' ('+o['players'][0].health+' hp) - position : '+o['players'][0].position;
+        let p2 = o['players'][1].id + ' ('+o['players'][1].health+' hp) - position : '+o['players'][1].position;
+
+        $('#messages').append($('<li>').text(p1));
+        $('#messages').append($('<li>').text(p2));
+    });
+
 
     table_socket.on('card distribution', function (o) {
         $('.hit').show();
@@ -214,10 +230,10 @@
             let id2 = '#hcard' + i;
             let id3 = '#scard2' + i;
             let id4 = '#hcard2' + i;
-            $(id).text(s1[i].title);
-            $(id2).text(h1[i].title);
-            $(id3).text(s2[i].title);
-            $(id4).text(h2[i].title);
+            $(id).text(s1[i-1].title);
+            $(id2).text(h1[i-1].title);
+            $(id3).text(s2[i-1].title);
+            $(id4).text(h2[i-1].title);
         }
     });
 
@@ -249,7 +265,10 @@
     });
 
     table_socket.on('start round', function (o) {
-        console.log(JSON.stringify(o))
+        let p1 =  o['players'][0].id + ' is rank '+ o['players'][0].rank;
+        let p2 =  o['players'][1].id + ' is rank '+ o['players'][1].rank;
+        $('#messages').append($('<li>').text(p1));
+        $('#messages').append($('<li>').text(p2));
     });
 
     table_socket.on('ready to start', function (o) {
@@ -444,6 +463,24 @@
 
     function distribute(o) {
         table_socket.emit('send cards', {game: o})
+    }
+
+    function sendEffect1(x,y) {
+        table_socket.emit('player effect', {
+            game: x,
+            player : 'player 1',
+            action : 'movement',
+            value : y
+        })
+    }
+
+    function sendEffect2(x,y) {
+        table_socket.emit('player effect', {
+            game: x,
+            player : 'player 2',
+            action : 'protect',
+            value : y
+        })
     }
 
 

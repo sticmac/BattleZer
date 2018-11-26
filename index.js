@@ -4,27 +4,27 @@ const http = require('http');
 
 const server = http.Server(app);
 const io = require('socket.io')(server);
-const os = require('os');	
+const os = require('os');
 
 const StandaloneGame = require('./server/game_engine/StandaloneGame');
 const DistributedGame = require('./server/game_engine/DistributedGame');
 
-server.listen(8080, function() {
-	// Display available adresses
-	const ifaces = os.networkInterfaces();
-	console.log("Running server");
-	console.log("Available on:");
-	Object.keys(ifaces).forEach(function (dev) {
-		ifaces[dev].forEach(function (details) {
-			if (details.family === 'IPv4') {
-				console.log(('  http://' + details.address + ':8080'));
-			}
-		});
-	});
+server.listen(8080, function () {
+    // Display available adresses
+    const ifaces = os.networkInterfaces();
+    console.log("Running server");
+    console.log("Available on:");
+    Object.keys(ifaces).forEach(function (dev) {
+        ifaces[dev].forEach(function (details) {
+            if (details.family === 'IPv4') {
+                console.log(('  http://' + details.address + ':8080'));
+            }
+        });
+    });
 });
 
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + "/index.html");
+    res.sendFile(__dirname + "/index.html");
 });
 
 app.get('/test', function (req, res) {
@@ -65,12 +65,13 @@ function onConnect(socket) {
      * call comes from Table in Standalone
      */
     socket.on('players picks', function (p) {
-        console.log(p);
         socket.emit('chat message', {code: '203', message: 'server gathered all players picks'})
         let game = getGameByName(p.game);
         if (game) {
             if (game.state.value === 'picks') {
-                p.players.forEach(player => {game.setPlayerPicks(player);});
+                p.players.forEach(player => {
+                    game.setPlayerPicks(player);
+                });
             } else {
                 socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
             }
@@ -92,7 +93,24 @@ function onConnect(socket) {
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
     });
 
+    /**
+     * receiving each player effects
+     */
+    socket.on('player effect', function (a) {
+        let game = getGameByName(a.game);
+        if (game) {
+            if (game.state.value === 'effects') {
+                game.applyEffect(a)
+            } else {
+                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
+            }
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+    });
 
+
+    /**
+     * receiving message for sending cards to the game
+     */
     socket.on('send cards', function (a) {
         let game = getGameByName(a.game);
         if (game) {

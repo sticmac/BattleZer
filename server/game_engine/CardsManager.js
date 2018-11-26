@@ -11,8 +11,8 @@ module.exports = class CardsManager {
 
         this.styleDeck = this.generateStyleDeck(i);
         this.hitDeck = this.generateHitDeck(i);
-    }
 
+    }
 
     generateAttack(player) {
 
