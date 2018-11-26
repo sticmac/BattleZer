@@ -94,13 +94,27 @@ function onConnect(socket) {
     });
 
     /**
-     * receiving each player effects
+     * receiving each player's effects
      */
     socket.on('player effect', function (a) {
         let game = getGameByName(a.game);
         if (game) {
             if (game.state.value === 'effects') {
                 game.applyEffect(a)
+            } else {
+                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
+            }
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+    });
+
+    /**
+     * receiving each player's attack
+     */
+    socket.on('player attack', function (a) {
+        let game = getGameByName(a.game);
+        if (game) {
+            if (game.state.value === 'effects') {
+                game.applyAttack(a.attack)
             } else {
                 socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
             }

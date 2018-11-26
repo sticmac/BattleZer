@@ -91,4 +91,8 @@ module.exports = class StandaloneGame extends Game {
         return true;
     }
 
+    closeGame(){
+        this.state.next();
+    }
+
 };

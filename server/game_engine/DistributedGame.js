@@ -89,5 +89,9 @@ module.exports = class DistributedGame extends Game {
         return true;
     }
 
+    closeGame(){
+        this.state.next();
+    }
+
 
 };

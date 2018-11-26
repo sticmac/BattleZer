@@ -10,6 +10,7 @@ module.exports = class Player {
         this.stylePick = null;
         this.hitPick = null;
         this.hasPicked = false;
+        this.isDead = false;
 
         this.status = {
             'protect' : {

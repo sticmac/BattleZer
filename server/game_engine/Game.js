@@ -23,12 +23,36 @@ module.exports = class Game {
         this.io.to(this.tableId).emit('chat message', m)
     }
 
-    applyEffect(e) {
+    applyAttack(e) {
         let player = this.getPlayerById(e.player);
-
-        this.io.to().emit('chat message', {message: player.id + ' fait ' + e.action + ' (' + e.value + ')'});
+        console.log('#', player.id, '->', e.action + ' attack');
+        let playersOnTarget = this.getPlayersOnTile(e.target);
 
         switch (e.action) {
+            case 'basic' :
+                playersOnTarget.forEach(p => {
+                    p.health = p.health - e.power;
+                    if (p.health <= 0) {
+                        p.health = 0;
+                        p.isDead = true;
+                    }
+                });
+                break;
+            default :
+                break;
+
+        }
+        this.checkForGameOver();
+        this.sendPlayersUpdate();
+    }
+
+    applyEffect(e) {
+        let player = this.getPlayerById(e.player);
+        console.log('#', player.id, '->', e.action + ' effect');
+
+        switch (e.action) {
+            case 'basic' :
+                break;
             case 'movement' :
                 player.position = e.value;
                 break;
@@ -44,6 +68,7 @@ module.exports = class Game {
                 console.log('requested effect not implemented yet')
                 break;
         }
+        this.checkForGameOver();
         this.sendPlayersUpdate();
 
     }
@@ -52,16 +77,58 @@ module.exports = class Game {
         let obj = {};
         obj['game'] = this.name;
         obj['players'] = [];
+        let deads = [];
 
         this.players.forEach(player => {
+            if (player.health === 0) deads.push(player);
+
             obj['players'].push({
                 id: player.id,
-                health : player.health,
-                position : player.position
+                health: player.health,
+                position: player.position
             })
         });
 
+        if (deads.length > 0) this.sendPlayersDeath(deads);
         this.io.to(this.tableId).emit('update player', obj)
+    }
+
+    sendPlayersDeath(d) {
+        let res = {};
+        res['game'] = this.name;
+        res['deads'] = [];
+        d.forEach(p => {
+            res['deads'].push(p.id);
+        });
+        this.io.to(this.tableId).emit('death', res)
+    }
+
+    checkForGameOver() {
+        let teamSize = this.playersCount / 2;
+        let dead0 = [];
+        let dead1 = [];
+        this.players.forEach(a => {
+            if(a.isDead) {
+                console.log('# '+a.id + ' est mort');
+                a.team === 0 ? dead0.push(a.id) : dead1.push(a.id)
+            }
+        });
+        if(dead0.length === teamSize) this.sendGameOver(1);
+        if(dead1.length === teamSize) this.sendGameOver(0);
+    }
+
+    sendGameOver(i) {
+        let winners = [];
+        this.players.forEach(a => {
+            if(a.team === i ) winners.push(a.id)
+        });
+        this.io.to(this.tableId).emit('game over', {
+            game: this.name,
+            winner: i,
+            players : winners,
+        });
+
+        this.closeGame();
     }
 
 
@@ -106,6 +173,9 @@ module.exports = class Game {
 
     comparePriority(a, b) {
         return b.attack.priority - a.attack.priority;
+    }
+
+    closeGame(){
     }
 
 }

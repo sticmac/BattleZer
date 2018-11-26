@@ -8,10 +8,6 @@
             margin-top: 50px;
         }
 
-        button {
-            width: 80%;
-        }
-
         #messages {
             background-color: lavenderblush;
             margin-top: 50px;
@@ -83,12 +79,36 @@
                             </button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-secondary" onclick="sendEffect1('gameroom#1',3)">player 1 <i>moves to #3</i>
-                            </button>
+                            <div>player 1 moves to position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendEffect1(2)" class="btn btn-secondary">#2</button>
+                                <button type="button" onclick="sendEffect1(4)" class="btn btn-secondary">#4</button>
+                                <button type="button" onclick="sendEffect1(7)" class="btn btn-secondary">#7</button>
+                            </div>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-secondary" onclick="sendEffect2('gameroom#1',5)">player 2 <i>protect 5</i>
-                            </button>
+                            <div>player 2 moves to position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendEffect2(3)" class="btn btn-secondary">#3</button>
+                                <button type="button" onclick="sendEffect2(5)" class="btn btn-secondary">#5</button>
+                                <button type="button" onclick="sendEffect2(8)" class="btn btn-secondary">#8</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div>player 1 attacks (-10 hp) on position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendAction1(3)" class="btn btn-secondary">#3</button>
+                                <button type="button" onclick="sendAction1(5)" class="btn btn-secondary">#5</button>
+                                <button type="button" onclick="sendAction1(8)" class="btn btn-secondary">#8</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div>player 2 attacks (-5 hp) on position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendAction2(2)" class="btn btn-secondary">#2</button>
+                                <button type="button" onclick="sendAction2(4)" class="btn btn-secondary">#4</button>
+                                <button type="button" onclick="sendAction2(7)" class="btn btn-secondary">#7</button>
+                            </div>
                         </li>
                     </ol>
                 </div>
@@ -206,8 +226,8 @@
     });
 
     table_socket.on('update player', function (o) {
-        let p1 = o['players'][0].id + ' ('+o['players'][0].health+' hp) - position : '+o['players'][0].position;
-        let p2 = o['players'][1].id + ' ('+o['players'][1].health+' hp) - position : '+o['players'][1].position;
+        let p1 = o['players'][0].id + ' (' + o['players'][0].health + ' hp) - position : ' + o['players'][0].position;
+        let p2 = o['players'][1].id + ' (' + o['players'][1].health + ' hp) - position : ' + o['players'][1].position;
 
         $('#messages').append($('<li>').text(p1));
         $('#messages').append($('<li>').text(p2));
@@ -230,10 +250,10 @@
             let id2 = '#hcard' + i;
             let id3 = '#scard2' + i;
             let id4 = '#hcard2' + i;
-            $(id).text(s1[i-1].title);
-            $(id2).text(h1[i-1].title);
-            $(id3).text(s2[i-1].title);
-            $(id4).text(h2[i-1].title);
+            $(id).text(s1[i - 1].title);
+            $(id2).text(h1[i - 1].title);
+            $(id3).text(s2[i - 1].title);
+            $(id4).text(h2[i - 1].title);
         }
     });
 
@@ -246,8 +266,8 @@
         for (let i = 1; i <= 5; i++) {
             let id = '#scard' + i;
             let id2 = '#hcard' + i;
-            $(id).text(s[i-1].title);
-            $(id2).text(h[i-1].title);
+            $(id).text(s[i - 1].title);
+            $(id2).text(h[i - 1].title);
         }
     });
 
@@ -259,14 +279,14 @@
         for (let i = 1; i <= 5; i++) {
             let id = '#scard2' + i;
             let id2 = '#hcard2' + i;
-            $(id).text(s[i-1].title);
-            $(id2).text(h[i-1].title);
+            $(id).text(s[i - 1].title);
+            $(id2).text(h[i - 1].title);
         }
     });
 
     table_socket.on('start round', function (o) {
-        let p1 =  o['players'][0].id + ' is rank '+ o['players'][0].rank;
-        let p2 =  o['players'][1].id + ' is rank '+ o['players'][1].rank;
+        let p1 = o['players'][0].id + ' is rank ' + o['players'][0].rank;
+        let p2 = o['players'][1].id + ' is rank ' + o['players'][1].rank;
         $('#messages').append($('<li>').text(p1));
         $('#messages').append($('<li>').text(p2));
     });
@@ -282,6 +302,18 @@
 
     phone2_socket.on('ready to start', function (o) {
         console.log('phone 2 ready to start ')//, JSON.stringify(o))
+    });
+
+    table_socket.on('death', function (o) {
+        o.deads.forEach(a => {
+            $('#messages').append($('<li>').text(a + ' est MORT 🤣🤣🤣'));
+        })
+    });
+
+    table_socket.on('game over', function (a) {
+        $('#messages').append($('<li>').text(a.players[0]+  ' a gagné 😱😱😱'));
+        console.log('GAME OVER #############')
+        console.log(a)
     });
 
     function sendAllPicks() {
@@ -465,24 +497,48 @@
         table_socket.emit('send cards', {game: o})
     }
 
-    function sendEffect1(x,y) {
-        table_socket.emit('player effect', {
-            game: x,
-            player : 'player 1',
-            action : 'movement',
-            value : y
+    function sendAction1(y) {
+        table_socket.emit('player attack', {
+            game: 'gameroom#1',
+            attack: {
+                player: 'player 1',
+                action: 'basic',
+                power: 10,
+                target: y
+            }
         })
     }
 
-    function sendEffect2(x,y) {
-        table_socket.emit('player effect', {
-            game: x,
-            player : 'player 2',
-            action : 'protect',
-            value : y
+    function sendAction2(y) {
+        table_socket.emit('player attack', {
+            game: 'gameroom#1',
+            attack: {
+                player: 'player 2',
+                action: 'basic',
+                power: 2,
+                target: y
+            }
         })
     }
 
+    function sendEffect1(y) {
+        table_socket.emit('player effect', {
+            game: 'gameroom#1',
+            player: 'player 1',
+            action: 'movement',
+            value: y
+        })
+    }
+
+
+    function sendEffect2(y) {
+        table_socket.emit('player effect', {
+            game: 'gameroom#1',
+            player: 'player 2',
+            action: 'movement',
+            value: y
+        })
+    }
 
     function connectTable(t) {
         table_socket.emit('start game', {players: 2, type: t})
