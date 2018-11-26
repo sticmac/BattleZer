@@ -1,0 +1,565 @@
+<!doctype html>
+<html>
+<head>
+    <title>BattleZer Client</title>
+    <style>
+        .btns {
+            background-color: bisque;
+            margin-top: 50px;
+        }
+
+        #messages {
+            background-color: lavenderblush;
+            margin-top: 50px;
+        }
+
+        #messages li:nth-child(odd) {
+            background-color: lavender
+        }
+
+        .btns li {
+            margin: 10px 0px;
+        }
+
+        .hit td {
+            border: 1px solid #970aa3;
+            padding: 10px 5px;
+        }
+
+        .style td {
+            border: 1px solid #238f23;
+            padding: 10px 5px;
+        }
+
+        .hit2 td {
+            border: 1px solid #970aa3;
+            padding: 10px 5px;
+        }
+
+        .style2 td {
+            border: 1px solid #238f23;
+            padding: 10px 5px;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <h4>version pour 4 joueurs</h4>
+
+
+    <div class="row text-center">
+
+        <div class="col-sm-6 btns">
+            <div style="padding: 15px 0">
+                <button type="button" class="btn btn-danger" onclick="resetGames()">reset games
+                </button>
+            </div>
+            <div class="row">
+                <div class="standalone">
+                    <h4>Standalone scénario pour 4 personnes</h4>
+                    <ol>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="connectTable('standalone')">connect
+                                as
+                                standalone
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="distribute('gameroom#1')">
+                                distribute cards
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-secondary" onclick="sendAllPicks()">send picks
+                            </button>
+                        </li>
+                        <li>
+                            <div>player 1's position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendEffect1(1)" class="btn btn-secondary">1</button>
+                                <button type="button" onclick="sendEffect1(2)" class="btn btn-secondary">2</button>
+                                <button type="button" onclick="sendEffect1(3)" class="btn btn-secondary">3</button>
+                                <button type="button" onclick="sendEffect1(4)" class="btn btn-secondary">4</button>
+                                <button type="button" onclick="sendEffect1(5)" class="btn btn-secondary">5</button>
+                                <button type="button" onclick="sendEffect1(6)" class="btn btn-secondary">6</button>
+                                <button type="button" onclick="sendEffect1(7)" class="btn btn-secondary">7</button>
+                                <button type="button" onclick="sendEffect1(8)" class="btn btn-secondary">8</button>
+                                <button type="button" onclick="sendEffect1(9)" class="btn btn-secondary">9</button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div>player 2's position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendEffect2(1)" class="btn btn-secondary">1</button>
+                                <button type="button" onclick="sendEffect2(2)" class="btn btn-secondary">2</button>
+                                <button type="button" onclick="sendEffect2(3)" class="btn btn-secondary">3</button>
+                                <button type="button" onclick="sendEffect2(4)" class="btn btn-secondary">4</button>
+                                <button type="button" onclick="sendEffect2(5)" class="btn btn-secondary">5</button>
+                                <button type="button" onclick="sendEffect2(6)" class="btn btn-secondary">6</button>
+                                <button type="button" onclick="sendEffect2(7)" class="btn btn-secondary">7</button>
+                                <button type="button" onclick="sendEffect2(8)" class="btn btn-secondary">8</button>
+                                <button type="button" onclick="sendEffect2(9)" class="btn btn-secondary">9</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div>player 3's position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendEffect3(1)" class="btn btn-secondary">1</button>
+                                <button type="button" onclick="sendEffect3(2)" class="btn btn-secondary">2</button>
+                                <button type="button" onclick="sendEffect3(3)" class="btn btn-secondary">3</button>
+                                <button type="button" onclick="sendEffect3(4)" class="btn btn-secondary">4</button>
+                                <button type="button" onclick="sendEffect3(5)" class="btn btn-secondary">5</button>
+                                <button type="button" onclick="sendEffect3(6)" class="btn btn-secondary">6</button>
+                                <button type="button" onclick="sendEffect3(7)" class="btn btn-secondary">7</button>
+                                <button type="button" onclick="sendEffect3(8)" class="btn btn-secondary">8</button>
+                                <button type="button" onclick="sendEffect3(9)" class="btn btn-secondary">9</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div>player 4's position :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendEffect4(1)" class="btn btn-secondary">1</button>
+                                <button type="button" onclick="sendEffect4(2)" class="btn btn-secondary">2</button>
+                                <button type="button" onclick="sendEffect4(3)" class="btn btn-secondary">3</button>
+                                <button type="button" onclick="sendEffect4(4)" class="btn btn-secondary">4</button>
+                                <button type="button" onclick="sendEffect4(5)" class="btn btn-secondary">5</button>
+                                <button type="button" onclick="sendEffect4(6)" class="btn btn-secondary">6</button>
+                                <button type="button" onclick="sendEffect4(7)" class="btn btn-secondary">7</button>
+                                <button type="button" onclick="sendEffect4(8)" class="btn btn-secondary">8</button>
+                                <button type="button" onclick="sendEffect4(9)" class="btn btn-secondary">9</button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div>player 1's attack (-10 hp) :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendAction1(1)" class="btn btn-primary">1</button>
+                                <button type="button" onclick="sendAction1(2)" class="btn btn-primary">2</button>
+                                <button type="button" onclick="sendAction1(3)" class="btn btn-primary">3</button>
+                                <button type="button" onclick="sendAction1(4)" class="btn btn-primary">4</button>
+                                <button type="button" onclick="sendAction1(5)" class="btn btn-primary">5</button>
+                                <button type="button" onclick="sendAction1(6)" class="btn btn-primary">6</button>
+                                <button type="button" onclick="sendAction1(7)" class="btn btn-primary">7</button>
+                                <button type="button" onclick="sendAction1(8)" class="btn btn-primary">8</button>
+                                <button type="button" onclick="sendAction1(9)" class="btn btn-primary">9</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div>player 2's attack (-10 hp) :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendAction2(1)" class="btn btn-primary">1</button>
+                                <button type="button" onclick="sendAction2(2)" class="btn btn-primary">2</button>
+                                <button type="button" onclick="sendAction2(3)" class="btn btn-primary">3</button>
+                                <button type="button" onclick="sendAction2(4)" class="btn btn-primary">4</button>
+                                <button type="button" onclick="sendAction2(5)" class="btn btn-primary">5</button>
+                                <button type="button" onclick="sendAction2(6)" class="btn btn-primary">6</button>
+                                <button type="button" onclick="sendAction2(7)" class="btn btn-primary">7</button>
+                                <button type="button" onclick="sendAction2(8)" class="btn btn-primary">8</button>
+                                <button type="button" onclick="sendAction2(9)" class="btn btn-primary">9</button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div>player 3's attack (-10 hp) :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendAction3(1)" class="btn btn-primary">1</button>
+                                <button type="button" onclick="sendAction3(2)" class="btn btn-primary">2</button>
+                                <button type="button" onclick="sendAction3(3)" class="btn btn-primary">3</button>
+                                <button type="button" onclick="sendAction3(4)" class="btn btn-primary">4</button>
+                                <button type="button" onclick="sendAction3(5)" class="btn btn-primary">5</button>
+                                <button type="button" onclick="sendAction3(6)" class="btn btn-primary">6</button>
+                                <button type="button" onclick="sendAction3(7)" class="btn btn-primary">7</button>
+                                <button type="button" onclick="sendAction3(8)" class="btn btn-primary">8</button>
+                                <button type="button" onclick="sendAction3(9)" class="btn btn-primary">9</button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div>player 4's attack (-10 hp) :</div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="sendAction4(1)" class="btn btn-primary">1</button>
+                                <button type="button" onclick="sendAction4(2)" class="btn btn-primary">2</button>
+                                <button type="button" onclick="sendAction4(3)" class="btn btn-primary">3</button>
+                                <button type="button" onclick="sendAction4(4)" class="btn btn-primary">4</button>
+                                <button type="button" onclick="sendAction4(5)" class="btn btn-primary">5</button>
+                                <button type="button" onclick="sendAction4(6)" class="btn btn-primary">6</button>
+                                <button type="button" onclick="sendAction4(7)" class="btn btn-primary">7</button>
+                                <button type="button" onclick="sendAction4(8)" class="btn btn-primary">8</button>
+                                <button type="button" onclick="sendAction4(9)" class="btn btn-primary">9</button>
+                            </div>
+                        </li>
+
+                    </ol>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="col-sm-6">
+            <ul id="messages"></ul>
+        </div>
+    </div>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const table_socket = io();
+
+    table_socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text('TABLE : ' + msg.message));
+    });
+
+    table_socket.on('update player', function (o) {
+        o['players'].forEach(a => {
+            $('#messages').append($('<li>').text(a.id + ' (' + a.health + ' hp) - position : ' + a.position));
+        });
+
+    });
+
+
+    table_socket.on('card distribution', function (o) {
+        $('#messages').append($('<li>').text('TABLE : cards have been distributed boys'));
+    });
+
+
+    table_socket.on('start round', function (o) {
+        o['players'].forEach(a => {
+            $('#messages').append($('<li>').text(a.id + ' is rank ' + a.rank));
+        });
+    });
+
+    table_socket.on('ready to start', function (o) {
+        console.log('table ready to start ')//, JSON.stringify(o))
+    });
+
+
+    table_socket.on('death', function (o) {
+        o.deads.forEach(a => {
+            $('#messages').append($('<li>').text(a + ' est MORT 🤣🤣🤣'));
+        })
+    });
+
+    table_socket.on('game over', function (a) {
+        $('#messages').append($('<li>').text(a.players[0] + ' & ' + a.players[0] + ' ont gagné 😱😱😱'));
+        console.log('GAME OVER #############')
+        console.log(a)
+    });
+
+
+    function distribute(o) {
+        table_socket.emit('send cards', {game: o})
+    }
+
+    function sendAction1(y) {
+        table_socket.emit('player attack', {
+            game: 'gameroom#1',
+            attack: {
+                player: 'player 1',
+                action: 'basic',
+                power: 10,
+                target: y
+            }
+        })
+    }
+
+    function sendAction2(y) {
+        table_socket.emit('player attack', {
+            game: 'gameroom#1',
+            attack: {
+                player: 'player 2',
+                action: 'basic',
+                power: 10,
+                target: y
+            }
+        })
+    }
+
+    function sendAction3(y) {
+        table_socket.emit('player attack', {
+            game: 'gameroom#1',
+            attack: {
+                player: 'player 3',
+                action: 'basic',
+                power: 10,
+                target: y
+            }
+        })
+    }
+
+    function sendAction4(y) {
+        table_socket.emit('player attack', {
+            game: 'gameroom#1',
+            attack: {
+                player: 'player 4',
+                action: 'basic',
+                power: 10,
+                target: y
+            }
+        })
+    }
+
+    function sendEffect1(y) {
+        table_socket.emit('player effect', {
+            game: 'gameroom#1',
+            player: 'player 1',
+            action: 'movement',
+            value: y
+        })
+    }
+
+
+    function sendEffect2(y) {
+        table_socket.emit('player effect', {
+            game: 'gameroom#1',
+            player: 'player 2',
+            action: 'movement',
+            value: y
+        })
+    }
+
+    function sendEffect3(y) {
+        table_socket.emit('player effect', {
+            game: 'gameroom#1',
+            player: 'player 3',
+            action: 'movement',
+            value: y
+        })
+    }
+
+    function sendEffect4(y) {
+        table_socket.emit('player effect', {
+            game: 'gameroom#1',
+            player: 'player 4',
+            action: 'movement',
+            value: y
+        })
+    }
+
+    function connectTable(t) {
+        table_socket.emit('start game', {players: 4, type: t})
+    }
+
+    function resetGames() {
+        table_socket.emit('reset games', {})
+    }
+
+    function sendAllPicks() {
+        table_socket.emit('players picks', {
+            game: 'gameroom#1',
+            players: [
+                {
+                    id: 'player 1',
+                    hitPick: {
+                        "title": "Coudasse",
+                        "type": "Coup",
+                        "priority": "2",
+                        "power": "3",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "LA COUDASSE\n"
+                    },
+                    stylePick: {
+                        "title": "empoisoné",
+                        "type": "Style",
+                        "priority": "1",
+                        "power": "0",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "poison",
+                                "value": "3"
+                            }
+                        ],
+                        "before": "déplacement",
+                        "during": "inflige 1 dégat à la fin de chaque tour pour 3 tours",
+                        "after": "",
+                        "flavor": "\n"
+                    },
+                },
+                {
+                    id: 'player 2',
+                    hitPick: {
+                        "title": "Coup de poing américain",
+                        "type": "Coup",
+                        "priority": "4",
+                        "power": "4",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "l'équipe est gantée\n"
+                    },
+                    stylePick: {
+                        "title": "revigorant",
+                        "type": "Style",
+                        "priority": "5",
+                        "power": "0",
+                        "range": "0",
+                        "actions": [
+                            {
+                                "time": "after",
+                                "action": "heal",
+                                "value": "3"
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "soin +3",
+                        "flavor": "\n"
+                    }
+                },
+                {
+                    id: 'player 2',
+                    hitPick: {
+                        "title": "Coup de poing américain",
+                        "type": "Coup",
+                        "priority": "4",
+                        "power": "4",
+                        "range": "1",
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "l'équipe est gantée\n"
+                    },
+                    stylePick: {
+                        "title": "revigorant",
+                        "type": "Style",
+                        "priority": "5",
+                        "power": "0",
+                        "range": "0",
+                        "actions": [
+                            {
+                                "time": "after",
+                                "action": "heal",
+                                "value": "3"
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "soin +3",
+                        "flavor": "\n"
+                    },
+                },
+                {
+                    id: 'player 3',
+                    hitPick: {
+                        "title": "Machette",
+                        "type": "Coup",
+                        "priority": 3,
+                        "power": 4,
+                        "range": 2,
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "mange tes fajitas\n"
+                    },
+                    stylePick: {
+                        "title": "revigorant",
+                        "type": "Style",
+                        "priority": "5",
+                        "power": "0",
+                        "range": "0",
+                        "actions": [
+                            {
+                                "time": "after",
+                                "action": "heal",
+                                "value": "3"
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "soin +3",
+                        "flavor": "\n"
+                    }
+                },
+                {
+                    id: 'player 4',
+                    hitPick: {
+                        "title": "Coup de boule",
+                        "type": "Coup",
+                        "priority": 3,
+                        "power": 5,
+                        "range": 1,
+                        "actions": [
+                            {
+                                "time": "during",
+                                "action": "basic",
+                                "value": 0
+                            }
+                        ],
+                        "before": "",
+                        "during": "",
+                        "after": "",
+                        "flavor": "coup de tête à la zizou\n"
+                    },
+                    stylePick: {
+                        "title": "sprinté",
+                        "type": "Style",
+                        "priority": 3,
+                        "power": 0,
+                        "range": 5,
+                        "actions": [
+                            {
+                                "time": "before",
+                                "action": "movement",
+                                "value": 5
+                            }
+                        ],
+                        "before": "déplacement",
+                        "during": "",
+                        "after": "",
+                        "flavor": "\n"
+                    },
+                }
+            ]
+        })
+    }
+
+
+
+</script>
+
+</body>
+</html>

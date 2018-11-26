@@ -20,6 +20,10 @@ module.exports = class Player {
         }
     }
 
+    endOfRound(){
+
+    }
+
     /*
     TODO : fin de round
     à la fin de chaque round :

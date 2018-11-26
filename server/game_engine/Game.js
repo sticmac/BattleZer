@@ -11,7 +11,7 @@ module.exports = class Game {
         this.tableId = tableId;
         this.type = null;
         this.io = io;
-        this.currentRound = 0;
+        this.currentRound = 1;
 
         this.cardsManager = new CardsManager(2);
 
@@ -19,8 +19,9 @@ module.exports = class Game {
         this.maxHealth = 20;
     }
 
-    sendToTable(m) {
-        this.io.to(this.tableId).emit('chat message', m)
+    newRound(){
+        this.currentRound ++;
+        this.players.forEach(p => p.endOfRound())
     }
 
     applyAttack(e) {
