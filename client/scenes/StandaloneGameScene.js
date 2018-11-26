@@ -5,7 +5,7 @@ const Bar = require('../components/Bar');
 const CardZone = require('../components/CardZone');
 const ShowAttack = require('../components/ShowAttack');
 const DisplayText = require('../components/DisplayText');
-const Round = require('../Round');
+const Round = require('../round/Round');
 const io = require('socket.io-client');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
@@ -124,7 +124,8 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                 });
                 text.undraw();
                 this.round = new Round(this.gameId, dataPlayers, this.players, socket);
-                this.round.start()
+                this.round.start(0);
+
             }, 3000);
         });
 

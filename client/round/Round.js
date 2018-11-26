@@ -1,27 +1,32 @@
+const BeforeEffectState = require('./state/BeforeEffectState');
+
 module.exports = class Round {
     constructor(game, data, players, socket) {
         this.game = game;
         this.data = data;
         this.players = players;
         this.socket = socket;
+        this.finished = false;
         this.socket.on("update players", (update) => {
             update.players.forEach(playerUpdate => {
                 const player = this.players[playerUpdate.id];
                 player.player.health = playerUpdate.health;
                 player.player.position = playerUpdate.position;
+                this.state.next();
+                if (this.state !== undefined) {
+                    this.state.run(this.game, this.data[this.currentIndex]);
+                } else {
+                    this.finished = true;
+                }
             });
         });
     }
 
-    start() {
+    start(i) {
         console.log(this.data);
-        if (this.data[0].attack.actions.before.length > 0) {
-            this.socket.emit('player effect', {
-                game: this.game,
-                player: this.data[0].id,
-                action: this.data[0].attack.actions.before[0].action,
-                value: this.data[0].attack.actions.before[0].value
-            })
-        }
+        this.currentIndex = i;
+
+        this.state = new BeforeEffectState(this);
+        this.state.run(this.game, this.data[i]);
     }
 }
