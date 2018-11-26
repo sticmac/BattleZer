@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
+const http = require('http');
 
-const server = require('http').Server(app);
+const server = http.Server(app);
 const io = require('socket.io')(server);
 const os = require('os');	
 
@@ -24,6 +25,10 @@ server.listen(8080, function() {
 
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + "/index.html");
+});
+
+app.get('/test', function (req, res) {
+    res.sendFile(__dirname + "/server/index.html");
 });
 
 app.use('/assets', express.static('assets'));
