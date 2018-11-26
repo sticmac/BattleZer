@@ -89,8 +89,7 @@ module.exports = class Game {
             })
         });
 
-        if (deads.length > 0) this.sendPlayersDeath(deads);
-        this.io.to(this.tableId).emit('update player', obj)
+        this.io.to(this.tableId).emit('update players', obj)
     }
 
     sendPlayersDeath(d) {

@@ -1,10 +1,11 @@
 module.exports = class Round {
-    constructor(data, players, socket) {
+    constructor(game, data, players, socket) {
+        this.game = game;
         this.data = data;
         this.players = players;
         this.socket = socket;
-        this.socket.on("update players", function(update) {
-            update.forEach(playerUpdate => {
+        this.socket.on("update players", (update) => {
+            update.players.forEach(playerUpdate => {
                 const player = this.players[playerUpdate.id];
                 player.player.health = playerUpdate.health;
                 player.player.position = playerUpdate.position;
@@ -13,7 +14,11 @@ module.exports = class Round {
     }
 
     start() {
-        this.socket.emit("attack", data[0]);
-        
+        this.socket.emit('player effect', {
+            game: this.game,
+            player: this.data[0].id,
+            action: 'movement',
+            value: 3
+        })
     }
 }
