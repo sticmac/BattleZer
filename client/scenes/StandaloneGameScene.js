@@ -118,6 +118,10 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             text.draw();
 
             setTimeout(() => {
+                // clear game space
+                this.playersIds.forEach((id) => {
+                    this.players[id].showAttack.undraw();
+                });
                 text.undraw();
                 this.round = new Round(this.gameId, dataPlayers, this.players, socket);
                 this.round.start()
