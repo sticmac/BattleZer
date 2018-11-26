@@ -45,7 +45,7 @@ module.exports = class CardsManager {
         return {
             power: parseInt(h.power) + parseInt(s.power),
             priority: parseInt(h.priority) + parseInt(s.priority),
-            range : parseInt(h.range),
+            range : parseInt(h.range) + parseInt(s.range),
             actions: actions
         }
     }

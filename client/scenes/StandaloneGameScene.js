@@ -5,10 +5,12 @@ const Bar = require('../components/Bar');
 const CardZone = require('../components/CardZone');
 const ShowAttack = require('../components/ShowAttack');
 const DisplayText = require('../components/DisplayText');
+const Round = require('../Round');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
     constructor() {
         super("standalone_game");
+        this.round = null;
     }
 
     /**
@@ -33,7 +35,8 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         const grid = new Grid(9, this);
 
         const colors = [0x2222ee, 0xee2222];
-        let players = {};
+        this.players = {};
+        this.playersIds = [];
 
         const socket = io();
         socket.emit("start game", {players: 2, type: "standalone"});
@@ -42,11 +45,12 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             const sentPlayers = data.players;
             for (let i = 0 ; i < sentPlayers.length ; i++) {
                 const element = sentPlayers[i];
-                players[element.id] = {player: new PlayerModel(element.id, element.position, element.health),
+                this.playersIds.push(element.id);
+                this.players[element.id] = {player: new PlayerModel(element.id, element.position, element.health),
                     token: this.add.circle((scene_width / 9) / 2, 0, 30, colors[i]),
                     bar: new Bar(scene_width / 2 - scene_width / 10, (i * (scene_height - 25)), scene_width / 5, 20, this),
                     showAttack: new ShowAttack(scene_width / 2, scene_height - ( (i * 2 + 1) * scene_height / 4 ), scene_width / 10, scene_height / 4, this)};
-                grid.addToken("player" + i, players[element.id].token, element.position);
+                grid.addToken("player" + i, this.players[element.id].token, element.position);
             }
             socket.emit('send cards', {game: this.gameId});
         });
@@ -103,16 +107,17 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                 const id = dataPlayers[i].id;
 
                 //and show attack of related player
-                players[id].showAttack.setHitCard(dataPlayers[i].hitCard);
-                players[id].showAttack.setStyleCard(dataPlayers[i].styleCard);
-                players[id].showAttack.draw();
+                this.players[id].showAttack.setHitCard(dataPlayers[i].hitCard);
+                this.players[id].showAttack.setStyleCard(dataPlayers[i].styleCard);
+                this.players[id].showAttack.draw();
             }
 
             // Shows who plays first
             const text = new DisplayText(dataPlayers[0].id + " joue en premier", scene_width * (1/3), scene_height * (1/2), this);
             text.draw();
 
-
+            this.round = new Round(dataPlayers, players, socket);
+            this.round.start()
         });
 
         socket.on("chat message", (data) => {
@@ -124,5 +129,9 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
      * Update scene
      */
     update() {
+        this.playersIds.forEach((id) => {
+            this.players[id].bar.changeValue(this.players[id].player.health);
+            this.players[id].bar.draw();
+        })
     }
 };

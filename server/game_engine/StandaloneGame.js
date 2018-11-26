@@ -50,6 +50,7 @@ module.exports = class StandaloneGame extends Game {
             obj['round'] = this.currentRound;
             players_data.push(obj);
         });
+        console.log(this.io);
         this.io.to(this.name).emit('ready to start', {game: this.name, players: players_data});
     }
 
