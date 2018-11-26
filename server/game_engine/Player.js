@@ -12,23 +12,22 @@ module.exports = class Player {
         this.hasPicked = false;
         this.isDead = false;
 
+
         this.status = {
             'protect' : {
-                length : 0,
+                duration : 0,
+                value : 0
+            },
+            'close-proect': {
+                duration : 0,
                 value : 0
             }
         }
     }
 
-    endOfRound(){
 
-    }
 
-    /*
-    TODO : fin de round
-    à la fin de chaque round :
-    pour chaque élément de this.state, duration --, et si duration = 0 on efface
-     */
+
 
 
 

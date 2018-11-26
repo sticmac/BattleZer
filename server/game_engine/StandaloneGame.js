@@ -31,10 +31,6 @@ module.exports = class StandaloneGame extends Game {
         this.setReady();
     }
 
-    newRound() {
-        //remise des cartes dans le paquet + shuffle
-        //distribuer a nouveau
-    }
 
 
 

@@ -13,6 +13,5 @@ module.exports = class GameOverState {
     }
 
     next(){
-        this.game.state = null;
     }
 };

@@ -144,6 +144,21 @@ function onConnect(socket) {
 
     });
 
+    socket.on('end round', function(a){
+        let game = getGameByName(a.game);
+        if (game) {
+            if (game.state.value === 'effects') {
+
+                game.endRound();
+            } else {
+                socket.emit('chat message', {
+                    code: 406, message: 'game is not ready for this operation'
+                })
+            }
+        } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
+
+    });
+
     socket.on('join game', function (m) {
         if (socket.rooms.hasOwnProperty(m.game)) {
             //le socket est deja dans une game

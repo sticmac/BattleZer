@@ -251,8 +251,8 @@
     });
 
     table_socket.on('game over', function (a) {
-        $('#messages').append($('<li>').text(a.players[0] + ' & ' + a.players[0] + ' ont gagné 😱😱😱'));
-        console.log('GAME OVER #############')
+        $('#messages').append($('<li>').text(a.players[0] + ' & ' + a.players[1] + ' ont gagné 😱😱😱'));
+        console.log('GAME OVER')
         console.log(a)
     });
 

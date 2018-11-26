@@ -79,6 +79,10 @@
                             </button>
                         </li>
                         <li>
+                            <button type="button" class="btn btn-secondary" onclick="endRound()">end round
+                            </button>
+                        </li>
+                        <li>
                             <div>player 1 moves to position :</div>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" onclick="sendEffect1(2)" class="btn btn-secondary">#2</button>
@@ -316,6 +320,10 @@
         console.log('GAME OVER #############')
         console.log(a)
     });
+
+    function endRound(){
+        table_socket.emit('end round', {game : 'gameroom#1'})
+    }
 
     function sendAllPicks() {
         table_socket.emit('players picks', {

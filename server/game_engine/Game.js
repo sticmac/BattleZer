@@ -19,9 +19,26 @@ module.exports = class Game {
         this.maxHealth = 20;
     }
 
-    newRound(){
-        this.currentRound ++;
-        this.players.forEach(p => p.endOfRound())
+    endRound() {
+        this.players.forEach(p => {
+            p.status['protect'].duration = 0;
+        });
+
+        this.sendPlayersUpdate();
+
+
+        this.cardsManager.newRound();
+
+        /*
+          TODO : fin de round
+          à la fin de chaque round :
+          + remise des cartes dans le paquet
+          + shuffle des paquets
+          + distribution d'une nouvelle carte par joueur
+          + envoyer à chaque joueur ses nouvelles cartes
+        */
+        console.log('[4] ' + this.name + ' ends round #' + this.currentRound);
+        this.currentRound++;
     }
 
     applyAttack(e) {
@@ -31,6 +48,7 @@ module.exports = class Game {
 
         switch (e.action) {
             case 'basic' :
+                //check for counter effects
                 playersOnTarget.forEach(p => {
                     p.health = p.health - e.power;
                     if (p.health <= 0) {
@@ -109,24 +127,24 @@ module.exports = class Game {
         let dead0 = [];
         let dead1 = [];
         this.players.forEach(a => {
-            if(a.isDead) {
-                console.log('# '+a.id + ' est mort');
+            if (a.isDead) {
+                console.log('# ' + a.id + ' est mort');
                 a.team === 0 ? dead0.push(a.id) : dead1.push(a.id)
             }
         });
-        if(dead0.length === teamSize) this.sendGameOver(1);
-        if(dead1.length === teamSize) this.sendGameOver(0);
+        if (dead0.length === teamSize) this.sendGameOver(1);
+        if (dead1.length === teamSize) this.sendGameOver(0);
     }
 
     sendGameOver(i) {
         let winners = [];
         this.players.forEach(a => {
-            if(a.team === i ) winners.push(a.id)
+            if (a.team === i) winners.push(a.id)
         });
         this.io.to(this.tableId).emit('game over', {
             game: this.name,
             winner: i,
-            players : winners,
+            players: winners,
         });
 
         this.closeGame();
@@ -176,7 +194,7 @@ module.exports = class Game {
         return b.attack.priority - a.attack.priority;
     }
 
-    closeGame(){
+    closeGame() {
     }
 
 }

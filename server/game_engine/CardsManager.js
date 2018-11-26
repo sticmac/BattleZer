@@ -14,6 +14,16 @@ module.exports = class CardsManager {
 
     }
 
+
+    newRound(players){
+        /*
+        pour chaque joueur :
+        - retirer de ses paquets les picks
+        - shuffle
+        - donner une carte de chaque deck à chaque joueur
+         */
+    }
+
     generateAttack(player) {
 
         let h = player.hitPick;
