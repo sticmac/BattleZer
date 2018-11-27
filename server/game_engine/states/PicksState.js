@@ -6,13 +6,14 @@ const EffectsState = require('./EffectsState');
 
 module.exports = class PicksState {
     constructor(game) {
-        let self = this;
+        this.self = this;
         this.game = game;
         this.value = 'picks';
+        console.log('[3] ' + game.name+ ' waiting for picks');
         game.state = this;
-        console.log('[3] ' + game.name + ' waiting for picks');
-        this.next = function () {
-            return new EffectsState(self.game);
-        }
+    }
+
+    next(){
+        this.game.state = new EffectsState(this.self.game);
     }
 };

@@ -1,4 +1,4 @@
-const GameOverState = require('./GameOverState')
+const PicksState = require('./PicksState');
 /**
  * 4
  */
@@ -13,7 +13,7 @@ module.exports = class EffectsState {
     }
 
     next(){
-        this.game.state = new GameOverState(this.self.game);
+        this.game.state = new PicksState(this.self.game);
     }
 
 };
