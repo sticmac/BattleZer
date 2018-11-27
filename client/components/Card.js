@@ -17,82 +17,148 @@ module.exports = class Card {
         this.container.removeAll();
 
         if (!showBack) {
-            const bg = this.scene.add.graphics({x: -this.width / 2, y: -this.height / 2});
-            bg.fillStyle(this.cardModel.type === "Coup" ? 0xbbbcf4 : 0xdef4bb, 1);
-            bg.fillRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
-            bg.lineStyle(2, 0x000000, 1);
-            bg.strokeRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
-            this.container.add(bg);
+            console.log(this.cardModel.type)
 
-            this.container.add(this.createInfoContainer(this.width / 2, 0).setScale(-1.0, -1.0));
-            this.container.add(this.createInfoContainer(-this.width / 2, 0));
+            if(this.cardModel.type === 'Coup'){
+                const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+                bg.displayHeight = this.height;
+                bg.displayWidth = this.width;
+
+                this.container.add(bg);
+                this.container.add(this.createHitInfoContainer(-this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
+                this.container.add(this.createHitInfoContainer(this.width / 2, 0,this.cardModel.type));
+
+            } else {
+                const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+                bg.displayHeight = this.height;
+                bg.displayWidth = this.width;
+
+                this.container.add(bg);
+                this.container.add(this.createStyleInfoContainer(this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
+                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0,this.cardModel.type));
+
+            }
 
         } else {
 
-            const bg = this.scene.add.graphics({x: -this.width / 2, y: -this.height / 2});
-            bg.fillStyle(0x232323);
-            bg.fillRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
-            bg.lineStyle(2, 0x000000, 1);
-            bg.strokeRoundedRect(0, 0, this.width - 2, this.height - 2, 10);
+            const bg = this.scene.add.image(0, 0, 'card_back');
+            bg.displayHeight = this.height;
+            bg.displayWidth = this.width;
             this.container.add(bg);
 
-            //this.container.add(this.scene.add.image(this.width,this.height,this.back))
         }
 
     }
 
-    /*
-    drawBehind() {
+    drawBehind(showBack) {
         this.container.removeAll();
-        let width = this.width * 1.5;
-        let height = this.height * 1.5;
-        const bg = this.scene.add.graphics({x: -width / 2, y: -height / 2});
-        bg.fillStyle(this.cardModel.type === "Coup" ? 0xbbbcf4 : 0xdef4bb, 1);
-        bg.fillRoundedRect(0, 0, width - 2, height - 2, 10);
-        bg.lineStyle(2, 0x000000, 1);
-        bg.strokeRoundedRect(0, 0, width - 2, height - 2, 10);
-        this.container.add(bg);
 
-        this.container.add(this.createInfoContainer(width / 2, 0).setScale(-1.0, -1.0));
-        this.container.add(this.createInfoContainer(-width / 2, 0));
+        if (!showBack) {
+            console.log(this.cardModel.type)
+
+            if(this.cardModel.type === 'Coup'){
+                const bg = this.scene.add.image(-30, -30, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+                bg.displayHeight = this.height;
+                bg.displayWidth = this.width;
+
+                this.container.add(bg);
+                this.container.add(this.createHitInfoContainer(-this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
+                this.container.add(this.createHitInfoContainer(this.width / 2, 0,this.cardModel.type));
+
+            } else {
+                const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+                bg.displayHeight = this.height;
+                bg.displayWidth = this.width;
+
+                this.container.add(bg);
+                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
+                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0,this.cardModel.type));
+
+            }
+
+        } else {
+
+            const bg = this.scene.add.image(0, 0, 'card_back');
+            bg.displayHeight = this.height;
+            bg.displayWidth = this.width;
+            this.container.add(bg);
+
+        }
+
     }
-    */
 
-    createInfoContainer(x, y) {
+
+    createHitInfoContainer(x,y){
         const infos = this.scene.add.container(x, y);
 
-        const range = this.scene.add.container(0, 0);
-        range.add(this.scene.add.circle(0, 0, 20, 0x202f72));
-        range.add(this.scene.add.text(0, 0, this.cardModel.range, {
-            fontFamily: 'Arial Black',
-            fontSize: 20,
-            color: "#fff"
-        }).setOrigin(0.5));
-        infos.add(range);
-
-        const power = this.scene.add.container(0, -40);
-        power.add(this.scene.add.circle(0, 0, 20, 0x71221b));
-        power.add(this.scene.add.text(0, 0, this.cardModel.power, {
-            fontFamily: 'Arial Black',
-            fontSize: 20,
-            color: "#fff"
-        }).setOrigin(0.5));
-        infos.add(power);
-
-        const priority = this.scene.add.container(0, -80);
-        priority.add(this.scene.add.circle(0, 0, 20, 0xc2a73c));
+        const priority = this.scene.add.container(-21, -72);
         priority.add(this.scene.add.text(0, 0, this.cardModel.priority, {
-            fontFamily: 'Arial Black',
+            fontFamily: 'Impact',
             fontSize: 20,
             color: "#fff"
         }).setOrigin(0.5));
         infos.add(priority);
 
-        const title = this.scene.add.text(this.width / 2 + 10, this.height / 2 - 20, this.cardModel.title,
-            {fontFamily: 'Arial Black', fontSize: 20, color: "#000"}).setOrigin(0.5);
+        const power = this.scene.add.container(-21, -35);
+        power.add(this.scene.add.text(0, 0, this.cardModel.power, {
+            fontFamily: 'Impact',
+            fontSize: 20,
+            color: "#fff"
+        }).setOrigin(0.5));
+        infos.add(power);
+
+        const range = this.scene.add.container(-20, 0);
+        range.add(this.scene.add.text(0, 0, this.cardModel.range, {
+            fontFamily: 'Impact',
+            fontSize: 20,
+            color: "#fff"
+        }).setOrigin(0.5));
+        infos.add(range);
+
+
+
+        const title = this.scene.add.text(-this.width + 8, this.height / 2-24, this.cardModel.title,
+            {fontFamily: 'Impact', fontSize: 18, color: "#e29288"}).setOrigin(1);
+        title.setScale(-1.0, -1.0);
+        infos.add(title);
+
+
+        return infos;
+    }
+
+    createStyleInfoContainer(x, y) {
+        const infos = this.scene.add.container(x, y);
+
+        const priority = this.scene.add.container(22, -72);
+        priority.add(this.scene.add.text(0, 0, this.cardModel.priority, {
+            fontFamily: 'Impact',
+            fontSize: 20,
+            color: "#fff"
+        }).setOrigin(0.5));
+        infos.add(priority);
+
+        const power = this.scene.add.container(22, -35);
+        power.add(this.scene.add.text(0, 0, this.cardModel.power, {
+            fontFamily: 'Impact',
+            fontSize: 20,
+            color: "#fff"
+        }).setOrigin(0.5));
+        infos.add(power);
+
+        const range = this.scene.add.container(21, 0);
+        range.add(this.scene.add.text(0, 0, this.cardModel.range, {
+            fontFamily: 'Impact',
+            fontSize: 20,
+            color: "#fff"
+        }).setOrigin(0.5));
+        infos.add(range);
+
+
+        const title = this.scene.add.text(this.width - 10, this.height / 2-3, this.cardModel.title,
+            {fontFamily: 'Impact', fontSize: 18, color: "#9ce3b1"}).setOrigin(0);
         title.setScale(-1.0, -1.0);
         infos.add(title);
 
         return infos;
     }
-}
+};
