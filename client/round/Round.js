@@ -7,15 +7,8 @@ module.exports = class Round {
         this.players = players;
         this.socket = socket;
         this.finished = false;
-        this.socket.on("update players", (update) => {
-            update.players.forEach(playerUpdate => {
-                const player = this.players[playerUpdate.id];
-                player.player.health = playerUpdate.health;
-                player.player.position = playerUpdate.position;
-            });
-            this.state.next();
-            this.runNextState();
-        });
+
+        this.socket.on("update players", (update) => this.cbUpdate(update));
     }
 
     start(i) {
@@ -35,5 +28,19 @@ module.exports = class Round {
         } else {
             this.finished = true;
         }
+    }
+
+    cbUpdate(update) {
+        update.players.forEach(playerUpdate => {
+            const player = this.players[playerUpdate.id];
+            player.player.health = playerUpdate.health;
+            player.player.position = playerUpdate.position;
+        });
+        this.state.next();
+        this.runNextState();
+    }
+
+    reset() {
+        this.finished = false;
     }
 }

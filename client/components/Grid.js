@@ -14,7 +14,6 @@ module.exports = class Grid {
             this.gridContainer.add(container);
         }
         
-        console.log(this.gridContainer.list);
         this.tokens = {};
     }
 
