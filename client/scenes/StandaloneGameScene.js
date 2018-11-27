@@ -5,7 +5,7 @@ const Bar = require('../components/Bar');
 const CardZone = require('../components/CardZone');
 const ShowAttack = require('../components/ShowAttack');
 const DisplayText = require('../components/DisplayText');
-const Round = require('../Round');
+const Round = require('../round/Round');
 const io = require('socket.io-client');
 
 module.exports = class StandaloneGameScene extends Phaser.Scene {
@@ -33,7 +33,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
 
         this.add.image(0,0,'sky').setOrigin(0,0).setDisplaySize(scene_width, scene_height);
 
-        const grid = new Grid(9, this);
+        this.grid = new Grid(9, this);
 
         const colors = [0x2222ee, 0xee2222];
         this.players = {};
@@ -51,7 +51,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                     token: this.add.circle((scene_width / 9) / 2, 0, 30, colors[i]),
                     bar: new Bar(scene_width / 2 - scene_width / 10, (i * (scene_height - 25)), scene_width / 5, 20, this),
                     showAttack: new ShowAttack(scene_width / 2, scene_height - ( (i * 2 + 1) * scene_height / 4 ), scene_width / 10, scene_height / 4, this)};
-                grid.addToken("player" + i, this.players[element.id].token, element.position);
+                this.grid.addToken(element.id, this.players[element.id].token, element.position);
             }
             socket.emit('send cards', {game: this.gameId});
         });
@@ -117,8 +117,16 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             const text = new DisplayText(dataPlayers[0].id + " joue en premier", scene_width * (1/3), scene_height * (1/2), this);
             text.draw();
 
-            this.round = new Round(dataPlayers, players, socket);
-            this.round.start()
+            setTimeout(() => {
+                // clear game space
+                this.playersIds.forEach((id) => {
+                    this.players[id].showAttack.undraw();
+                });
+                text.undraw();
+                this.round = new Round(this.gameId, dataPlayers, this.players, socket);
+                this.round.start(0);
+
+            }, 3000);
         });
 
         socket.on("chat message", (data) => {
@@ -133,6 +141,10 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         this.playersIds.forEach((id) => {
             this.players[id].bar.changeValue(this.players[id].player.health);
             this.players[id].bar.draw();
+
+            if (this.players[id].player.position != this.grid.getTokenPosition(id)) {
+                this.grid.moveTokenByKey(id, this.players[id].player.position);
+            }
         })
     }
 };

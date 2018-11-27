@@ -14,6 +14,7 @@ module.exports = class Grid {
             this.gridContainer.add(container);
         }
         
+        console.log(this.gridContainer.list);
         this.tokens = {};
     }
 
@@ -29,6 +30,10 @@ module.exports = class Grid {
             tokenObj.position = position;
             this.tokens[key] = tokenObj;
         }
+    }
+
+    getTokenPosition(key) {
+        return this.tokens[key].position;
     }
 
     _moveToken(token, oldPosition, position) {
