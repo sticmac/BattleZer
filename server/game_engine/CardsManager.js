@@ -18,8 +18,8 @@ module.exports = class CardsManager {
     newRound(players) {
         players.forEach(p => {
             let w = p.removePicks();
-            if(w[0]) this.styleDeck.push(w[0]);
-            if(w[1]) this.hitDeck.push(w[1]);
+            if(w[0]) this.styleDeck.unshift(w[0]);
+            if(w[1]) this.hitDeck.unshift(w[1]);
             this.distributeOne(p)
         });
     }
