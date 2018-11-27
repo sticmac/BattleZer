@@ -1,4 +1,5 @@
 const Card = require('./Card.js');
+const Phaser = require('phaser');
 
 module.exports = class CardZone {
 
@@ -36,7 +37,14 @@ module.exports = class CardZone {
         this.container.add(styleNextButton);
 
 
-        this.readyButton = this.scene.add.rectangle(4 * this.cardWidth + 80, 0, 200, 80, 0x00f6f0).setOrigin(0.5);
+        /*this.readyButton = this.scene.add.rectangle(4 * this.cardWidth + 80, 0, 200, 80, 0x00f6f0).setOrigin(0.5);
+        this.readyButton.setInteractive();
+        this.container.add(this.readyButton);*/
+
+        this.readyButton = this.scene.add.container(4 * this.cardWidth + 80, 0);
+        this.readyButton.add(this.scene.add.rectangle(0, 0, 200, 80, 0x00f6f0).setOrigin(0.5));
+        this.readyButton.add(this.addText(0, 0, "ready", 20));
+        this.readyButton.setSize(200, 80);
         this.readyButton.setInteractive();
         this.container.add(this.readyButton);
 
@@ -47,8 +55,7 @@ module.exports = class CardZone {
         hideBar.setInteractive();
         this.container.add(hideBar)
 
-        this.addText(barX + barX / 2, barY,"click to show",20);
-        this.addText(4 * this.cardWidth + 80, 0, "ready", 25);
+        this.container.add(this.addText(barX + barX / 2, barY,"click to show",20));
 
 
         hitNextButton.on('pointerdown', () => {
@@ -98,11 +105,11 @@ module.exports = class CardZone {
     }
 
     addText(x, y, t, s) {
-        this.container.add(this.scene.add.text(x, y, t, {
+        return this.scene.add.text(x, y, t, {
             fontFamily: 'Arial Black',
             fontSize: s,
             color: "#1e3045"
-        }));
+        });
     }
 
 

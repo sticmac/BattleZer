@@ -169,6 +169,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                         players: toSendPlayers
                     });
                 }
+                this.cardZones[i].readyButton.setVisible(false);
             });
         }
     }
