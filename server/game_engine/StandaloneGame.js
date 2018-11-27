@@ -24,7 +24,7 @@ module.exports = class StandaloneGame extends Game {
     initPlayers() {
         for (let i = 1; i <= this.playersCount; i++) {
             let team = (i - 1) % 2;
-            let position = team === 0 ? 1 : this.fieldSize - 2;
+            let position = team === 0 ? 1 : this.fieldSize - 1;
             this.players.push(new Player("player " + i, this.maxHealth, position, team));
         }
         this.state.next();
@@ -70,13 +70,9 @@ module.exports = class StandaloneGame extends Game {
             p.hitPick = u.hitPick;
             p.stylePick = u.stylePick;
             p.hasPicked = true;
-            console.log(p.id, p.hitPick.title, p.stylePick.title)
+            console.log('#',p.id,'->', p.hitPick.title, p.stylePick.title)
         } else {
             console.log('unrecognized player ', u.id, ' for picks')
-        }
-        if (this.allPlayersHavePicked()) {
-            this.state.next();
-            this.startRound();
         }
     }
 
@@ -88,7 +84,7 @@ module.exports = class StandaloneGame extends Game {
     }
 
     closeGame(){
-        this.state.next();
+        this.state.value = 'over';
     }
 
 };

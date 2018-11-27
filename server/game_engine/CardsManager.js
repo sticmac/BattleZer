@@ -15,13 +15,27 @@ module.exports = class CardsManager {
     }
 
 
-    newRound(players){
-        /*
-        pour chaque joueur :
-        - retirer de ses paquets les picks
-        - shuffle
-        - donner une carte de chaque deck à chaque joueur
-         */
+    newRound(players) {
+        players.forEach(p => {
+            let w = p.removePicks();
+            if(w[0]) this.styleDeck.unshift(w[0]);
+            if(w[1]) this.hitDeck.unshift(w[1]);
+            this.distributeOne(p)
+        });
+    }
+
+    distributeOne(player){
+        if(player.hitCards.length < 5) player.giveHitCard(this.hitDeck.pop());
+        if(player.styleCards.length < 5) player.giveStyleCard(this.styleDeck.pop());
+    }
+
+    distribute(players) {
+        for (let i = 0; i < 5; i++) {
+            players.forEach(p => {
+                p.giveHitCard(this.hitDeck.pop());
+                p.giveStyleCard(this.styleDeck.pop());
+            })
+        }
     }
 
     generateAttack(player) {
@@ -55,17 +69,8 @@ module.exports = class CardsManager {
         return {
             power: parseInt(h.power) + parseInt(s.power),
             priority: parseInt(h.priority) + parseInt(s.priority),
-            range : parseInt(h.range) + parseInt(s.range),
+            range: parseInt(h.range) + parseInt(s.range),
             actions: actions
-        }
-    }
-
-    distribute(players) {
-        for (let i = 0; i < 5; i++) {
-            players.forEach(p => {
-                p.giveHitCard(this.hitDeck.pop());
-                p.giveStyleCard(this.styleDeck.pop());
-            })
         }
     }
 

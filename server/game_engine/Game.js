@@ -1,5 +1,6 @@
 const Player = require('./Player');
 const CardsManager = require('./CardsManager');
+const PicksState = require('./states/PicksState');
 
 module.exports = class Game {
 
@@ -15,29 +16,40 @@ module.exports = class Game {
 
         this.cardsManager = new CardsManager(2);
 
-        this.fieldSize = 9;
+        this.fieldSize = 8;
         this.maxHealth = 20;
     }
 
     endRound() {
+
+        // clear and apply end round effects
         this.players.forEach(p => {
             p.status['protect'].duration = 0;
         });
 
-        this.sendPlayersUpdate();
+        //distribute new cards
+        this.cardsManager.newRound(this.players);
+
+        let players_data = [];
+        this.players.forEach(a => {
+            let obj = {};
+            obj['id'] = a.id;
+            obj['styleCards'] = a.styleCards;
+            obj['hitCards'] = a.hitCards;
+            obj['health'] = a.health;
+            obj['position'] = a.position;
+            players_data.push(obj);
+        });
+
+        this.io.to(this.tableId).emit('end round', {
+            game: this.name,
+            round : this.currentRound,
+            players: players_data
+        });
 
 
-        this.cardsManager.newRound();
-
-        /*
-          TODO : fin de round
-          à la fin de chaque round :
-          + remise des cartes dans le paquet
-          + shuffle des paquets
-          + distribution d'une nouvelle carte par joueur
-          + envoyer à chaque joueur ses nouvelles cartes
-        */
         console.log('[4] ' + this.name + ' ends round #' + this.currentRound);
+        this.state = new PicksState(this);
         this.currentRound++;
     }
 
@@ -58,6 +70,8 @@ module.exports = class Game {
                 });
                 break;
             default :
+
+                console.log('requested effect not implemented yet');
                 break;
 
         }
@@ -84,7 +98,7 @@ module.exports = class Game {
                     player.health = player.health + e.value;
                 break;
             default :
-                console.log('requested effect not implemented yet')
+                console.log('requested effect not implemented yet');
                 break;
         }
         this.checkForGameOver();

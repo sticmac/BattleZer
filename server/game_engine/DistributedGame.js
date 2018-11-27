@@ -20,7 +20,7 @@ module.exports = class DistributedGame extends Game {
         console.log(id + ' joining ' + this.name);
         if (this.players.length < this.playersCount) {
             let team = (this.players.length) % 2;
-            let position = team === 0 ? 1 : this.fieldSize - 1;
+            let position = team === 0 ? 1 : this.fieldSize-1;
             this.players.push(new Player(id, this.maxHealth, position, team));
 
             this.io.to(id).emit('chat message', {code: 202, message: 'successfully joined game'});
@@ -90,7 +90,7 @@ module.exports = class DistributedGame extends Game {
     }
 
     closeGame(){
-        this.state.next();
+        this.state.value = 'over';
     }
 
 

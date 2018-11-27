@@ -214,6 +214,11 @@
     const phone1_socket = io();
     const phone2_socket = io();
 
+    let player1_hit;
+    let player1_style;
+    let player2_hit;
+    let player2_style;
+
     $('.hit').hide();
     $('.style').hide();
     $('.hit2').hide();
@@ -248,6 +253,11 @@
         let h1 = o.players[0].hitCards;
         let s2 = o.players[1].styleCards;
         let h2 = o.players[1].hitCards;
+
+        player1_hit = o.players[0].hitCards
+        player1_style = o.players[0].styleCards
+        player2_hit = o.players[1].hitCards
+        player2_style = o.players[1].styleCards
 
         for (let i = 1; i <= 5; i++) {
             let id = '#scard' + i;
@@ -321,6 +331,32 @@
         console.log(a)
     });
 
+    table_socket.on('end round', function(o){
+        console.log(o)
+        $('#messages').append($('<li>').text('ROUND '+o.round+' IS OVER'));
+
+        let s1 = o.players[0].styleCards;
+        let h1 = o.players[0].hitCards;
+        let s2 = o.players[1].styleCards;
+        let h2 = o.players[1].hitCards;
+
+        player1_hit = o.players[0].hitCards
+        player1_style = o.players[0].styleCards
+        player2_hit = o.players[1].hitCards
+        player2_style = o.players[1].styleCards
+
+        for (let i = 1; i <= 5; i++) {
+            let id = '#scard' + i;
+            let id2 = '#hcard' + i;
+            let id3 = '#scard2' + i;
+            let id4 = '#hcard2' + i;
+            $(id).text(s1[i - 1].title);
+            $(id2).text(h1[i - 1].title);
+            $(id3).text(s2[i - 1].title);
+            $(id4).text(h2[i - 1].title);
+        }
+    });
+
     function endRound(){
         table_socket.emit('end round', {game : 'gameroom#1'})
     }
@@ -331,81 +367,13 @@
             players: [
                 {
                     id: 'player 1',
-                    hitPick: {
-                        "title": "Coudasse",
-                        "type": "Coup",
-                        "priority": "7",
-                        "power": "3",
-                        "range": "1",
-                        "actions": [
-                            {
-                                "time": "during",
-                                "action": "basic",
-                                "value": 0
-                            }
-                        ],
-                        "before": "",
-                        "during": "",
-                        "after": "",
-                        "flavor": "LA COUDASSE\n"
-                    },
-                    stylePick: {
-                        "title": "empoisoné",
-                        "type": "Style",
-                        "priority": "4",
-                        "power": "0",
-                        "range": "1",
-                        "actions": [
-                            {
-                                "time": "during",
-                                "action": "poison",
-                                "value": "3"
-                            }
-                        ],
-                        "before": "déplacement",
-                        "during": "inflige 1 dégat à la fin de chaque tour pour 3 tours",
-                        "after": "",
-                        "flavor": "\n"
-                    },
+                    hitPick: player1_hit[0],
+                    stylePick: player1_style[0]
                 },
                 {
                     id: 'player 2',
-                    hitPick: {
-                        "title": "Coup de poing américain",
-                        "type": "Coup",
-                        "priority": "4",
-                        "power": "4",
-                        "range": "1",
-                        "actions": [
-                            {
-                                "time": "during",
-                                "action": "basic",
-                                "value": 0
-                            }
-                        ],
-                        "before": "",
-                        "during": "",
-                        "after": "",
-                        "flavor": "l'équipe est gantée\n"
-                    },
-                    stylePick: {
-                        "title": "revigorant",
-                        "type": "Style",
-                        "priority": "5",
-                        "power": "0",
-                        "range": "0",
-                        "actions": [
-                            {
-                                "time": "after",
-                                "action": "heal",
-                                "value": "3"
-                            }
-                        ],
-                        "before": "",
-                        "during": "",
-                        "after": "soin +3",
-                        "flavor": "\n"
-                    },
+                    hitPick: player2_hit[0],
+                    stylePick: player2_style[0]
                 }
             ]
         })
