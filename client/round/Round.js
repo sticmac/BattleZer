@@ -13,14 +13,8 @@ module.exports = class Round {
                 player.player.health = playerUpdate.health;
                 player.player.position = playerUpdate.position;
             });
-            while (this.state !== undefined && !this.state.canRun(this.data[this.currentIndex])) {
-                this.state.next();
-            }
-            if (this.state !== undefined) {
-                this.state.run(this.game, this.data[this.currentIndex]);
-            } else {
-                this.finished = true;
-            }
+            this.state.next();
+            this.runNextState();
         });
     }
 
@@ -29,9 +23,17 @@ module.exports = class Round {
         this.currentIndex = i;
 
         this.state = new BeforeEffectState(this);
-        while (!this.state.canRun(this.data[i])) {
+        this.runNextState();
+    }
+
+    runNextState() {
+        while (this.state !== undefined && !this.state.canRun(this.data[this.currentIndex])) {
             this.state.next();
         }
-        this.state.run(this.game, this.data[i]);
+        if (this.state !== undefined) {
+            this.state.run(this.game, this.data[this.currentIndex]);
+        } else {
+            this.finished = true;
+        }
     }
 }
