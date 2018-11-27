@@ -7,6 +7,10 @@ module.exports = class RoundState {
         throw new Error("Not implemented state");
     }
 
+    canRun(playerData) {
+        throw new Error("Not implemented running condition");
+    }
+
     next() {
         throw new Error("No next state");
     }

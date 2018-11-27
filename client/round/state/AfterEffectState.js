@@ -6,7 +6,7 @@ module.exports = class AfterEffectState extends RoundState {
     }
 
     run(game, playerData) {
-        if (playerData.attack.actions.after.length > 0) {
+        if (this.canRun(playerData)) {
             for (let j = 0 ; j < playerData.attack.actions.after.length ; j++) {
                 this.context.socket.emit('player effect', {
                     game: game,
@@ -20,5 +20,9 @@ module.exports = class AfterEffectState extends RoundState {
 
     next() {
         this.context.state = undefined;
+    }
+
+    canRun(playerData) {
+        return playerData.attack.actions.after.length > 0;
     }
 }
