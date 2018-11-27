@@ -106,6 +106,7 @@ function onConnect(socket) {
      * receiving each player's effects
      */
     socket.on('player effect', function (a) {
+        console.log("effect");
         let game = getGameByName(a.game);
         if (game) {
             if (game.state.value === 'effects') {

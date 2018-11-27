@@ -87,7 +87,7 @@ module.exports = class Game {
             case 'basic' :
                 break;
             case 'movement' :
-                player.position = e.value;
+                player.position = Math.max(Math.min(player.position + e.value, 8), 0);
                 break;
             case 'protect' :
                 player.status['protect'] = {duration: 1, value: e.value};
@@ -122,8 +122,7 @@ module.exports = class Game {
             })
         });
 
-        if (deads.length > 0) this.sendPlayersDeath(deads);
-        this.io.to(this.tableId).emit('update player', obj)
+        this.io.to(this.tableId).emit('update players', obj)
     }
 
     sendPlayersDeath(d) {
