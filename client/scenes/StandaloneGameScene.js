@@ -39,9 +39,9 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
         this.players = {};
         this.playersIds = [];
 
-        const socket = io();
-        socket.emit("start game", {players: 2, type: "standalone"});
-        socket.on("ready to start", (data) => {
+        this.socket = io();
+        this.socket.emit("start game", {players: 2, type: "standalone"});
+        this.socket.on("ready to start", (data) => {
             this.gameId = data.game;
             const sentPlayers = data.players;
             for (let i = 0 ; i < sentPlayers.length ; i++) {
@@ -53,10 +53,10 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                     showAttack: new ShowAttack(scene_width / 2, scene_height - ( (i * 2 + 1) * scene_height / 4 ), scene_width / 10, scene_height / 4, this)};
                 this.grid.addToken(element.id, this.players[element.id].token, element.position);
             }
-            socket.emit('send cards', {game: this.gameId});
+            this.socket.emit('send cards', {game: this.gameId});
         });
 
-        socket.on("card distribution", (data) => {
+        this.socket.on("card distribution", (data) => {
             const players = data.players;
 
             this.cardZones = [];
@@ -90,7 +90,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                                 hitPick: this.cardZones[i].hitCards[this.cardZones[i].selectedHitCard].cardModel
                             })
                         }
-                        socket.emit("players picks", {
+                        this.socket.emit("players picks", {
                             game: this.gameId,
                             players: toSendPlayers
                         })
@@ -99,22 +99,22 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
             }
         });
 
-        socket.on("start round", (data) => {
-            const dataPlayers = data.players;
-            for (let i = 0 ; i < dataPlayers.length ; ++i) {
+        this.socket.on("start round", (data) => {
+            this.lastChosenAttacks = data.players;
+            for (let i = 0 ; i < this.lastChosenAttacks.length ; ++i) {
                 // set choice section invisible, now that choice is made
                 this.cardZones[i].container.setVisible(false);
 
-                const id = dataPlayers[i].id;
+                const id = this.lastChosenAttacks[i].id;
 
                 //and show attack of related player
-                this.players[id].showAttack.setHitCard(dataPlayers[i].hitCard);
-                this.players[id].showAttack.setStyleCard(dataPlayers[i].styleCard);
+                this.players[id].showAttack.setHitCard(this.lastChosenAttacks[i].hitCard);
+                this.players[id].showAttack.setStyleCard(this.lastChosenAttacks[i].styleCard);
                 this.players[id].showAttack.draw();
             }
 
             // Shows who plays first
-            const text = new DisplayText(dataPlayers[0].id + " joue en premier", scene_width * (1/3), scene_height * (1/2), this);
+            const text = new DisplayText(this.lastChosenAttacks[0].id + " joue en premier", scene_width * (1/3), scene_height * (1/2), this);
             text.draw();
 
             setTimeout(() => {
@@ -123,13 +123,14 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                     this.players[id].showAttack.undraw();
                 });
                 text.undraw();
-                this.round = new Round(this.gameId, dataPlayers, this.players, socket);
+                this.round = new Round(this.gameId, this.lastChosenAttacks, this.players, this.socket);
                 this.round.start(0);
+                this.lastPlayedIndex = 0; // player 0 starts
 
             }, 3000);
         });
 
-        socket.on("chat message", (data) => {
+        this.socket.on("chat message", (data) => {
             console.info(data)
         });
     }
@@ -138,6 +139,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
      * Update scene
      */
     update() {
+        //update 
         this.playersIds.forEach((id) => {
             this.players[id].bar.changeValue(this.players[id].player.health);
             this.players[id].bar.draw();
@@ -146,5 +148,14 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
                 this.grid.moveTokenByKey(id, this.players[id].player.position);
             }
         })
+
+        if (this.round != null && (this.lastPlayedIndex != this.playersIds.length - 1) && this.round.finished) {
+            this.round.reset();
+            this.lastPlayedIndex++;
+            setTimeout(() => {
+                console.log("Begin player 2 round");
+                this.round.start(this.lastPlayedIndex);
+            }, 1500);
+        }
     }
 };
