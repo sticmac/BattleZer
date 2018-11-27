@@ -54,8 +54,7 @@ module.exports = class Game {
             case 'basic' :
                 break;
             case 'movement' :
-                player.position += e.value;
-                console.log(player.position);
+                player.position = Math.max(Math.min(player.position + e.value, 8), 0);
                 break;
             case 'protect' :
                 player.status['protect'] = {duration: 1, value: e.value};
