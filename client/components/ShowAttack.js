@@ -28,6 +28,7 @@ module.exports = class ShowAttack {
             cards[i].draw();
             this.container.add(cards[i].container);
         }
+        this.container.setVisible(true);
     }
 
     undraw() {

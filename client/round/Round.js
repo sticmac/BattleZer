@@ -1,9 +1,8 @@
 const BeforeEffectState = require('./state/BeforeEffectState');
 
 module.exports = class Round {
-    constructor(game, data, players, socket) {
+    constructor(game, players, socket) {
         this.game = game;
-        this.data = data;
         this.players = players;
         this.socket = socket;
         this.finished = false;
@@ -11,20 +10,21 @@ module.exports = class Round {
         this.socket.on("update players", (update) => this.cbUpdate(update));
     }
 
-    start(i) {
-        console.log(this.data);
+    start(i, attacks) {
         this.currentIndex = i;
+        this.attacks = attacks;
+        console.log(this.attacks);
 
         this.state = new BeforeEffectState(this);
         this.runNextState();
     }
 
     runNextState() {
-        while (this.state !== undefined && !this.state.canRun(this.data[this.currentIndex])) {
+        while (this.state !== undefined && !this.state.canRun(this.attacks[this.currentIndex])) {
             this.state.next();
         }
         if (this.state !== undefined) {
-            this.state.run(this.game, this.data[this.currentIndex]);
+            this.state.run(this.game, this.attacks[this.currentIndex]);
         } else {
             this.finished = true;
         }
