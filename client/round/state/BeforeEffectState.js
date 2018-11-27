@@ -1,5 +1,5 @@
 const RoundState = require('./RoundState');
-const AfterEffectState = require('./AfterEffectState');
+const DamageState = require('./DamageState');
 
 module.exports = class BeforeEffectState extends RoundState {
     constructor(context) {
@@ -20,7 +20,7 @@ module.exports = class BeforeEffectState extends RoundState {
     }
 
     next() {
-        this.context.state = new AfterEffectState(this.context);
+        this.context.state = new DamageState(this.context);
     }
 
     canRun(playerData) {
