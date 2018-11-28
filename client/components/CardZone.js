@@ -28,30 +28,43 @@ module.exports = class CardZone {
     }
 
 
-    drawInterface(){
+    drawInterface() {
         this.container.removeAll();
-        let hitNextButton = this.scene.add.rectangle(20, 0, 80, 150, 0xff0000).setOrigin(0.5);
+        let hitNextButton = this.scene.add.image(26, 0, 'arrow_left')
+            .setOrigin(0.5)
+            .setScale(0.5, 0.5);
         hitNextButton.setInteractive();
         this.container.add(hitNextButton);
 
-        let styleNextButton = this.scene.add.rectangle((250 + 2 * this.cardWidth), 0, 80, 150, 0x00ff00).setOrigin(0.5);
+
+        let styleNextButton = this.scene.add.image((250 + 2 * this.cardWidth), 0, 'arrow_right')
+            .setOrigin(0.5)
+            .setScale(0.5, 0.5);
         styleNextButton.setInteractive();
         this.container.add(styleNextButton);
 
 
-        this.readyButton = this.scene.add.rectangle(4 * this.cardWidth + 80, 0, 200, 80, 0x00f6f0).setOrigin(0.5);
+        this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0,'ready').setScale(0.5,0.5);
         this.readyButton.setInteractive();
         this.container.add(this.readyButton);
 
 
         let barX = 0;
-        let barY = -(this.cardHeight / 2)-50;
+        let barY = -(this.cardHeight / 2) - 50;
         let hideBar = this.scene.add.rectangle(barX, barY, this.cardWidth * 3, 40, 0xffd852).setOrigin(0, 0);
         hideBar.setInteractive();
-        this.container.add(hideBar)
+        this.container.add(hideBar);
 
-        this.addText(barX + barX / 2, barY,"click to show",20);
-        this.addText(4 * this.cardWidth + 80, 0, "ready", 25);
+        this.addText(barX + barX / 2, barY, "click to show", 20);
+
+        this.readyButton.on('pointerover',() => {
+            this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0,'ready_hover').setScale(0.5,0.5);
+            this.container.add(this.readyButton)
+        });
+        this.readyButton.on('pointerout',() => {
+            this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0,'ready').setScale(0.5,0.5);
+            this.container.add(this.readyButton)
+        });
 
 
         hitNextButton.on('pointerdown', () => {
@@ -77,7 +90,7 @@ module.exports = class CardZone {
     }
 
 
-    drawCards(){
+    drawCards() {
         this.cardsContainer.removeAll();
 
         let prevH = (this.selectedHitCard + 1) % this.hitCards.length;
