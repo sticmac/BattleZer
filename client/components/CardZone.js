@@ -17,7 +17,7 @@ module.exports = class CardZone {
         /**
          * METTRE A TRUE CI DESSOUS
          */
-        this.showBack = false;
+        this.showBack = true;
         this.readyButton = null;
 
         this.hitCards = [];
@@ -26,6 +26,7 @@ module.exports = class CardZone {
             this.hitCards.push(new Card(hitCardsModels[i], 200, 0, cardWidth, cardHeight, scene, 'card_back'));
             this.styleCards.push(new Card(styleCardsModels[i], cardWidth + 250, 0, cardWidth, cardHeight, scene, 'card_back'));
         }
+        this.showTouch = 0;
     }
 
 
@@ -77,8 +78,21 @@ module.exports = class CardZone {
         });
 
         hideBar.on('pointerdown', () => {
-            this.showBack = !this.showBack;
-            this.flip()
+            this.showTouch = Math.min(3, this.showTouch + 1);
+            if (this.showTouch === 3) { 
+                console.log("Touching!");
+                this.showBack = false;
+                this.flip()
+            }
+        });
+
+        hideBar.on('pointerup', () => {
+            this.showTouch = Math.max(0, this.showTouch - 1);
+            if (this.showTouch === 0) { 
+                console.log("untouch");
+                this.showBack = true;
+                this.flip()
+            }
         });
 
     }
@@ -134,8 +148,13 @@ module.exports = class CardZone {
 
 
     flip() {
+        let prevH = (this.selectedHitCard + 1) % this.hitCards.length;
+        let prevS = (this.selectedStyleCard + 1) % this.styleCards.length;
+
         this.hitCards[this.selectedHitCard].draw(this.showBack);
+        this.hitCards[prevH].drawBehind(this.showBack);
 
         this.styleCards[this.selectedStyleCard].draw(this.showBack);
+        this.styleCards[prevS].drawBehind(this.showBack);
     }
 }

@@ -37,6 +37,7 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
 
         this.scene_width = this.game.config.width;
         this.scene_height = this.game.config.height;
+        this.game.input.addPointer(10);
 
         this.add.image(0,0,'sky').setOrigin(0,0).setDisplaySize(this.scene_width, this.scene_height);
 
