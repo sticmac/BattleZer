@@ -91,9 +91,9 @@ module.exports = class CardZone {
 
 
         this.styleCards[this.selectedStyleCard].draw(this.showBack);
-        //this.styleCards[prevS].drawBehind(this.showBack);
+        this.styleCards[prevS].drawBehind(this.showBack);
 
-        //this.cardsContainer.add(this.styleCards[prevS].container);
+        this.cardsContainer.add(this.styleCards[prevS].container);
         this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container);
 
         this.container.add(this.cardsContainer);

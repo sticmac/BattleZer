@@ -17,16 +17,15 @@ module.exports = class Card {
         this.container.removeAll();
 
         if (!showBack) {
-            console.log(this.cardModel.type)
 
-            if(this.cardModel.type === 'Coup'){
+            if (this.cardModel.type === 'Coup') {
                 const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
                 bg.displayHeight = this.height;
                 bg.displayWidth = this.width;
 
                 this.container.add(bg);
-                this.container.add(this.createHitInfoContainer(-this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
-                this.container.add(this.createHitInfoContainer(this.width / 2, 0,this.cardModel.type));
+                this.container.add(this.createHitInfoContainer(-this.width / 2, 0, false).setScale(-1.0, -1.0));
+                this.container.add(this.createHitInfoContainer(this.width / 2, 0, false));
 
             } else {
                 const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
@@ -34,8 +33,8 @@ module.exports = class Card {
                 bg.displayWidth = this.width;
 
                 this.container.add(bg);
-                this.container.add(this.createStyleInfoContainer(this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
-                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0,this.cardModel.type));
+                this.container.add(this.createStyleInfoContainer(this.width / 2, 0, false).setScale(-1.0, -1.0));
+                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0, false));
 
             }
 
@@ -54,25 +53,27 @@ module.exports = class Card {
         this.container.removeAll();
 
         if (!showBack) {
-            console.log(this.cardModel.type)
 
-            if(this.cardModel.type === 'Coup'){
+            if (this.cardModel.type === 'Coup') {
                 const bg = this.scene.add.image(-30, -30, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
                 bg.displayHeight = this.height;
                 bg.displayWidth = this.width;
+                bg.setTint(0x777777);
 
                 this.container.add(bg);
-                this.container.add(this.createHitInfoContainer(-this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
-                this.container.add(this.createHitInfoContainer(this.width / 2, 0,this.cardModel.type));
+                this.container.add(this.createHitInfoContainer((-this.width / 2) - 30, -30, true).setScale(-1.0, -1.0));
+                this.container.add(this.createHitInfoContainer((this.width / 2) - 30, -30, true));
+
 
             } else {
-                const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+                const bg = this.scene.add.image(30, -30, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
                 bg.displayHeight = this.height;
                 bg.displayWidth = this.width;
+                bg.setTint(0x777777);
 
                 this.container.add(bg);
-                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0,this.cardModel.type).setScale(-1.0, -1.0));
-                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0,this.cardModel.type));
+                this.container.add(this.createStyleInfoContainer(this.width/2+29, -30, true).setScale(-1.0, -1.0));
+                this.container.add(this.createStyleInfoContainer(-53, -30, true));
 
             }
 
@@ -88,14 +89,18 @@ module.exports = class Card {
     }
 
 
-    createHitInfoContainer(x,y){
+    createHitInfoContainer(x, y, isBehind) {
+
+        let color1 = isBehind ? '#afafaf' : '#fff';
+        let color2 = isBehind ? '#9e665f' : '#e29288';
+
         const infos = this.scene.add.container(x, y);
 
         const priority = this.scene.add.container(-21, -72);
         priority.add(this.scene.add.text(0, 0, this.cardModel.priority, {
             fontFamily: 'Impact',
             fontSize: 20,
-            color: "#fff"
+            color: color1
         }).setOrigin(0.5));
         infos.add(priority);
 
@@ -103,7 +108,7 @@ module.exports = class Card {
         power.add(this.scene.add.text(0, 0, this.cardModel.power, {
             fontFamily: 'Impact',
             fontSize: 20,
-            color: "#fff"
+            color: color1
         }).setOrigin(0.5));
         infos.add(power);
 
@@ -111,14 +116,13 @@ module.exports = class Card {
         range.add(this.scene.add.text(0, 0, this.cardModel.range, {
             fontFamily: 'Impact',
             fontSize: 20,
-            color: "#fff"
+            color: color1
         }).setOrigin(0.5));
         infos.add(range);
 
 
-
-        const title = this.scene.add.text(-this.width + 8, this.height / 2-24, this.cardModel.title,
-            {fontFamily: 'Impact', fontSize: 18, color: "#e29288"}).setOrigin(1);
+        const title = this.scene.add.text(-this.width + 8, this.height / 2 - 24, this.cardModel.title,
+            {fontFamily: 'Impact', fontSize: 18, color: color2}).setOrigin(1);
         title.setScale(-1.0, -1.0);
         infos.add(title);
 
@@ -126,14 +130,18 @@ module.exports = class Card {
         return infos;
     }
 
-    createStyleInfoContainer(x, y) {
+    createStyleInfoContainer(x, y, isBehind) {
         const infos = this.scene.add.container(x, y);
+
+
+        let color1 = isBehind ? '#afafaf' : '#fff';
+        let color2 = isBehind ? '#59996a' : '#9ce3b1';
 
         const priority = this.scene.add.container(22, -72);
         priority.add(this.scene.add.text(0, 0, this.cardModel.priority, {
             fontFamily: 'Impact',
             fontSize: 20,
-            color: "#fff"
+            color: color1
         }).setOrigin(0.5));
         infos.add(priority);
 
@@ -141,7 +149,7 @@ module.exports = class Card {
         power.add(this.scene.add.text(0, 0, this.cardModel.power, {
             fontFamily: 'Impact',
             fontSize: 20,
-            color: "#fff"
+            color: color1
         }).setOrigin(0.5));
         infos.add(power);
 
@@ -149,13 +157,13 @@ module.exports = class Card {
         range.add(this.scene.add.text(0, 0, this.cardModel.range, {
             fontFamily: 'Impact',
             fontSize: 20,
-            color: "#fff"
+            color: color1
         }).setOrigin(0.5));
         infos.add(range);
 
 
-        const title = this.scene.add.text(this.width - 10, this.height / 2-3, this.cardModel.title,
-            {fontFamily: 'Impact', fontSize: 18, color: "#9ce3b1"}).setOrigin(0);
+        const title = this.scene.add.text(this.width - 10, this.height / 2 - 3, this.cardModel.title,
+            {fontFamily: 'Impact', fontSize: 18, color: color2}).setOrigin(0);
         title.setScale(-1.0, -1.0);
         infos.add(title);
 
