@@ -27,6 +27,10 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
+app.get('/controller', function (req, res) {
+    res.sendFile(__dirname + "/controller.html");
+});
+
 app.get('/test', function (req, res) {
     res.sendFile(__dirname + "/server/index.html");
 });
