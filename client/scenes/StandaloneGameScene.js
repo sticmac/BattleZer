@@ -20,7 +20,8 @@ module.exports = class StandaloneGameScene extends Phaser.Scene {
     preload() {
         this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
         this.load.image('card_back', 'assets/card_back.jpg');
-
+        this.load.image('style_card','assets/style_card_template.png');
+        this.load.image('hit_card','assets/hit_card_template.png');
     }
 
     /**

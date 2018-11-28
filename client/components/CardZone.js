@@ -13,7 +13,10 @@ module.exports = class CardZone {
 
         this.selectedHitCard = 0;
         this.selectedStyleCard = 0;
-        this.showBack = true;
+        /**
+         * METTRE A TRUE CI DESSOUS
+         */
+        this.showBack = false;
         this.readyButton = null;
 
         this.hitCards = [];
@@ -77,10 +80,20 @@ module.exports = class CardZone {
     drawCards(){
         this.cardsContainer.removeAll();
 
+        let prevH = (this.selectedHitCard + 1) % this.hitCards.length;
+        let prevS = (this.selectedStyleCard + 1) % this.styleCards.length;
+
         this.hitCards[this.selectedHitCard].draw(this.showBack);
+        this.hitCards[prevH].drawBehind(this.showBack);
+
+        this.cardsContainer.add(this.hitCards[prevH].container);
         this.cardsContainer.add(this.hitCards[this.selectedHitCard].container);
 
+
         this.styleCards[this.selectedStyleCard].draw(this.showBack);
+        this.styleCards[prevS].drawBehind(this.showBack);
+
+        this.cardsContainer.add(this.styleCards[prevS].container);
         this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container);
 
         this.container.add(this.cardsContainer);
