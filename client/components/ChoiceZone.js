@@ -14,6 +14,7 @@ module.exports = class ChoiceZone {
     }
 
     undraw() {
+
         // undraw things, probably by making them .setVisible(false)
     }
 }

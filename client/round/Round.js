@@ -1,11 +1,12 @@
 const BeforeEffectState = require('./state/BeforeEffectState');
 
 module.exports = class Round {
-    constructor(game, players, socket) {
+    constructor(game, players, socket, choiceZones) {
         this.game = game;
         this.players = players;
         this.socket = socket;
         this.finished = false;
+        this.choiceZones = choiceZones;
 
         this.socket.on("update players", (update) => this.cbUpdate(update));
     }
@@ -24,6 +25,7 @@ module.exports = class Round {
             this.state.next();
         }
         if (this.state) {
+            this.choiceZones.forEach(c => c.draw())
             this.state.run(this.game, this.attacks[this.currentIndex]);
         } else {
             this.finished = true;

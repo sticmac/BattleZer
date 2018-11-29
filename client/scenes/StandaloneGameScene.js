@@ -6,6 +6,7 @@ const CardZone = require('../components/CardZone');
 const ShowAttack = require('../components/ShowAttack');
 const DisplayText = require('../components/DisplayText');
 const Round = require('../round/Round');
+const ChoiceZone = require('../components/ChoiceZone');
 const io = require('socket.io-client');
 
 module.exports = class StandaloneGameScene extends GameScene {
@@ -80,12 +81,21 @@ module.exports = class StandaloneGameScene extends GameScene {
     }
 
     runRound() {
-        // clear game space
+        this.choiceZones = [];
+
+        this.choiceZones.push(new ChoiceZone(this.scene_width / 8, this.scene_height * (14/16),
+            this.scene_width / 10, this.scene_height / 4, this));
+
+        this.choiceZones.push(new ChoiceZone(this.scene_width * (7/8), this.scene_height * (2/16),
+            this.scene_width / 10, this.scene_height / 4, this));
+
+        this.choiceZones[1].container.setScale(-1.0,-1.0);
+
         this.playersIds.forEach((id) => {
             this.players[id].showAttack.undraw();
         });
         if (this.round === null) {
-            this.round = new Round(this.gameId, this.players, this.socket);
+            this.round = new Round(this.gameId, this.players, this.socket, this.choiceZones);
         }
         this.round.start(0, this.lastChosenAttacks);
         this.lastPlayedIndex = 0; // player 0 starts
