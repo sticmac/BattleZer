@@ -24,7 +24,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
         this.socket.on("card distribution", (data) => {
             this.playerId = data.player.id;
-            this.cardZone = new CardZone(data.player.hitCards, data.player.styleCards, 20, this.game.config.height / 2,
+            this.cardZone = new CardZone(data.player.hitCards, data.player.styleCards, 20, 200,
                 this.game.config.width / 10, this.game.config.height / 4, this);
             this.cardZone.draw();
             this.cardZone.readyButton.on('pointerdown', () => {

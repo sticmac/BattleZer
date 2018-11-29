@@ -6,14 +6,14 @@ module.exports = class Controller {
 
         window.gameId = gameId;
 
-        const height = window.innerHeight * window.devicePixelRatio;
-        const width = height*16/10;
+        const height = window.innerHeight;
+        const width = window.innerWidth;
+
         const config = {
             type: Phaser.AUTO,
             width:width,
             height:height,
             scene: ControllerScene,
-            autoResize: true
         };
 
         this.game = new Phaser.Game(config);
