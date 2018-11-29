@@ -100,8 +100,9 @@ function onConnect(socket) {
     /**
      * call comes from Phone in Distributed
      */
-    socket.on('player picks', function (p) {
+    socket.on('player pick', function (p) {
         let game = getGameByName(p.game);
+        console.log(p.game);
         if (game) {
             if (game.state.value === 'picks') {
                 game.setPlayerPicks(p.player);
