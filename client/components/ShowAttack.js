@@ -25,7 +25,7 @@ module.exports = class ShowAttack {
         ];
 
         for (let i = 0 ; i < cards.length ; i++) {
-            cards[i].draw();
+            cards[i].draw(false);
             this.container.add(cards[i].container);
         }
         this.container.setVisible(true);

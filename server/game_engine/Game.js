@@ -182,7 +182,6 @@ module.exports = class Game {
     }
 
     startRound() {
-        console.log("START ROUND!");
         let attacks = [];
         this.players.forEach(a => {
             attacks.push({
@@ -200,8 +199,6 @@ module.exports = class Game {
         }
 
         this.io.to(this.tableId).emit('start round', {game: this.name, players: attacks})
-        console.log("START ROUND^!!!");
-
     }
 
 
