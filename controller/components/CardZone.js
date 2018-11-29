@@ -3,13 +3,14 @@ const Card = require('./Card.js');
 module.exports = class CardZone {
 
 
-    constructor(hitCardsModels, styleCardsModels, x, y, cardWidth, cardHeight, scene) {
+    constructor(hitCardsModels, styleCardsModels, x, y, scale, scene) {
         this.container = scene.add.container(x, y);
         this.cardsContainer = scene.add.container(0, 0);
         this.scene = scene;
 
-        this.cardHeight = cardHeight;
-        this.cardWidth = cardWidth;
+        this.cardWidth = 192;
+        this.cardHeight = 270;
+        this.scale = scale;
 
         this.selectedHitCard = 0;
         this.selectedStyleCard = 0;
@@ -18,10 +19,9 @@ module.exports = class CardZone {
         this.hitCards = [];
         this.styleCards = [];
         for (let i = 0; i < hitCardsModels.length; i++) {
-            this.hitCards.push(new Card(hitCardsModels[i], 200, 0, cardWidth, cardHeight, scene, 'card_back'));
-            this.styleCards.push(new Card(styleCardsModels[i], cardWidth + 250, 0, cardWidth, cardHeight, scene, 'card_back'));
+            this.hitCards.push(new Card(hitCardsModels[i], 200, 0, this.cardWidth, this.cardHeight, scene, 'card_back'));
+            this.styleCards.push(new Card(styleCardsModels[i], this.cardWidth + 250, 0, this.cardWidth, this.cardHeight, scene, 'card_back'));
         }
-        this.showTouch = 0;
     }
 
 

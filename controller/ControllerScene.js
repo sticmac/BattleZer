@@ -33,8 +33,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     choiceStep(player) {
-        this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200,
-            this.game.config.width / 10, this.game.config.height / 4, this);
+        this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200, this.game.config.width / 1920, this);
         this.cardZone.draw();
         this.cardZone.readyButton.on('pointerdown', () => {
             console.log('player ' + this.playerId + ' picked : ');
