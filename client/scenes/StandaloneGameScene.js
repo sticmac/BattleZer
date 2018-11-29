@@ -32,6 +32,8 @@ module.exports = class StandaloneGameScene extends GameScene {
     }
 
     choiceStep(players) {
+        this.game.input.addPointer(10);
+
         this.cardZones = [];
         this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, this.scene_width / 8, this.scene_height * (14/16),
             this.scene_width / 10, this.scene_height / 4, this));
