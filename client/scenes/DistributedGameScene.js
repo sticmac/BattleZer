@@ -6,6 +6,8 @@ module.exports = class DistributedGameScene extends GameScene {
     }
 
     choiceStep(players) {
-        console.log("lol");
+        
     }
+
+    
 }
