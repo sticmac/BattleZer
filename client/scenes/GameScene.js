@@ -20,6 +20,7 @@ module.exports = class GameScene extends Phaser.Scene {
      */
     preload() {
         this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
+        this.load.image('bg','assets/bg.png');
     }
 
     /**
@@ -30,7 +31,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.scene_width = this.game.config.width;
         this.scene_height = this.game.config.height;
 
-        this.add.image(0,0,'sky').setOrigin(0,0).setDisplaySize(this.scene_width, this.scene_height);
+        this.add.image(0,0,'bg').setOrigin(0,0).setDisplaySize(this.scene_width, this.scene_height);
 
         this.grid = new Grid(9, this);
 
