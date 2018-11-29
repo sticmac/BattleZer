@@ -119,6 +119,7 @@ module.exports = class DistributedGame extends Game {
 
 
         console.log('[4] ' + this.name + ' ends round #' + this.currentRound);
+        this.players.forEach(p => p.hasPicked = false);
         this.state = new PicksState(this);
         this.currentRound++;
     }
