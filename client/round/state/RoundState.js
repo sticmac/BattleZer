@@ -1,6 +1,7 @@
 module.exports = class RoundState {
     constructor(context) {
         this.context = context;
+        this.value = null;
     }
 
     run(game, playerData) {

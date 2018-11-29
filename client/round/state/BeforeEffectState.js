@@ -4,6 +4,7 @@ const DamageState = require('./DamageState');
 module.exports = class BeforeEffectState extends RoundState {
     constructor(context) {
         super(context);
+        this.value = 'before';
 
     }
 

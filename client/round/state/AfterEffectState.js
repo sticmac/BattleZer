@@ -3,6 +3,7 @@ const RoundState = require('./RoundState');
 module.exports = class AfterEffectState extends RoundState {
     constructor(context) {
         super(context);
+        this.value = 'after';
     }
 
     run(game, playerData) {

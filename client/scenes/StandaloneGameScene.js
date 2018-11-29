@@ -56,7 +56,7 @@ module.exports = class StandaloneGameScene extends GameScene {
                 
                 counter++;
 
-                if (counter == this.cardZones.length) {
+                if (counter === this.cardZones.length) {
                     const toSendPlayers = [];
                     for (let i = 0 ; i < this.cardZones.length ; ++i) {
                         toSendPlayers.push({
@@ -86,10 +86,10 @@ module.exports = class StandaloneGameScene extends GameScene {
         this.choiceZones = [];
 
         this.choiceZones.push(new ChoiceZone(this.scene_width / 8, this.scene_height * (14/16),
-            this.scene_width / 10, this.scene_height / 4, this));
+            this.scene_width / 10, this.scene_height / 4, this, false));
 
         this.choiceZones.push(new ChoiceZone(this.scene_width * (7/8), this.scene_height * (2/16),
-            this.scene_width / 10, this.scene_height / 4, this));
+            this.scene_width / 10, this.scene_height / 4, this, true));
 
         this.choiceZones[1].container.setScale(-1.0,-1.0);
 

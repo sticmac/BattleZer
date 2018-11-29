@@ -5,6 +5,7 @@ module.exports = class DamageState extends RoundState {
 
     constructor(context) {
         super(context);
+        this.value = 'damage'
     }
 
     run(game, playerData) {
