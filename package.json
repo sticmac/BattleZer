@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client:run": "nodemon index.js",
     "client:watch-js": "watchify ./client/client.js -o client/bundle.js -v",
-    "start": "npm run client:watch-js & npm run client:run"
+    "controller:watch-js": "watchify ./controller/index.js -o controller/bundle.js -v",
+    "start": "npm run client:watch-js & npm run controller:watch-js & npm run client:run"
   },
   "keywords": [],
   "author": "",

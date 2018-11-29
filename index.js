@@ -45,6 +45,7 @@ app.get('/favicon.ico', function (req, res) {
 
 app.use('/assets', express.static('assets'));
 app.use('/client', express.static('client'));
+app.use('/controller', express.static('controller'));
 
 io.on('connection', onConnect);
 
