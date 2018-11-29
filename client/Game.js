@@ -1,4 +1,3 @@
-//const SceneManager = require('./SceneManager');
 const StandaloneGameScene = require('./scenes/StandaloneGameScene');
 const DistributedGameScene = require('./scenes/DistributedGameScene');
 const StartScene = require('./scenes/StartScene');
