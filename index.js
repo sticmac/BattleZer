@@ -39,6 +39,10 @@ app.get('/test2', function (req, res) {
     res.sendFile(__dirname + "/server/index2.html");
 });
 
+app.get('/favicon.ico', function (req, res) {
+    res.sendFile(__dirname + "/favicon.ico");
+});
+
 app.use('/assets', express.static('assets'));
 app.use('/client', express.static('client'));
 
