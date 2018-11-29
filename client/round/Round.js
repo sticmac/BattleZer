@@ -23,7 +23,7 @@ module.exports = class Round {
         while (this.state !== undefined && !this.state.canRun(this.attacks[this.currentIndex])) {
             this.state.next();
         }
-        if (this.state !== undefined) {
+        if (this.state) {
             this.state.run(this.game, this.attacks[this.currentIndex]);
         } else {
             this.finished = true;

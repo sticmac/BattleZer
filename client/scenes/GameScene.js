@@ -69,18 +69,9 @@ module.exports = class GameScene extends Phaser.Scene {
             text.draw();
 
             setTimeout(() => {
-                // clear game space
-                this.playersIds.forEach((id) => {
-                    this.players[id].showAttack.undraw();
-                });
                 text.undraw();
-                if (this.round === null) {
-                    this.round = new Round(this.gameId, this.players, this.socket);
-                }
-                this.round.start(0, this.lastChosenAttacks);
-                this.lastPlayedIndex = 0; // player 0 starts
-                this.roundStep = true;
 
+                this.runRound();
             }, 3000);
         });
 
@@ -133,5 +124,9 @@ module.exports = class GameScene extends Phaser.Scene {
         this.players[id].showAttack.setHitCard(this.lastChosenAttacks[i].hitCard);
         this.players[id].showAttack.setStyleCard(this.lastChosenAttacks[i].styleCard);
         this.players[id].showAttack.draw();
+    }
+
+    runRound() {
+
     }
 };

@@ -14,9 +14,6 @@ module.exports = class CardZone {
 
         this.selectedHitCard = 0;
         this.selectedStyleCard = 0;
-        /**
-         * METTRE A TRUE CI DESSOUS
-         */
         this.showBack = true;
         this.readyButton = null;
 
