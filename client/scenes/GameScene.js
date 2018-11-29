@@ -10,7 +10,8 @@ const io = require('socket.io-client');
 
 module.exports = class GameScene extends Phaser.Scene {
     constructor(name) {
-        super(name);
+        super(name + "_game");
+        this.type = name;
         this.round = null;
         this.roundStep = false;
     }
@@ -40,7 +41,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.playersIds = [];
 
         this.socket = io();
-        this.socket.emit("start game", {players: 2, type: "standalone"});
+        this.socket.emit("start game", {players: 2, type: this.type});
         this.socket.on("ready to start", (data) => {
             this.gameId = data.game;
             const sentPlayers = data.players;
