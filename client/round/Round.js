@@ -14,7 +14,6 @@ module.exports = class Round {
     start(i, attacks) {
         this.currentIndex = i;
         this.attacks = attacks;
-        console.log('player ' + i + ' starts picks');
 
         this.state = new BeforeEffectState(this);
         this.runNextState();
@@ -31,15 +30,16 @@ module.exports = class Round {
                 this.players[Object.keys(this.players)[this.currentIndex]],
                 this.state.value);
             z.readyButton.on('pointerdown', () => {
-                //recuperer les données de z et les mettre dans this.state.run
-                console.log('choice ok');
-                this.state.run(this.game, this.attacks[this.currentIndex]);
-                z.undraw();
+                if (z.grid.choice) {
+
+                    this.state.run(this.game, this.players[Object.keys(this.players)[this.currentIndex]].player.id, z.grid.actions, z.grid.choice);
+                    z.undraw();
+                } else
+                    console.log('choice pas ok');
             });
 
 
         } else {
-            console.log('players effect finished');
             this.finished = true;
         }
     }

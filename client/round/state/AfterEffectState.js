@@ -6,17 +6,18 @@ module.exports = class AfterEffectState extends RoundState {
         this.value = 'after';
     }
 
-    run(game, playerData) {
-        if (this.canRun(playerData)) {
-            for (let j = 0 ; j < playerData.attack.actions.after.length ; j++) {
-                this.context.socket.emit('player effect', {
-                    game: game,
-                    player: playerData.id,
-                    action: playerData.attack.actions.after[j].action,
-                    value: playerData.attack.actions.after[j].value
-                });
-            }
-        }
+    run(game, id, actions, value) {
+        console.log('--> id',id);
+        actions.codes.forEach(c => {
+            console.log('--> action',c.action)
+            this.context.socket.emit('player effect', {
+                game: game,
+                player: id,
+                action: c.action,
+                value: value
+            });
+        });
+
     }
 
     next() {

@@ -8,22 +8,18 @@ module.exports = class DamageState extends RoundState {
         this.value = 'damage'
     }
 
-    run(game, playerData) {
-        if (this.canRun(playerData)) {
-
-            this.context.socket.emit('player attack', {
+    run(game, id, actions, value) {
+        console.log('--> id',id);
+        actions.codes.forEach(c => {
+            console.log('--> action',c.action)
+            this.context.socket.emit('player effect', {
                 game: game,
-                attack: {
-                    player: playerData.id,
-                    action: 'basic',
-                    power: playerData.attack.power,
-                    target: Math.min(
-                        playerData.attack.range,
-                        this.context.players["player 2"].player.position
-                    )
-                }
+                player: id,
+                action: c.action,
+                value: value
             });
-        }
+        });
+
     }
 
     next() {
@@ -34,7 +30,7 @@ module.exports = class DamageState extends RoundState {
         return true;
     }
 
-    sayWhoIAm(){
+    sayWhoIAm() {
         console.log('attack state')
     }
 

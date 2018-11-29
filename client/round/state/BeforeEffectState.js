@@ -8,17 +8,18 @@ module.exports = class BeforeEffectState extends RoundState {
 
     }
 
-    run(game, playerData) {
-        if (this.canRun(playerData)) {
-            for (let j = 0 ; j < playerData.attack.actions.before.length ; j++) {
-                this.context.socket.emit('player effect', {
-                    game: game,
-                    player: playerData.id,
-                    action: playerData.attack.actions.before[j].action,
-                    value: playerData.attack.actions.before[j].value
-                });
-            }
-        }
+    run(game, id, actions, value) {
+        console.log('--> id',id);
+        actions.codes.forEach(c => {
+            console.log('--> action',c.action)
+            this.context.socket.emit('player effect', {
+                game: game,
+                player: id,
+                action: c.action,
+                value: value
+            });
+        });
+
     }
 
     next() {

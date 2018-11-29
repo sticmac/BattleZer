@@ -50,9 +50,9 @@ module.exports = class StandaloneGameScene extends GameScene {
 
         for (let i = 0 ; i < this.cardZones.length ; ++i) {
             this.cardZones[i].readyButton.on('pointerdown', () => {
-                console.log('player ' + (i + 1) + ' picked : ');
-                console.log(this.cardZones[i].hitCards[this.cardZones[i].selectedStyleCard].cardModel.title);
-                console.log(this.cardZones[i].styleCards[this.cardZones[i].selectedHitCard].cardModel.title);
+                //console.log('player ' + (i + 1) + ' picked : ');
+                //console.log(this.cardZones[i].hitCards[this.cardZones[i].selectedStyleCard].cardModel.title);
+                //console.log(this.cardZones[i].styleCards[this.cardZones[i].selectedHitCard].cardModel.title);
                 
                 counter++;
 
