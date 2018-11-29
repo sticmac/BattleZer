@@ -24,10 +24,19 @@ module.exports = class Round {
         while (this.state !== undefined && !this.state.canRun(this.attacks[this.currentIndex])) {
             this.state.next();
         }
-        if (this.state) {
-            this.choiceZones.forEach(c => c.draw())
-            this.state.run(this.game, this.attacks[this.currentIndex]);
+        if (this.state !== undefined) {
+            this.state.sayWhoIAm();
+            let z = this.choiceZones[this.currentIndex];
+            z.draw();
+            z.readyButton.on('pointerdown', () => {
+                console.log('choice ok');
+                this.state.run(this.game, this.attacks[this.currentIndex]);
+                z.undraw();
+            });
+
+
         } else {
+            console.log('players effect finished')
             this.finished = true;
         }
     }

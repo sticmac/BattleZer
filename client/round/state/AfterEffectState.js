@@ -25,4 +25,8 @@ module.exports = class AfterEffectState extends RoundState {
     canRun(playerData) {
         return playerData.attack.actions.after.length > 0;
     }
+
+    sayWhoIAm(){
+        console.log('after state')
+    }
 }

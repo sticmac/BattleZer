@@ -6,15 +6,21 @@ module.exports = class ChoiceZone {
         this.width = width;
         this.height = height;
         this.scene = scene;
+        this.readyButton = null;
     }
 
     draw() {
-        this.container.add(this.scene.add.text(50,50,'salut à tous',{fontSize: 50,
-            color: "#ff0000"}))
+        this.container.setVisible(true);
+        this.readyButton = this.scene.add.image(100, 100,'ready');
+        this.readyButton.setInteractive();
+        this.container.add(this.readyButton)
+
+
+
+
     }
 
     undraw() {
-
-        // undraw things, probably by making them .setVisible(false)
+        this.container.setVisible(false)
     }
 }

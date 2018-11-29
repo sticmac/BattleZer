@@ -72,7 +72,7 @@ module.exports = class GameScene extends Phaser.Scene {
                 text.undraw();
 
                 this.runRound();
-            }, 3000);
+            }, 1000);
         });
 
         this.socket.on("end round", (data) => this.choiceStep(data.players));
@@ -94,12 +94,13 @@ module.exports = class GameScene extends Phaser.Scene {
             if (this.players[id].player.position != this.grid.getTokenPosition(id)) {
                 this.grid.moveTokenByKey(id, this.players[id].player.position);
             }
-        })
+        });
 
         //update round
         if (this.roundStep && this.round.finished) {
+            this.round.reset();
             if (this.lastPlayedIndex != this.playersIds.length - 1) { // not last round
-                this.round.reset();
+
                 this.lastPlayedIndex++;
                 setTimeout(() => {
                     this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);

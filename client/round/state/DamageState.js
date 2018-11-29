@@ -2,12 +2,14 @@ const RoundState = require('./RoundState');
 const AfterEffectState = require('./AfterEffectState');
 
 module.exports = class DamageState extends RoundState {
+
     constructor(context) {
         super(context);
     }
 
     run(game, playerData) {
         if (this.canRun(playerData)) {
+
             this.context.socket.emit('player attack', {
                 game: game,
                 attack: {
@@ -30,4 +32,9 @@ module.exports = class DamageState extends RoundState {
     canRun(playerData) {
         return true;
     }
+
+    sayWhoIAm(){
+        console.log('attack state')
+    }
+
 }

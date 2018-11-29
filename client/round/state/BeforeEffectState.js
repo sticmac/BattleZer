@@ -4,6 +4,7 @@ const DamageState = require('./DamageState');
 module.exports = class BeforeEffectState extends RoundState {
     constructor(context) {
         super(context);
+
     }
 
     run(game, playerData) {
@@ -25,5 +26,9 @@ module.exports = class BeforeEffectState extends RoundState {
 
     canRun(playerData) {
         return playerData.attack.actions.before.length > 0;
+    }
+
+    sayWhoIAm(){
+        console.log('before state')
     }
 }
