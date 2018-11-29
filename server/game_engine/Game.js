@@ -1,9 +1,7 @@
 const Player = require('./Player');
 const CardsManager = require('./CardsManager');
-const PicksState = require('./states/PicksState');
 
 module.exports = class Game {
-
 
     constructor(name, nb, tableId, io) {
         this.playersCount = nb;
@@ -18,39 +16,6 @@ module.exports = class Game {
 
         this.fieldSize = 8;
         this.maxHealth = 20;
-    }
-
-    endRound() {
-
-        // clear and apply end round effects
-        this.players.forEach(p => {
-            p.status['protect'].duration = 0;
-        });
-
-        //distribute new cards
-        this.cardsManager.newRound(this.players);
-
-        let players_data = [];
-        this.players.forEach(a => {
-            let obj = {};
-            obj['id'] = a.id;
-            obj['styleCards'] = a.styleCards;
-            obj['hitCards'] = a.hitCards;
-            obj['health'] = a.health;
-            obj['position'] = a.position;
-            players_data.push(obj);
-        });
-
-        this.io.to(this.tableId).emit('end round', {
-            game: this.name,
-            round : this.currentRound,
-            players: players_data
-        });
-
-
-        console.log('[4] ' + this.name + ' ends round #' + this.currentRound);
-        this.state = new PicksState(this);
-        this.currentRound++;
     }
 
     applyAttack(e) {
@@ -200,7 +165,6 @@ module.exports = class Game {
 
         this.io.to(this.tableId).emit('start round', {game: this.name, players: attacks})
     }
-
 
     comparePriority(a, b) {
         return b.attack.priority - a.attack.priority;

@@ -24,27 +24,33 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
         this.socket.on("card distribution", (data) => {
             this.playerId = data.player.id;
-            this.cardZone = new CardZone(data.player.hitCards, data.player.styleCards, 20, 200,
-                this.game.config.width / 10, this.game.config.height / 4, this);
-            this.cardZone.draw();
-            this.cardZone.readyButton.on('pointerdown', () => {
-                console.log('player ' + this.playerId + ' picked : ');
-                console.log(this.cardZone.hitCards[this.cardZone.selectedStyleCard].cardModel.title);
-                console.log(this.cardZone.styleCards[this.cardZone.selectedHitCard].cardModel.title);
-
-                this.socket.emit("player pick", {
-                    game: window.gameId,
-                    player: {
-                        id: this.playerId,
-                        stylePick: this.cardZone.styleCards[this.cardZone.selectedStyleCard].cardModel,
-                        hitPick: this.cardZone.hitCards[this.cardZone.selectedStyleCard].cardModel
-                    }
-                });
-
-                this.cardZone.container.setVisible(false);
-            });
+            this.choiceStep(data.player);
         });
 
+        this.socket.on("end round", (data) => this.choiceStep(data));
+
         this.socket.emit('join game', {game: window.gameId});
+    }
+
+    choiceStep(player) {
+        this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200,
+            this.game.config.width / 10, this.game.config.height / 4, this);
+        this.cardZone.draw();
+        this.cardZone.readyButton.on('pointerdown', () => {
+            console.log('player ' + this.playerId + ' picked : ');
+            console.log(this.cardZone.hitCards[this.cardZone.selectedStyleCard].cardModel.title);
+            console.log(this.cardZone.styleCards[this.cardZone.selectedHitCard].cardModel.title);
+
+            this.socket.emit("player pick", {
+                game: window.gameId,
+                player: {
+                    id: this.playerId,
+                    stylePick: this.cardZone.styleCards[this.cardZone.selectedStyleCard].cardModel,
+                    hitPick: this.cardZone.hitCards[this.cardZone.selectedStyleCard].cardModel
+                }
+            });
+
+            this.cardZone.container.setVisible(false);
+        });
     }
 }

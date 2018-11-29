@@ -164,7 +164,6 @@ function onConnect(socket) {
         let game = getGameByName(a.game);
         if (game) {
             if (game.state.value === 'effects') {
-
                 game.endRound();
             } else {
                 socket.emit('chat message', {
