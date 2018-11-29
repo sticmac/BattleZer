@@ -9,8 +9,8 @@ const Round = require('../round/Round');
 const io = require('socket.io-client');
 
 module.exports = class GameScene extends Phaser.Scene {
-    constructor() {
-        super("standalone_game");
+    constructor(name) {
+        super(name);
         this.round = null;
         this.roundStep = false;
     }

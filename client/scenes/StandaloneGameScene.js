@@ -11,8 +11,6 @@ const io = require('socket.io-client');
 module.exports = class StandaloneGameScene extends GameScene {
     constructor() {
         super("standalone_game");
-        this.round = null;
-        this.roundStep = false;
     }
 
     /**
