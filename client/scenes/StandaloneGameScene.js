@@ -26,7 +26,6 @@ module.exports = class StandaloneGameScene extends GameScene {
         this.load.image('arrow_left','assets/left_arrow.png');
         this.load.image('arrow_right','assets/right_arrow.png');
         this.load.image('ready','assets/ready.png');
-        this.load.image('ready_hover','assets/ready2.png');
 
     }
 

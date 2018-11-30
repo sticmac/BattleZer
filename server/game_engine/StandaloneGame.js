@@ -32,10 +32,6 @@ module.exports = class StandaloneGame extends Game {
     }
 
 
-
-
-
-
     setReady() {
         let players_data = [];
         this.players.forEach(a => {
@@ -70,7 +66,7 @@ module.exports = class StandaloneGame extends Game {
             p.hitPick = u.hitPick;
             p.stylePick = u.stylePick;
             p.hasPicked = true;
-            console.log('#',p.id,'->', p.hitPick.title, p.stylePick.title)
+            console.log('#', p.id, '->', p.hitPick.title, p.stylePick.title)
         } else {
             console.log('unrecognized player ', u.id, ' for picks')
         }
@@ -83,7 +79,7 @@ module.exports = class StandaloneGame extends Game {
         return true;
     }
 
-    closeGame(){
+    closeGame() {
         this.state.value = 'over';
     }
 
