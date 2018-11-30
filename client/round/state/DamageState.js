@@ -7,6 +7,15 @@ module.exports = class DamageState extends RoundState {
     }
 
     run(game, playerData) {
+        // Choose position of the opponent
+        let targetId = undefined;
+        for (let i = 0 ; i < this.context.attacks.length ; ++i) {
+            if (this.context.attacks[i].id !== playerData.id) {
+                targetId = this.context.attacks[i].id;
+            }
+        }
+
+        // play the attack
         if (this.canRun(playerData)) {
             this.context.socket.emit('player attack', {
                 game: game,
@@ -16,7 +25,7 @@ module.exports = class DamageState extends RoundState {
                     power: playerData.attack.power,
                     target: Math.min(
                         playerData.attack.range,
-                        this.context.players["player 2"].player.position
+                        this.context.players[targetId].player.position
                     )
                 }
             });

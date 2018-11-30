@@ -45,6 +45,7 @@ app.get('/favicon.ico', function (req, res) {
 
 app.use('/assets', express.static('assets'));
 app.use('/client', express.static('client'));
+app.use('/controller', express.static('controller'));
 
 io.on('connection', onConnect);
 
@@ -99,8 +100,9 @@ function onConnect(socket) {
     /**
      * call comes from Phone in Distributed
      */
-    socket.on('player picks', function (p) {
+    socket.on('player pick', function (p) {
         let game = getGameByName(p.game);
+        console.log(p.game);
         if (game) {
             if (game.state.value === 'picks') {
                 game.setPlayerPicks(p.player);
@@ -162,7 +164,6 @@ function onConnect(socket) {
         let game = getGameByName(a.game);
         if (game) {
             if (game.state.value === 'effects') {
-
                 game.endRound();
             } else {
                 socket.emit('chat message', {

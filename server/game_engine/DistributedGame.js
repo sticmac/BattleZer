@@ -1,7 +1,7 @@
 const Player = require('./Player');
 const Game = require('./Game');
 const ConnectionState = require('./states/ConnectionState');
-
+const PicksState = require('./states/PicksState');
 
 module.exports = class DistributedGame extends Game {
 
@@ -87,6 +87,41 @@ module.exports = class DistributedGame extends Game {
             if(!this.players[i].hasPicked) return false;
         }
         return true;
+    }
+
+    endRound() {
+
+        // clear and apply end round effects
+        this.players.forEach(p => {
+            p.status['protect'].duration = 0;
+        });
+
+        //distribute new cards
+        this.cardsManager.newRound(this.players);
+
+        let players_data = [];
+        this.players.forEach(a => {
+            let obj = {};
+            obj['id'] = a.id;
+            obj['styleCards'] = a.styleCards;
+            obj['hitCards'] = a.hitCards;
+            obj['health'] = a.health;
+            obj['position'] = a.position;
+            players_data.push(obj);
+            this.io.to(a.id).emit('end round', obj);
+        });
+
+        this.io.to(this.tableId).emit('end round', {
+            game: this.name,
+            round : this.currentRound,
+            players: players_data
+        });
+
+
+        console.log('[4] ' + this.name + ' ends round #' + this.currentRound);
+        this.players.forEach(p => p.hasPicked = false);
+        this.state = new PicksState(this);
+        this.currentRound++;
     }
 
     closeGame(){

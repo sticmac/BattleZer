@@ -1,7 +1,7 @@
 const Player = require('./Player');
 const Game = require('./Game');
 const ConnectionState = require('./states/ConnectionState');
-
+const PicksState = require('./states/PicksState');
 
 module.exports = class StandaloneGame extends Game {
 
@@ -31,6 +31,38 @@ module.exports = class StandaloneGame extends Game {
         this.setReady();
     }
 
+    endRound() {
+
+        // clear and apply end round effects
+        this.players.forEach(p => {
+            p.status['protect'].duration = 0;
+        });
+
+        //distribute new cards
+        this.cardsManager.newRound(this.players);
+
+        let players_data = [];
+        this.players.forEach(a => {
+            let obj = {};
+            obj['id'] = a.id;
+            obj['styleCards'] = a.styleCards;
+            obj['hitCards'] = a.hitCards;
+            obj['health'] = a.health;
+            obj['position'] = a.position;
+            players_data.push(obj);
+        });
+
+        this.io.to(this.tableId).emit('end round', {
+            game: this.name,
+            round : this.currentRound,
+            players: players_data
+        });
+
+
+        console.log('[4] ' + this.name + ' ends round #' + this.currentRound);
+        this.state = new PicksState(this);
+        this.currentRound++;
+    }
 
     setReady() {
         let players_data = [];
@@ -66,7 +98,7 @@ module.exports = class StandaloneGame extends Game {
             p.hitPick = u.hitPick;
             p.stylePick = u.stylePick;
             p.hasPicked = true;
-            console.log('#', p.id, '->', p.hitPick.title, p.stylePick.title)
+            console.log('#',p.id,'->', p.hitPick.title, p.stylePick.title)
         } else {
             console.log('unrecognized player ', u.id, ' for picks')
         }
@@ -79,7 +111,7 @@ module.exports = class StandaloneGame extends Game {
         return true;
     }
 
-    closeGame() {
+    closeGame(){
         this.state.value = 'over';
     }
 

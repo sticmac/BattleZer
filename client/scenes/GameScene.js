@@ -9,8 +9,9 @@ const Round = require('../round/Round');
 const io = require('socket.io-client');
 
 module.exports = class GameScene extends Phaser.Scene {
-    constructor() {
-        super("standalone_game");
+    constructor(name) {
+        super(name + "_game");
+        this.type = name;
         this.round = null;
         this.roundStep = false;
     }
@@ -21,6 +22,8 @@ module.exports = class GameScene extends Phaser.Scene {
     preload() {
         this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
         this.load.image('bg','assets/bg.png');
+        this.load.image('style_card','assets/style_card_template.png');
+        this.load.image('hit_card','assets/hit_card_template.png');
     }
 
     /**
@@ -40,7 +43,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.playersIds = [];
 
         this.socket = io();
-        this.socket.emit("start game", {players: 2, type: "standalone"});
+        this.socket.emit("start game", {players: 2, type: this.type});
         this.socket.on("ready to start", (data) => {
             this.gameId = data.game;
             const sentPlayers = data.players;

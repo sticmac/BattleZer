@@ -19,9 +19,23 @@ module.exports = class StartScene extends Phaser.Scene {
     create() {
         this.add.image(0,0,'sky').setOrigin(0,0).setScale(3.0, 2.0);
 
-        const container = this.add.container(this.game.config.width / 2, this.game.config.height / 2);
-        const bg = this.add.rectangle(0, 0, this.game.config.width / 4, this.game.config.height / 4, 0xdadada);
-        const text = this.add.text(0, 0, "Start",
+        this.addButton(this.game.config.width / 4, this.game.config.height / 2, this.game.config.width / 4, this.game.config.height / 4, "Standalone",
+            () => this.scene.start('standalone_game'));
+
+        this.addButton(this.game.config.width * (3/4), this.game.config.height / 2, this.game.config.width / 4, this.game.config.height / 4, "Distributed",
+            () => this.scene.start('distributed_game'));
+    }
+
+    /**
+     * Returns function to update scene
+     */
+    update() {
+    }
+
+    addButton(x, y, width, height, textButton, callback) {
+        const container = this.add.container(x, y);
+        const bg = this.add.rectangle(0, 0, width, height, 0xdadada);
+        const text = this.add.text(0, 0, textButton,
             { fontFamily: 'Arial', fontSize: 64, color: '#000' }).setOrigin(0.5);
         container.add(bg);
         container.add(text);
@@ -32,14 +46,6 @@ module.exports = class StartScene extends Phaser.Scene {
             .on("pointerout", () => {
                 bg.setFillStyle(bg.fillColor, 1.0);
             })
-            .on("pointerdown", () => {
-                this.scene.start('standalone_game');
-            });
-    }
-
-    /**
-     * Returns function to update scene
-     */
-    update() {
+            .on("pointerdown", () => callback());
     }
 }
