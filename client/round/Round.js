@@ -31,7 +31,6 @@ module.exports = class Round {
                 this.state.value);
             z.readyButton.on('pointerdown', () => {
                 if (z.grid.choice) {
-
                     this.state.run(this.game, this.players[Object.keys(this.players)[this.currentIndex]].player.id, z.grid.actions, z.grid.choice);
                     z.undraw();
                 } else

@@ -92,7 +92,7 @@ module.exports = class Game {
             case 'basic' :
                 break;
             case 'movement' :
-                player.position = Math.max(Math.min(player.position + e.value, 8), 0);
+                player.position = e.value;
                 break;
             case 'protect' :
                 player.status['protect'] = {duration: 1, value: e.value};
