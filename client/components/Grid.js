@@ -40,16 +40,16 @@ module.exports = class Grid {
         if (oldPosition !== undefined) {
             this.gridContainer.list[oldPosition].remove(token);
         }
-        if (this.gridContainer.list[position].list.length > 1 ) { // there is already a token
+        if (this.gridContainer.list[position].list.length > 0 ) { // there is already a token
             token.setY(token.y - this.scene.game.config.height / 12);
-            this.gridContainer.list[position].list[1].setY(this.gridContainer.list[position].list[1].y + this.scene.game.config.height / 12);
+            this.gridContainer.list[position].list[0].setY(this.gridContainer.list[position].list[0].y + this.scene.game.config.height / 12);
         }
         this.gridContainer.list[position].add(token);
 
         //other loners have to be placed normally
         this.gridContainer.list.forEach(element => {
-            if (element.list.length === 2) {
-                element.list[1].setY(0);
+            if (element.list.length === 1) {
+                element.list[0].setY(0);
             }
         });
     }
