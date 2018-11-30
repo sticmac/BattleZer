@@ -9,6 +9,7 @@ module.exports = class ChoiceGrid {
         this.range = range;
         if (reverse) this.gridContainer.setScale(-1.0, -1.0);
         this.choice = null;
+        this.rectChoice = null;
 
         this.draw();
 
@@ -36,7 +37,15 @@ module.exports = class ChoiceGrid {
                 .setOrigin(0, 0.5);
             rect.setInteractive();
             rect.on('pointerdown', () => {
-                if(valid) this.choice = i;
+                if(valid) {
+                    if (this.rectChoice) {
+                        this.rectChoice.setFillStyle(0xFFA500);
+                    }
+                    this.choice = i;
+                    console.log(container);
+                    this.rectChoice = this.gridContainer.list[i].list[0];
+                    this.rectChoice.setFillStyle(0xA50000)
+                }
                 console.log('case : ',i, valid)
             });
             container.add(rect);

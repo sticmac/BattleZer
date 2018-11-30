@@ -48,16 +48,16 @@ module.exports = class ChoiceZone {
         this.text1 = this.scene.add.text(0, -100, 'Choisis la cible pour l\'' + status, {
             fontSize: 28,
             fontFamily:'Arial Black',
-            stroke:'#000000',
-            strokeThickness: 1,
             fontWeight:'bold',
-            color: '#FF4500'
+            color: '#205b31',
+            backgroundColor: "#fff",
+            padding: 5
         });
 
         this.container.add(this.text1);
 
 
-        this.readyButton = this.scene.add.image(this.width * 2, 50, 'ready').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        this.readyButton = this.scene.add.image(600, 20, 'ready').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
         this.readyButton.setInteractive();
         this.container.add(this.readyButton)
 
