@@ -52,7 +52,7 @@ module.exports = class GameScene extends Phaser.Scene {
                 this.playersIds.push(element.id);
                 this.players[element.id] = {player: new PlayerModel(element.id, element.position, element.health),
                     token: this.add.circle((this.scene_width / 9) / 2, 0, 30, colors[i]),
-                    bar: new Bar(this.scene_width / 2 - this.scene_width / 10, (i * (this.scene_height - 25)), this.scene_width / 5, 20, this),
+                    bar: new Bar((1 - i) * ((4/5) * this.scene_width - 5), (i * (this.scene_height - 25)), this.scene_width / 5, 20, this),
                     showAttack: new ShowAttack(this.scene_width / 2, this.scene_height - ( (i * 2 + 1) * this.scene_height / 4 ),
                         this.scene_width / 10, this.scene_height / 4, i == 1, this)};
                 this.grid.addToken(element.id, this.players[element.id].token, element.position);
