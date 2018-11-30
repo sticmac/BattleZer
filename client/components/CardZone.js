@@ -55,10 +55,6 @@ module.exports = class CardZone {
 
         this.container.add(this.addText(barX + barX / 2, barY, "click to show", 20));
 
-        this.readyButton.on('pointerover',() => {
-            this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0,'ready_hover').setScale(0.5,0.5);
-            this.container.add(this.readyButton)
-        });
         this.readyButton.on('pointerout',() => {
             this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0,'ready').setScale(0.5,0.5);
             this.container.add(this.readyButton)
