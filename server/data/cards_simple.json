@@ -1,0 +1,200 @@
+[
+  {
+    "title": "Batarang",
+    "type": "Coup",
+    "priority": 10,
+    "power": 1,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "\"\"\"parle mieux\"\" - Batman\"\n"
+  },
+  {
+    "title": "Coup de poing",
+    "type": "Coup",
+    "priority": 4,
+    "power": 1,
+    "range": 10,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "(20:12) DamienDu12: ton père le chauve\n"
+  },
+  {
+    "title": "High Kick",
+    "type": "Coup",
+    "priority": 5,
+    "power": 2,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "coup d'pied dans les dents\n"
+  },
+  {
+    "title": "Coup de coude",
+    "type": "Coup",
+    "priority": 7,
+    "power": 3,
+    "range": 1,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "LA COUDASSE\n"
+  },
+  {
+    "title": "Sabre laser",
+    "type": "Coup",
+    "priority": 3,
+    "power": 4,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "mange tes fajitas\n"
+  },
+  {
+    "title": "Coup de tête",
+    "type": "Coup",
+    "priority": 3,
+    "power": 5,
+    "range": 1,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "coup de tête à la zizou\n"
+  },
+  {
+    "title": "Fusil",
+    "type": "Coup",
+    "priority": 2,
+    "power": 7,
+    "range": 2,
+    "actions": [
+      {
+        "time": "during",
+        "action": "basic",
+        "value": 0
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "",
+    "flavor": "à la mafioso\n"
+  },
+  {
+    "title": "en TMAX",
+    "type": "Style",
+    "priority": 2,
+    "power": 0,
+    "range": 5,
+    "actions": [
+      {
+        "time": "after",
+        "action": "movement",
+        "value": 5
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "déplacement",
+    "flavor": "téma le style bro\n"
+  },
+  {
+    "title": "sprinté",
+    "type": "Style",
+    "priority": 3,
+    "power": 0,
+    "range": 5,
+    "actions": [
+      {
+        "time": "before",
+        "action": "movement",
+        "value": 5
+      }
+    ],
+    "before": "déplacement",
+    "during": "",
+    "after": "",
+    "flavor": "\n"
+  },
+  {
+    "title": "évadé",
+    "type": "Style",
+    "priority": 6,
+    "power": 0,
+    "range": 2,
+    "actions": [
+      {
+        "time": "after",
+        "action": "movement",
+        "value": 2
+      }
+    ],
+    "before": "",
+    "during": "",
+    "after": "déplacement",
+    "flavor": "\n"
+  },
+  {
+    "title": "cafeiné",
+    "type": "Style",
+    "priority": 5,
+    "power": 1,
+    "range": 3,
+    "actions": [
+      {
+        "time": "before",
+        "action": "movement",
+        "value": 2
+      }
+    ],
+    "before": "déplacement",
+    "during": "",
+    "after": "",
+    "flavor": "un ptit coup de speed"
+  }
+]

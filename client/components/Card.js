@@ -17,7 +17,6 @@ module.exports = class Card {
         this.container.removeAll();
 
         if (!showBack) {
-
             if (this.cardModel.type === 'Coup') {
                 const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
                 bg.displayHeight = this.height;

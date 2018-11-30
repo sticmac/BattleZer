@@ -14,7 +14,7 @@ module.exports = class Game {
         this.io = io;
         this.currentRound = 1;
 
-        this.cardsManager = new CardsManager(2);
+        this.cardsManager = new CardsManager(4);
 
         this.fieldSize = 8;
         this.maxHealth = 20;
