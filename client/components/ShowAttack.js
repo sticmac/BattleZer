@@ -1,12 +1,13 @@
 const Card = require('./Card');
 
 module.exports = class ShowAttack {
-    constructor(x, y, card_width, card_height, scene) {
+    constructor(x, y, card_width, card_height, reverse, scene) {
         this.scene = scene;
         this.container = scene.add.container(x, y);
 
         this.card_width = card_width;
         this.card_height = card_height;
+        this.reverse = reverse;
     }
 
     setHitCard(hitCard) {
@@ -28,6 +29,11 @@ module.exports = class ShowAttack {
             cards[i].draw(false);
             this.container.add(cards[i].container);
         }
+
+        if (this.reverse) {
+            this.container.setScale(-1.0);
+        }
+        
         this.container.setVisible(true);
     }
 
