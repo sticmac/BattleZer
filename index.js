@@ -118,7 +118,7 @@ function onConnect(socket) {
         let game = getGameByName(a.game);
         if (game) {
             if (game.state.value === 'effects') {
-                game.applyEffect(a)
+                game.applyEffect(a.attack)
             } else {
                 socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
             }

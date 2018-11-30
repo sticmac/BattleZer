@@ -14,7 +14,7 @@ module.exports = class CardZone {
 
         this.selectedHitCard = 0;
         this.selectedStyleCard = 0;
-        this.showBack = true;
+        this.showBack = false;
         this.readyButton = null;
 
         this.hitCards = [];

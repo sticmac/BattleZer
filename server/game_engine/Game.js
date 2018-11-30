@@ -55,7 +55,11 @@ module.exports = class Game {
 
     applyAttack(e) {
         let player = this.getPlayerById(e.player);
-        console.log('#', player.id, '->', e.action + ' attack');
+        if(!player) {
+            console.log('unrecognized player : '+e.player)
+            return;
+        }
+        console.log('#', e.player, '->', e.action + ' attack');
         let playersOnTarget = this.getPlayersOnTile(e.target);
 
         switch (e.action) {
@@ -80,8 +84,9 @@ module.exports = class Game {
     }
 
     applyEffect(e) {
+        console.log(e)
         let player = this.getPlayerById(e.player);
-        console.log('#', player.id, '->', e.action + ' effect');
+        console.log('#', e.player, '->', e.action + ' effect');
 
         switch (e.action) {
             case 'basic' :
