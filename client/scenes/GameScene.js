@@ -52,8 +52,9 @@ module.exports = class GameScene extends Phaser.Scene {
                 this.playersIds.push(element.id);
                 this.players[element.id] = {player: new PlayerModel(element.id, element.position, element.health),
                     token: this.add.circle((this.scene_width / 9) / 2, 0, 30, colors[i]),
-                    bar: new Bar(this.scene_width / 2 - this.scene_width / 10, (i * (this.scene_height - 25)), this.scene_width / 5, 20, this),
-                    showAttack: new ShowAttack(this.scene_width / 2, this.scene_height - ( (i * 2 + 1) * this.scene_height / 4 ), this.scene_width / 10, this.scene_height / 4, this)};
+                    bar: new Bar((1 - i) * ((4/5) * this.scene_width - 5), (i * (this.scene_height - 25)), this.scene_width / 5, 20, this),
+                    showAttack: new ShowAttack(this.scene_width / 2, this.scene_height - ( (i * 2 + 1) * this.scene_height / 4 ),
+                        this.scene_width / 10, this.scene_height / 4, i == 1, this)};
                 this.grid.addToken(element.id, this.players[element.id].token, element.position);
             }
             this.socket.emit('send cards', {game: this.gameId});
@@ -106,9 +107,14 @@ module.exports = class GameScene extends Phaser.Scene {
 
                 this.lastPlayedIndex++;
                 setTimeout(() => {
-                    this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);
-                }, 1500);
+                    if (this.lastPlayedIndex + 1 < this.playersIds.length) { // if not present, too much rounds are launched
+                        this.lastPlayedIndex++;
+                        console.log("next round " + this.lastPlayedIndex);
+                        this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);
+                    }
+                }, 1000);
             } else { // last round finished
+                console.log("send end round after " + this.lastPlayedIndex);
                 this.socket.emit('end round', {
                     game: this.gameId
                 });

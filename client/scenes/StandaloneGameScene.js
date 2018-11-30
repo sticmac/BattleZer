@@ -90,7 +90,7 @@ module.exports = class StandaloneGameScene extends GameScene {
             this.round = new Round(this.gameId, this.players, this.socket, this.choiceZones);
         }
         this.round.start(0, this.lastChosenAttacks);
-        this.lastPlayedIndex = 0; // player 0 starts
+        this.lastPlayedIndex = 0; // player with highest priority starts
         this.roundStep = true;
     }
 };
