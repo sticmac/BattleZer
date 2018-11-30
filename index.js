@@ -45,6 +45,7 @@ app.get('/favicon.ico', function (req, res) {
 
 app.use('/assets', express.static('assets'));
 app.use('/client', express.static('client'));
+app.use('/controller', express.static('controller'));
 
 io.on('connection', onConnect);
 
@@ -90,7 +91,7 @@ function onConnect(socket) {
                     game.startRound();
                 }
             } else {
-                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation'})
+                socket.emit('chat message', {code: 406, message: 'game is not ready for players picks', current: game.state.value})
             }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
 
@@ -99,13 +100,14 @@ function onConnect(socket) {
     /**
      * call comes from Phone in Distributed
      */
-    socket.on('player picks', function (p) {
+    socket.on('player pick', function (p) {
         let game = getGameByName(p.game);
+        console.log(p.game);
         if (game) {
             if (game.state.value === 'picks') {
                 game.setPlayerPicks(p.player);
             } else {
-                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
+                socket.emit('chat message', {code: 406, message: 'game is not ready for player pick', current: game.state.value})
             }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
     });
@@ -120,7 +122,7 @@ function onConnect(socket) {
             if (game.state.value === 'effects') {
                 game.applyEffect(a.attack)
             } else {
-                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
+                socket.emit('chat message', {code: 406, message: 'game is not ready for player effect', current: game.state.value})
             }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
     });
@@ -134,7 +136,7 @@ function onConnect(socket) {
             if (game.state.value === 'effects') {
                 game.applyAttack(a.attack)
             } else {
-                socket.emit('chat message', {code: 406, message: 'game is not ready for this operation '})
+                socket.emit('chat message', {code: 406, message: 'game is not ready for player attack', current: game.state.value})
             }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
     });
@@ -151,7 +153,7 @@ function onConnect(socket) {
                 game.distributeCards();
             } else {
                 socket.emit('chat message', {
-                    code: 406, message: 'game is not ready for this operation'
+                    code: 406, message: 'game is not ready for send cards'
                 })
             }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})
@@ -162,11 +164,10 @@ function onConnect(socket) {
         let game = getGameByName(a.game);
         if (game) {
             if (game.state.value === 'effects') {
-
                 game.endRound();
             } else {
                 socket.emit('chat message', {
-                    code: 406, message: 'game is not ready for this operation'
+                    code: 406, message: 'game is not ready for end round', current: game.state.value
                 })
             }
         } else socket.emit('chat message', {code: 403, message: 'requested game does not exists'})

@@ -1,19 +1,12 @@
 const GameScene = require('./GameScene');
-const PlayerModel = require('../model/PlayerModel');
-const Grid = require('../components/Grid');
-const Bar = require('../components/Bar');
 const CardZone = require('../components/CardZone');
-const ShowAttack = require('../components/ShowAttack');
-const DisplayText = require('../components/DisplayText');
 const Round = require('../round/Round');
 const ChoiceZone = require('../components/ChoiceZone');
 const io = require('socket.io-client');
 
 module.exports = class StandaloneGameScene extends GameScene {
     constructor() {
-        super("standalone_game");
-        this.round = null;
-        this.roundStep = false;
+        super("standalone");
     }
 
     /**
@@ -22,12 +15,9 @@ module.exports = class StandaloneGameScene extends GameScene {
     preload() {
         super.preload();
         this.load.image('card_back', 'assets/card_back.jpg');
-        this.load.image('style_card','assets/style_card_template.png');
-        this.load.image('hit_card','assets/hit_card_template.png');
         this.load.image('arrow_left','assets/left_arrow.png');
         this.load.image('arrow_right','assets/right_arrow.png');
         this.load.image('ready','assets/ready.png');
-        this.load.image('ready_hover','assets/ready2.png');
 
     }
 
