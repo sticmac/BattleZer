@@ -38,7 +38,6 @@ module.exports = class Round {
     }
 
     cbUpdate(update) {
-        console.log("update");
         update.players.forEach(playerUpdate => {
             const player = this.players[playerUpdate.id];
             player.player.health = playerUpdate.health;

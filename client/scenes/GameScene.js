@@ -104,8 +104,6 @@ module.exports = class GameScene extends Phaser.Scene {
         if (this.roundStep && this.round.finished) {
             this.round.reset();
             if (this.lastPlayedIndex != this.playersIds.length - 1) { // not last round
-
-                this.lastPlayedIndex++;
                 setTimeout(() => {
                     if (this.lastPlayedIndex + 1 < this.playersIds.length) { // if not present, too much rounds are launched
                         this.lastPlayedIndex++;
