@@ -23,7 +23,7 @@ module.exports = class DamageState extends RoundState {
                         player: data.id,
                         power: action.power,
                         action: "basic",
-                        value: choice.grid.choice
+                        target: choice.grid.choice
                     }
                 });
                 choice.undraw();

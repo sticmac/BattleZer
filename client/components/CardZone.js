@@ -13,7 +13,7 @@ module.exports = class CardZone {
 
         this.selectedHitCard = 0;
         this.selectedStyleCard = 0;
-        this.showBack = false;
+        this.showBack = true;
         this.readyButton = null;
 
         this.hitCards = [];
