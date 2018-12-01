@@ -24,15 +24,17 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
         this.socket.on("card distribution", (data) => {
             this.playerId = data.player.id;
-            this.choiceStep(data.player);
+            this.choiceAttack(data.player);
         });
+
+        this.socket.on("start round", (data) => console.log(data));
 
         this.socket.on("end round", (data) => this.choiceStep(data));
 
         this.socket.emit('join game', {game: window.gameId});
     }
 
-    choiceStep(player) {
+    choiceAttack(player) {
         this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200, this.game.config.width / 1920, this);
         this.cardZone.draw();
         this.cardZone.readyButton.on('pointerdown', () => {
