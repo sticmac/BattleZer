@@ -151,26 +151,6 @@ module.exports = class Game {
         return null;
     }
 
-    startRound() {
-        let attacks = [];
-        this.players.forEach(a => {
-            attacks.push({
-                id: a.id,
-                rank: null,
-                attack: this.cardsManager.generateAttack(a),
-                hitCard: a.hitPick,
-                styleCard: a.stylePick
-            });
-        });
-
-        attacks.sort(this.comparePriority);
-        for (let i = 0; i < this.players.length; i++) {
-            attacks[i].rank = i;
-        }
-
-        this.io.to(this.tableId).emit('start round', {game: this.name, players: attacks})
-    }
-
     comparePriority(a, b) {
         return b.attack.priority - a.attack.priority;
     }
