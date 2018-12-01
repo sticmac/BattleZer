@@ -13,36 +13,9 @@ module.exports = class ChoiceZone {
         this.grid = null;
     }
 
-    draw(data, playerData, state) {
-        let action = {};
-        action['power'] = data.attack.power;
-        action['range'] = data.attack.range;
-        action['codes'] = [];
-        let status;
-        switch (state) {
-            case 'before':
-                action['codes'] = data.attack.actions.before;
-                status = 'Effet d\'avant attaque';
-                break;
-            case 'damage':
-                action['codes'] = data.attack.actions.during;
-                status = 'Attaque';
-                break;
-            case 'after':
-                action['codes'] = data.attack.actions.after;
-                status = 'Effet d\'après attaque';
-                break;
-            default:
-                action = null;
-                break;
-        }
-        //console.log('power',action.power);
-        //console.log('range',action.range);
-        //action['codes'].forEach(c => console.log('action : '+c.action));
-
-
+    draw(action, initPosition, status) {
         this.container.setVisible(true);
-        this.grid = new ChoiceGrid(9, this.scene, action, playerData.player.position, action.range, this.reverseGrid);
+        this.grid = new ChoiceGrid(9, this.scene, action, initPosition, action.range, this.reverseGrid);
         this.container.add(this.grid.gridContainer);
 
         this.text1 = this.scene.add.text(0, -100, 'Choisis la cible pour l\'' + status, {

@@ -83,8 +83,10 @@ module.exports = class StandaloneGameScene extends GameScene {
 
         this.choiceZones[1].container.setScale(-1.0,-1.0);
 
+        let i = 0;
         this.playersIds.forEach((id) => {
             this.players[id].showAttack.undraw();
+            this.players[id].choiceZone = this.choiceZones[i++];
         });
         if (this.round === null) {
             this.round = new Round(this.gameId, this.players, this.socket, this.choiceZones);

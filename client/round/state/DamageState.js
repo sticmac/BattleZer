@@ -8,20 +8,28 @@ module.exports = class DamageState extends RoundState {
         this.value = 'damage'
     }
 
-    run(game, id, actions, value) {
-        console.log('--> id',id);
+    run(game, data, initPosition, choice) {
+        let action = {};
+        action['range'] = data.attack.range;
+        action['power'] = data.attack.power;
+        let status = 'Attaque';
 
-        console.log('--> actions',actions);
-        actions.codes.forEach(c => {
-            this.context.socket.emit('player attack', {
-                game: game,
-                attack : {
-                    player: id,
-                    action: c.action,
-                    value: value,
-                    power : actions.power
-                }
-            });
+        choice.draw(action, initPosition, status);
+        choice.readyButton.on('pointerdown', () => {
+            if (choice.grid.choice) {
+                this.context.socket.emit('player attack', {
+                    game: game,
+                    attack: {
+                        player: data.id,
+                        power: action.power,
+                        action: "basic",
+                        value: choice.grid.choice
+                    }
+                });
+                choice.undraw();
+            } else {
+                console.log("damage choice pas ok");
+            }
         });
 
     }

@@ -27,18 +27,10 @@ module.exports = class Round {
         }
         if (this.state !== undefined) {
             this.state.sayWhoIAm();
-            let z = this.choiceZones[this.currentIndex];
-            z.draw(this.attacks[this.currentIndex],
-                this.players[Object.keys(this.players)[this.currentIndex]],
-                this.state.value);
-            z.readyButton.on('pointerdown', () => {
-                if (z.grid.choice) {
-                    this.state.run(this.game, this.players[Object.keys(this.players)[this.currentIndex]].player.id, z.grid.actions, z.grid.choice);
-                    z.undraw();
-                } else
-                    console.log('choice pas ok');
-            });
+            const player = this.players[this.attacks[this.currentIndex].id];
+            console.log(player);
 
+            this.state.run(this.game, this.attacks[this.currentIndex], player.player.position, player.choiceZone);
 
         } else {
             this.finished = true;
@@ -46,6 +38,7 @@ module.exports = class Round {
     }
 
     cbUpdate(update) {
+        console.log("update");
         update.players.forEach(playerUpdate => {
             const player = this.players[playerUpdate.id];
             player.player.health = playerUpdate.health;
