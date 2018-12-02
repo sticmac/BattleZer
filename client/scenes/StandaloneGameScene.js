@@ -73,6 +73,27 @@ module.exports = class StandaloneGameScene extends GameScene {
     }
 
     runRound() {
+        this.round.reset();
+        console.log(this.lastPlayedIndex);
+        if (this.lastPlayedIndex < this.playersIds.length) { // not last round
+            setTimeout(() => {
+                if (this.lastPlayedIndex + 1 <= this.playersIds.length) { // if not present, too much rounds are launched
+                    console.log("next round " + this.lastPlayedIndex);
+                    this.round.start(this.lastPlayedIndex++, this.lastChosenAttacks);
+                }
+            }, 1000);
+        } else { // last round finished
+            console.log("send end round after " + this.lastPlayedIndex);
+            this.socket.emit('end round', {
+                game: this.gameId
+            });
+            this.roundStep = false;
+        }
+    }
+
+    startRoundStep() {
+        this.lastPlayedIndex = 0;
+
         this.choiceZones = [];
 
         this.choiceZones.push(new ChoiceZone(this.scene_width / 8, this.scene_height * (14/16),
@@ -88,11 +109,8 @@ module.exports = class StandaloneGameScene extends GameScene {
             this.players[id].showAttack.undraw();
             this.players[id].choiceZone = this.choiceZones[i++];
         });
-        if (this.round === null) {
-            this.round = new Round(this.gameId, this.players, this.socket, this.choiceZones);
-        }
-        this.round.start(0, this.lastChosenAttacks);
-        this.lastPlayedIndex = 0; // player with highest priority starts
         this.roundStep = true;
+
+        this.runRound();
     }
 };

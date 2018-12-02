@@ -106,8 +106,6 @@ module.exports = class GameScene extends Phaser.Scene {
                 this.displayAttacksOfPlayer(i);
             }
 
-
-
         });
 
         this.socket.on("end round", (data) => this.choiceStep(data.players));
@@ -133,32 +131,7 @@ module.exports = class GameScene extends Phaser.Scene {
 
         //update round
         if (this.roundStep && this.round.finished) {
-            this.round.reset();
-            if (this.lastPlayedIndex !== this.playersIds.length - 1) { // not last round
-                setTimeout(() => {
-                    if (this.lastPlayedIndex + 1 < this.playersIds.length) { // if not present, too much rounds are launched
-                        this.lastPlayedIndex++;
-
-                        new StartRoundTransition(
-                            this,
-                            this.lastChosenAttacks,
-                            1,
-                            this.scene_width / 2,
-                            this.scene_height / 2,
-                            () => {
-                                this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);
-                            });
-                        //this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);
-
-                    }
-                }, 1000);
-            } else { // last round finished
-                console.log("send end round after " + this.lastPlayedIndex);
-                this.socket.emit('end round', {
-                    game: this.gameId
-                });
-                this.roundStep = false;
-            }
+            this.runRound();
         }
     }
 
@@ -174,5 +147,7 @@ module.exports = class GameScene extends Phaser.Scene {
         //this.players[id].showAttack.draw();
     }
 
+    startRoundStep() {
 
+    }
 };
