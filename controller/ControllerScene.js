@@ -22,12 +22,22 @@ module.exports = class ControllerScene extends Phaser.Scene {
             console.info(data)
         });
 
+        this.socket.on("ready to start", (data) => {
+            this.player = data.player;
+        });
+
         this.socket.on("card distribution", (data) => {
             this.playerId = data.player.id;
             this.choiceAttack(data.player);
         });
 
-        this.socket.on("start round", (data) => console.log(data));
+        this.socket.on("start round", (data) => this.startRound(data));
+
+        this.socket.on("before effects", (data) => console.log(data));
+
+        this.socket.on("attack", (data) => console.log(data));
+
+        this.socket.on("after effects", (data) => console.log(data));
 
         this.socket.on("end round", (data) => this.choiceStep(data));
 
@@ -53,5 +63,9 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
             this.cardZone.container.setVisible(false);
         });
+    }
+
+    startRound(data) {
+        console.log(data);
     }
 }

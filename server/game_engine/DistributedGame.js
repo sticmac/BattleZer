@@ -2,6 +2,7 @@ const Player = require('./Player');
 const Game = require('./Game');
 const ConnectionState = require('./states/ConnectionState');
 const PicksState = require('./states/PicksState');
+const Round = require('./Round');
 
 module.exports = class DistributedGame extends Game {
 
@@ -90,28 +91,29 @@ module.exports = class DistributedGame extends Game {
     }
 
     startRound() {
-        let attacks = [];
+        this.attacks = [];
         this.players.forEach(a => {
-            attacks.push({
+            const attack = {
                 id: a.id,
                 rank: null,
                 attack: this.cardsManager.generateAttack(a),
                 hitCard: a.hitPick,
                 styleCard: a.stylePick
-            });
-            this.io.to(a.id).emit('start round', {game: this.game, players: attacks});
+            }
+            this.attacks.push(attack);
         });
 
-        attacks.sort(this.comparePriority);
+        this.attacks.sort(this.comparePriority);
         for (let i = 0; i < this.players.length; i++) {
-            attacks[i].rank = i;
+            this.attacks[i].rank = i;
         }
 
-        this.io.to(this.tableId).emit('start round', {game: this.name, players: attacks})
+        //this.io.to(this.attacks[0].id).emit('start round', {game: this.game, player: this.attacks[0]});
+        this.round = new Round(this, this.io);
+        this.runRoundForNextAttack();
     }
 
     endRound() {
-
         // clear and apply end round effects
         this.players.forEach(p => {
             p.status['protect'].duration = 0;
@@ -138,7 +140,6 @@ module.exports = class DistributedGame extends Game {
             players: players_data
         });
 
-
         console.log('[4] ' + this.name + ' ends round #' + this.currentRound);
         this.players.forEach(p => p.hasPicked = false);
         this.state = new PicksState(this);
@@ -149,5 +150,18 @@ module.exports = class DistributedGame extends Game {
         this.state.value = 'over';
     }
 
+    updateRound() {
+        if (!this.round.finished) {
+            this.round.runNextState();
+        } else if (this.attacks.length > 0) {
+            this.runRoundForNextAttack();
+        } else {
+            this.endRound();
+        }
+    }
 
+    runRoundForNextAttack() {
+        const attack = this.attacks.shift();
+        this.round.start(attack)
+    }
 };

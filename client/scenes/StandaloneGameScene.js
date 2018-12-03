@@ -92,6 +92,8 @@ module.exports = class StandaloneGameScene extends GameScene {
     }
 
     startRoundStep() {
+        if (!this.round)
+            this.round = new Round(this.gameId, this.players, this.socket, this.choiceZones);
         this.lastPlayedIndex = 0;
 
         this.choiceZones = [];

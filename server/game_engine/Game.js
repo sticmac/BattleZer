@@ -158,6 +158,10 @@ module.exports = class Game {
     closeGame() {
     }
 
+    updateRound() {
+
+    }
+
 }
 
 
