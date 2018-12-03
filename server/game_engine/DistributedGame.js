@@ -35,6 +35,18 @@ module.exports = class DistributedGame extends Game {
         }
     }
 
+    applyEffect(e) {
+        super.applyEffect(e);
+
+        if (this.round) this.round.runNextState(); //next state for round
+    }
+
+    applyAttack(e) {
+        super.applyAttack(e);
+
+        if (this.round) this.round.runNextState(); //next state for round
+    }
+
     setReady() {
         let players_data = [];
         this.players.forEach(a => {
