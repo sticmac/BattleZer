@@ -8,6 +8,7 @@ const DisplayText = require('../components/DisplayText');
 const Round = require('../round/Round');
 const io = require('socket.io-client');
 const DeckTransition = require('../transitions/Distribution');
+const ReadyTransition = require('../transitions/Ready');
 
 module.exports = class GameScene extends Phaser.Scene {
     constructor(name) {
@@ -65,22 +66,26 @@ module.exports = class GameScene extends Phaser.Scene {
 
         this.socket.on("card distribution", (data) => {
 
-            new DeckTransition(this,
-                5,
+            new ReadyTransition(this,
                 this.scene_width / 2,
                 this.scene_height / 2,
-                () => this.choiceStep(data.players),
-                [
-                    this.scene_width / 4,
-                    this.scene_height * 7 / 8,
-                    this.scene_width * 3 / 4-100,
-                    this.scene_height / 8
-                ]
-            );
-
+                () =>
+                    new DeckTransition(this,
+                        5,
+                        this.scene_width / 2,
+                        this.scene_height / 2,
+                        () => this.choiceStep(data.players),
+                        [
+                            this.scene_width / 4,
+                            this.scene_height * 7 / 8,
+                            this.scene_width * 3 / 4 - 100,
+                            this.scene_height / 8
+                        ]
+                    ));
         });
 
-        this.socket.on("start round", (data) => {this.lastChosenAttacks = data.players;
+        this.socket.on("start round", (data) => {
+            this.lastChosenAttacks = data.players;
             for (let i = 0; i < this.lastChosenAttacks.length; ++i) {
                 this.displayAttacksOfPlayer(i);
             }

@@ -39,7 +39,7 @@ module.exports = class StartScene extends Phaser.Scene {
             { fontFamily: 'Arial', fontSize: 64, color: '#000' }).setOrigin(0.5);
         container.add(bg);
         container.add(text);
-        container.setInteractive(new Phaser.Geom.Circle(0, 0, 60), Phaser.Geom.Circle.Contains)
+        container.setInteractive(new Phaser.Geom.Circle(0, 0, 100), Phaser.Geom.Circle.Contains)
             .on("pointerover", () => {
                 bg.setFillStyle(bg.fillColor, 0.5);
             })
