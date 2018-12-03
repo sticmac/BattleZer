@@ -21,8 +21,8 @@ module.exports = class ShowAttack {
     draw() {
         this.container.removeAll();
         const cards = [
-            new Card(this.hitCard, -this.card_width * (3/4), 0, this.card_width, this.card_height, this.scene, 'card_back'),
-            new Card(this.styleCard, this.card_width * (3/4), 0, this.card_width, this.card_height, this.scene, 'card_back'),
+            new Card(this.hitCard, -this.card_width * (3/4)+20, 0, this.card_width, this.card_height, this.scene, 'card_back'),
+            new Card(this.styleCard, this.card_width * (3/4)-20, 0, this.card_width, this.card_height, this.scene, 'card_back'),
         ];
 
         for (let i = 0 ; i < cards.length ; i++) {

@@ -42,11 +42,9 @@ module.exports = class ChoiceGrid {
                         this.rectChoice.setFillStyle(0xFFA500);
                     }
                     this.choice = i;
-                    console.log(container);
                     this.rectChoice = this.gridContainer.list[i].list[0];
                     this.rectChoice.setFillStyle(0xA50000)
                 }
-                console.log('case : ',i, valid)
             });
             container.add(rect);
             this.gridContainer.add(container);

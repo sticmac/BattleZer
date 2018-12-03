@@ -9,6 +9,7 @@ const Round = require('../round/Round');
 const io = require('socket.io-client');
 const DeckTransition = require('../transitions/Distribution');
 const ReadyTransition = require('../transitions/Ready');
+const StartRoundTransition = require('../transitions/StartRound');
 
 module.exports = class GameScene extends Phaser.Scene {
     constructor(name) {
@@ -85,20 +86,24 @@ module.exports = class GameScene extends Phaser.Scene {
         });
 
         this.socket.on("start round", (data) => {
+
+            console.log("dab on haters");
+
             this.lastChosenAttacks = data.players;
+
+            new StartRoundTransition(
+                this,
+                data.players,
+                this.scene_width / 2,
+                this.scene_height / 2,
+                () => {
+                    this.runRound();
+                });
+
             for (let i = 0; i < this.lastChosenAttacks.length; ++i) {
                 this.displayAttacksOfPlayer(i);
             }
 
-            // Shows who plays first
-            const text = new DisplayText(this.lastChosenAttacks[0].id + " joue en premier", this.scene_width * (1 / 3), this.scene_height * (1 / 2), this);
-            text.draw();
-
-            setTimeout(() => {
-                text.undraw();
-
-                this.runRound();
-            }, 1000);
         });
 
         this.socket.on("end round", (data) => this.choiceStep(data.players));
@@ -150,18 +155,10 @@ module.exports = class GameScene extends Phaser.Scene {
     displayAttacksOfPlayer(i) {
         const id = this.lastChosenAttacks[i].id;
 
-        //and show attack of related player
         this.players[id].showAttack.setHitCard(this.lastChosenAttacks[i].hitCard);
         this.players[id].showAttack.setStyleCard(this.lastChosenAttacks[i].styleCard);
         this.players[id].showAttack.draw();
     }
 
-    test() {
-        alert('c bon ca marche lul')
-    }
-
-    choice(data) {
-        this.choiceStep(data);
-    }
 
 };

@@ -14,8 +14,6 @@ module.exports = class Round {
     start(i, attacks) {
         this.currentIndex = i;
         this.attacks = attacks;
-        console.log("start " + i);
-        console.log(this.attacks);
 
         this.state = new BeforeEffectState(this);
         this.runNextState();
@@ -26,9 +24,7 @@ module.exports = class Round {
             this.state.next();
         }
         if (this.state !== undefined) {
-            this.state.sayWhoIAm();
             const player = this.players[this.attacks[this.currentIndex].id];
-            console.log(player);
 
             this.state.run(this.game, this.attacks[this.currentIndex], player.player.position, player.choiceZone);
 
