@@ -35,10 +35,10 @@ module.exports = class DamageState extends RoundState {
         this.sayWhoIAm();
         this.socket.to(attack.id).emit('attack', {
             game: this.game.name,
-            damage: {
+            attack: {
                 action: "basic",
                 power: attack.attack.power,
-                range: attack.attack.range
+                value: attack.attack.range
             }
         });
     }

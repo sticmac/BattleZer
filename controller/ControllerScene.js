@@ -39,11 +39,11 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
         this.socket.on("start round", (data) => this.startRound(data));
 
-        this.socket.on("before effects", (data) => this.applyEffects(data.effects));
+        this.socket.on("before effects", (data) => this.applyEffects(data.effects, "Effet d'avant attaque"));
 
-        this.socket.on("attack", (data) => console.log(data));
+        this.socket.on("attack", (data) => this.applyAttack(data.attack));
 
-        this.socket.on("after effects", (data) => console.log(data));
+        this.socket.on("after effects", (data) => this.applyEffects(data.effects, "Effet d'après attaque"));
 
         this.socket.on("end round", (data) => this.choiceStep(data));
 
@@ -75,10 +75,9 @@ module.exports = class ControllerScene extends Phaser.Scene {
         console.log(data);
     }
 
-    applyEffects(effects) {
+    applyEffects(effects, status) {
         const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, false);
-        choiceZone.draw(effects[0], this.player.position, "Effet d'avant attaque");
-        console.log(choiceZone.grid);
+        choiceZone.draw(effects[0], this.player.position, status);
         choiceZone.readyButton.on("pointerdown", () => {
             if (choiceZone.grid.choice) {
                 this.socket.emit('player effect', {
@@ -87,6 +86,25 @@ module.exports = class ControllerScene extends Phaser.Scene {
                         player: this.playerId,
                         action: choiceZone.grid.actions.action,
                         value: choiceZone.grid.choice
+                    }
+                });
+            }
+            choiceZone.undraw();
+        });
+    }
+
+    applyAttack(attack) {
+        const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, false);
+        choiceZone.draw(attack, this.player.position, "Attaque");
+        choiceZone.readyButton.on("pointerdown", () => {
+            if (choiceZone.grid.choice) {
+                this.socket.emit('player attack', {
+                    game: window.gameId,
+                    attack: {
+                        player: this.playerId,
+                        action: choiceZone.grid.actions.action,
+                        power: attack.power,
+                        target: choiceZone.grid.choice
                     }
                 });
             }
