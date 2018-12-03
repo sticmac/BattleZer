@@ -1,5 +1,6 @@
 const Phaser = require('phaser');
 const CardZone = require('./components/CardZone');
+const ChoiceZone = require('./components/ChoiceZone');
 const io = require('socket.io-client');
 
 module.exports = class ControllerScene extends Phaser.Scene {
@@ -33,7 +34,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
         this.socket.on("start round", (data) => this.startRound(data));
 
-        this.socket.on("before effects", (data) => console.log(data));
+        this.socket.on("before effects", (data) => this.applyEffects(data.effects));
 
         this.socket.on("attack", (data) => console.log(data));
 
@@ -67,5 +68,24 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
     startRound(data) {
         console.log(data);
+    }
+
+    applyEffects(effects) {
+        const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, false);
+        choiceZone.draw(effects[0], this.player.position, "Effet d'avant attaque");
+        console.log(choiceZone.grid);
+        choiceZone.readyButton.on("pointerdown", () => {
+            if (choiceZone.grid.choice) {
+                this.socket.emit('player effect', {
+                    game: window.gameId,
+                    attack: {
+                        player: this.playerId,
+                        action: choiceZone.grid.actions.action,
+                        value: choiceZone.grid.choice
+                    }
+                });
+            }
+            choiceZone.undraw();
+        });
     }
 }
