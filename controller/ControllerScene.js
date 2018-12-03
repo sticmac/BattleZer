@@ -32,6 +32,11 @@ module.exports = class ControllerScene extends Phaser.Scene {
             this.choiceAttack(data.player);
         });
 
+        this.socket.on("update player", (data) => {
+            this.player.health = data.health;
+            this.player.position = data.position;
+        });
+
         this.socket.on("start round", (data) => this.startRound(data));
 
         this.socket.on("before effects", (data) => this.applyEffects(data.effects));

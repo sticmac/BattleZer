@@ -47,6 +47,29 @@ module.exports = class DistributedGame extends Game {
         if (this.round) this.round.runNextState(); //next state for round
     }
 
+    sendPlayersUpdate() {
+        let obj = {};
+        obj['game'] = this.name;
+        obj['players'] = [];
+        let deads = [];
+
+        this.players.forEach(player => {
+            if (player.health === 0) deads.push(player);
+
+            const p = {
+                id: player.id,
+                health: player.health,
+                position: player.position
+            };
+
+            obj['players'].push(p);
+
+            this.io.to(p.id).emit('update player', p);
+        });
+
+        this.io.to(this.tableId).emit('update players', obj)
+    }
+
     setReady() {
         let players_data = [];
         this.players.forEach(a => {

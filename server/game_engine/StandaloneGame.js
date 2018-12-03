@@ -84,6 +84,25 @@ module.exports = class StandaloneGame extends Game {
         this.currentRound++;
     }
 
+    sendPlayersUpdate() {
+        let obj = {};
+        obj['game'] = this.name;
+        obj['players'] = [];
+        let deads = [];
+
+        this.players.forEach(player => {
+            if (player.health === 0) deads.push(player);
+
+            obj['players'].push({
+                id: player.id,
+                health: player.health,
+                position: player.position
+            })
+        });
+
+        this.io.to(this.tableId).emit('update players', obj)
+    }
+
     setReady() {
         let players_data = [];
         this.players.forEach(a => {
