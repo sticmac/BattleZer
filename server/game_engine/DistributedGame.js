@@ -38,13 +38,13 @@ module.exports = class DistributedGame extends Game {
     applyEffect(e) {
         super.applyEffect(e);
 
-        if (this.round) this.round.runNextState(); //next state for round
+        if (this.round) this.updateRound();
     }
 
     applyAttack(e) {
         super.applyAttack(e);
 
-        if (this.round) this.round.runNextState(); //next state for round
+        if (this.round) this.updateRound();
     }
 
     sendPlayersUpdate() {
@@ -187,10 +187,13 @@ module.exports = class DistributedGame extends Game {
 
     updateRound() {
         if (!this.round.finished) {
+            console.log("run next state");
             this.round.runNextState();
         } else if (this.attacks.length > 0) {
+            console.log("run next attack");
             this.runRoundForNextAttack();
         } else {
+            console.log("end round");
             this.endRound();
         }
     }

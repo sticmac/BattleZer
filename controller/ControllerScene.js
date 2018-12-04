@@ -45,7 +45,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
         this.socket.on("after effects", (data) => this.applyEffects(data.effects, "Effet d'après attaque"));
 
-        this.socket.on("end round", (data) => this.choiceStep(data));
+        this.socket.on("end round", (data) => this.choiceAttack(data));
 
         this.socket.emit('join game', {game: window.gameId});
     }
@@ -76,6 +76,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     applyEffects(effects, status) {
+        console.log("apply effects")
         const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, false);
         choiceZone.draw(effects[0], this.player.position, status);
         choiceZone.readyButton.on("pointerdown", () => {
@@ -94,6 +95,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     applyAttack(attack) {
+        console.log("apply attack")
         const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, false);
         choiceZone.draw(attack, this.player.position, "Attaque");
         choiceZone.readyButton.on("pointerdown", () => {

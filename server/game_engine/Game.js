@@ -49,7 +49,6 @@ module.exports = class Game {
     }
 
     applyEffect(e) {
-        console.log(e)
         let player = this.getPlayerById(e.player);
         console.log('#', e.player, '->', e.action + ' effect');
 

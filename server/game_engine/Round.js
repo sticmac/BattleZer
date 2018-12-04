@@ -3,12 +3,13 @@ const BeforeEffectState = require('./round_states/BeforeEffectState');
 module.exports = class Round {
     constructor(game, socket) {
         this.game = game;
-        this.state = new BeforeEffectState(this, this.game, socket);
         this.finished = false;
         this.socket = socket;
     }
 
     start(attack) {
+        this.finished = false;
+        this.state = new BeforeEffectState(this, this.game, this.socket);
         this.attack = attack;
         if (this.state.canRun(this.attack)) {
             this.state.run(this.attack, this.socket);
@@ -27,6 +28,7 @@ module.exports = class Round {
             this.state.run(this.attack, this.socket);
         } else {
             this.finished = true;
+            this.game.updateRound();
         }
     }
 }
