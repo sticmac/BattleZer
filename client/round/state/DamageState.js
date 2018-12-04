@@ -16,7 +16,7 @@ module.exports = class DamageState extends RoundState {
 
         choice.draw(action, initPosition, status);
         choice.readyButton.on('pointerdown', () => {
-            if (choice.grid.choice) {
+            if (choice.grid.choice !== null) {
                 this.context.socket.emit('player attack', {
                     game: game,
                     attack: {

@@ -16,7 +16,7 @@ module.exports = class BeforeEffectState extends RoundState {
 
         choice.draw(action, initPosition, status);
         choice.readyButton.on('pointerdown', () => {
-            if (choice.grid.choice) {
+            if (choice.grid.choice !== null) {
                 choice.grid.actions.codes.forEach(c => {
                     this.context.socket.emit('player effect', {
                         game: game,

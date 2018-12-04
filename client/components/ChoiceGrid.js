@@ -35,6 +35,7 @@ module.exports = class ChoiceGrid {
             rect.setInteractive();
             rect.on('pointerdown', () => {
                 if(valid) {
+                    console.log(i);
                     if (this.rectChoice) {
                         if (this.choice === this.position) {
                             this.rectChoice.setFillStyle(0x32CD32);
