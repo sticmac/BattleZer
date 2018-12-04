@@ -32,7 +32,7 @@ module.exports = class AfterEffectState extends RoundState {
         });*/
 
         this.sayWhoIAm();
-        socket.to(attack).emit('after effect', {
+        this.socket.to(attack.id).emit('after effects', {
             game: this.game.name,
             effects: attack.attack.actions.after
         });
