@@ -143,7 +143,8 @@ module.exports = class DistributedGame extends Game {
             this.attacks[i].rank = i;
         }
 
-        //this.io.to(this.attacks[0].id).emit('start round', {game: this.game, player: this.attacks[0]});
+        this.io.to(this.tableId).emit('start round', {game: this.name, players: this.attacks})
+
         this.round = new Round(this, this.io);
         this.runRoundForNextAttack();
     }
