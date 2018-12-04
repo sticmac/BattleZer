@@ -105,7 +105,6 @@ module.exports = class GameScene extends Phaser.Scene {
             for (let i = 0; i < this.lastChosenAttacks.length; ++i) {
                 this.displayAttacksOfPlayer(i);
             }
-
         });
 
         this.socket.on("end round", (data) => this.choiceStep(data.players));
@@ -144,7 +143,6 @@ module.exports = class GameScene extends Phaser.Scene {
 
         this.players[id].showAttack.setHitCard(this.lastChosenAttacks[i].hitCard);
         this.players[id].showAttack.setStyleCard(this.lastChosenAttacks[i].styleCard);
-        //this.players[id].showAttack.draw();
     }
 
     startRoundStep() {
