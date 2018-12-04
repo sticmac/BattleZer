@@ -77,7 +77,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
     applyEffects(effects, status) {
         console.log("apply effects")
-        const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, false);
+        const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, this.player.team % 2 != 0);
         choiceZone.draw(effects[0], this.player.position, status);
         choiceZone.readyButton.on("pointerdown", () => {
             if (choiceZone.grid.choice) {
@@ -96,7 +96,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
     applyAttack(attack) {
         console.log("apply attack")
-        const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, false);
+        const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, this.player.team % 2 != 0);
         choiceZone.draw(attack, this.player.position, "Attaque");
         choiceZone.readyButton.on("pointerdown", () => {
             if (choiceZone.grid.choice) {
