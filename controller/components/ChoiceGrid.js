@@ -21,16 +21,15 @@ module.exports = class ChoiceGrid {
 
             let color;
             let valid = false;
-            if (this.position === i) color = 0x32CD32;
-            else if (i > this.position && i <= (this.position + this.range)){
+            if (this.position === i) {
+                valid = true;
+                color = 0x32CD32;
+            }
+            else if (Math.abs(this.position - i) <= this.range) {
                 valid = true;
                 color = 0xFFA500;
             }
-            else if (i < this.position && i >= (this.position - this.range)){
-                valid = true;
-                color = 0xFFA500;
-            }
-            else color = 0xA9A9A9   ;
+            else color = 0xA9A9A9;
 
             const container = this.scene.add.container(i * 55, 0);
             const rect = this.scene.add.rectangle(0, 0, 50, 100, color)
@@ -39,7 +38,11 @@ module.exports = class ChoiceGrid {
             rect.on('pointerdown', () => {
                 if(valid) {
                     if (this.rectChoice) {
-                        this.rectChoice.setFillStyle(0xFFA500);
+                        if (this.choice === this.position) {
+                            this.rectChoice.setFillStyle(0x32CD32);
+                        } else {
+                            this.rectChoice.setFillStyle(0xFFA500);
+                        }
                     }
                     this.choice = i;
                     this.rectChoice = this.gridContainer.list[i].list[0];
