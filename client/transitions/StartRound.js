@@ -1,20 +1,23 @@
+const ShowAttack = require('../components/ShowAttack');
+
 module.exports = class StartRoundTransition {
 
-    constructor(scene, data, x, y, callback) {
+    constructor(scene, data, currentPlayer, x, y, callback) {
         this.scene = scene;
         this.x = x;
         this.y = y;
         this.container = scene.add.container(0, 0);
         this.callback = callback;
+        this.currentPlayer = currentPlayer;
 
         this.data = data;
-        console.log('DATA',data);
+        console.log('DATA', data);
         this.draw();
 
     }
 
     draw() {
-        let text1 = this.scene.add.text(this.x, this.y + 90, this.data[0].id + ' joue en 1er',
+        let text1 = this.scene.add.text(this.x, this.y + 70, this.data[this.currentPlayer].id + ' joue en 1er',
             {
                 backgroundColor: "#fff",
                 padding: 20,
@@ -23,7 +26,7 @@ module.exports = class StartRoundTransition {
                 fontSize: 50
             }).setOrigin(0.5);
 
-        let text2 = this.scene.add.text(this.x, this.y - 90, this.data[0].id + ' joue en 1er',
+        let text2 = this.scene.add.text(this.x, this.y - 70, this.data[this.currentPlayer].id + ' joue en 1er',
             {
                 backgroundColor: "#fff",
                 padding: 20,
@@ -32,7 +35,7 @@ module.exports = class StartRoundTransition {
                 fontSize: 50
             }).setOrigin(0.5).setScale(-1);
 
-        let subtext1 = this.scene.add.text(this.x, this.y + 170, 'Priorité : '+this.data[0].attack.priority,
+        let subtext1 = this.scene.add.text(this.x, this.y + 150, 'priorité : ' + this.data[0].attack.priority,
             {
                 backgroundColor: "#fff",
                 padding: 20,
@@ -41,7 +44,7 @@ module.exports = class StartRoundTransition {
                 fontSize: 50
             }).setOrigin(0.5);
 
-        let subtext2 = this.scene.add.text(this.x, this.y - 170, 'Priorité : '+this.data[0].attack.priority,
+        let subtext2 = this.scene.add.text(this.x, this.y - 150, 'priorité : ' + this.data[0].attack.priority,
             {
                 backgroundColor: "#fff",
                 padding: 20,
@@ -74,11 +77,25 @@ module.exports = class StartRoundTransition {
         this.container.add(subtext1);
         this.container.add(subtext2);
 
+
+        let s = new ShowAttack(this.x, this.y * 5 / 3, 170, 240, false, this.scene);
+        s.setHitCard(this.data[this.currentPlayer].hitCard);
+        s.setStyleCard(this.data[this.currentPlayer].styleCard);
+        s.draw();
+        this.container.add(s.container);
+
+        let s2 = new ShowAttack(this.x, this.y * 3 / 10, 170, 240, false, this.scene);
+        s2.setHitCard(this.data[this.currentPlayer].hitCard);
+        s2.setStyleCard(this.data[this.currentPlayer].styleCard);
+        s2.draw();
+        this.container.add(s2.container.setScale(-1));
+
     }
 
 
     undraw() {
         this.container.setVisible(false);
+
     }
 
 };

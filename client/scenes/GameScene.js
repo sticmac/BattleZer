@@ -87,22 +87,26 @@ module.exports = class GameScene extends Phaser.Scene {
 
         this.socket.on("start round", (data) => {
 
-            console.log("dab on haters");
 
             this.lastChosenAttacks = data.players;
 
             new StartRoundTransition(
                 this,
                 data.players,
+                0,
                 this.scene_width / 2,
                 this.scene_height / 2,
                 () => {
                     this.runRound();
                 });
 
+
+
             for (let i = 0; i < this.lastChosenAttacks.length; ++i) {
                 this.displayAttacksOfPlayer(i);
             }
+
+
 
         });
 
@@ -157,7 +161,7 @@ module.exports = class GameScene extends Phaser.Scene {
 
         this.players[id].showAttack.setHitCard(this.lastChosenAttacks[i].hitCard);
         this.players[id].showAttack.setStyleCard(this.lastChosenAttacks[i].styleCard);
-        this.players[id].showAttack.draw();
+        //this.players[id].showAttack.draw();
     }
 
 

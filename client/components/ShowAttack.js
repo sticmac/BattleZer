@@ -21,14 +21,22 @@ module.exports = class ShowAttack {
     draw() {
         this.container.removeAll();
         const cards = [
-            new Card(this.hitCard, -this.card_width * (3/4)+20, 0, this.card_width, this.card_height, this.scene, 'card_back'),
-            new Card(this.styleCard, this.card_width * (3/4)-20, 0, this.card_width, this.card_height, this.scene, 'card_back'),
+            new Card(this.hitCard, -this.card_width * (3/4)+40, 0, this.card_width, this.card_height, this.scene, 'card_back'),
+            new Card(this.styleCard, this.card_width * (3/4)-40, 0, this.card_width, this.card_height, this.scene, 'card_back'),
         ];
 
-        for (let i = 0 ; i < cards.length ; i++) {
-            cards[i].draw(false);
+
+        cards[0].drawWithAngle(-0.15);
+        cards[1].drawWithAngle(0.15);
+        this.container.add(cards[0].container);
+        this.container.add(cards[1].container);
+
+        /*for (let i = 0 ; i < cards.length ; i++) {
+            cards[i].drawWithAngle(0.5);
             this.container.add(cards[i].container);
-        }
+        }*/
+
+
 
         if (this.reverse) {
             this.container.setScale(-1.0);

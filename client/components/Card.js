@@ -71,7 +71,7 @@ module.exports = class Card {
                 bg.setTint(0x777777);
 
                 this.container.add(bg);
-                this.container.add(this.createStyleInfoContainer(this.width/2+29, -30, true).setScale(-1.0, -1.0));
+                this.container.add(this.createStyleInfoContainer(this.width / 2 + 29, -30, true).setScale(-1.0, -1.0));
                 this.container.add(this.createStyleInfoContainer(-53, -30, true));
 
             }
@@ -85,6 +85,31 @@ module.exports = class Card {
 
         }
 
+    }
+
+    drawWithAngle(angle) {
+        this.container.removeAll();
+        this.container.rotation = angle;
+
+        if (this.cardModel.type === 'Coup') {
+            const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+            bg.displayHeight = this.height;
+            bg.displayWidth = this.width;
+
+            this.container.add(bg);
+            this.container.add(this.createHitInfoContainer(-this.width / 2, 0, false).setScale(-1.0, -1.0));
+            this.container.add(this.createHitInfoContainer(this.width / 2, 0, false));
+
+        } else {
+            const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+            bg.displayHeight = this.height;
+            bg.displayWidth = this.width;
+
+            this.container.add(bg);
+            this.container.add(this.createStyleInfoContainer(this.width / 2, 0, false).setScale(-1.0, -1.0));
+            this.container.add(this.createStyleInfoContainer(-this.width / 2, 0, false));
+
+        }
     }
 
 
