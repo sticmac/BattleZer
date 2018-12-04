@@ -30,10 +30,12 @@ module.exports = class DeckTransition {
         for (let j = 0; j < this.targets.length / 2; j++) {
             let x = this.targets[j * 2];
             let y = this.targets[j * 2 + 1];
-            delay = 1000;
+            //delay = 1000;
+            delay = 0;
 
             for (let i = 0; i < this.count; i++) {
-                delay += 100;
+                //delay += 100;
+                delay += 10;
 
                 let card = this.scene.add.image(this.deckX + i*5 - 100, this.deckY + i*5, 'card_back')
                     .setScale(0.3);

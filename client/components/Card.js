@@ -17,25 +17,14 @@ module.exports = class Card {
         this.container.removeAll();
 
         if (!showBack) {
-            if (this.cardModel.type === 'Coup') {
-                const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
-                bg.displayHeight = this.height;
-                bg.displayWidth = this.width;
+            const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'hit_card');
+            bg.displayHeight = this.height;
+            bg.displayWidth = this.width;
 
-                this.container.add(bg);
-                this.container.add(this.createHitInfoContainer(-this.width / 2, 0, false).setScale(-1.0, -1.0));
-                this.container.add(this.createHitInfoContainer(this.width / 2, 0, false));
+            this.container.add(bg);
+            this.container.add(this.createHitInfoContainer(-this.width / 2, 0, false).setScale(-1.0, -1.0));
+            this.container.add(this.createHitInfoContainer(this.width / 2, 0, false));
 
-            } else {
-                const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
-                bg.displayHeight = this.height;
-                bg.displayWidth = this.width;
-
-                this.container.add(bg);
-                this.container.add(this.createStyleInfoContainer(this.width / 2, 0, false).setScale(-1.0, -1.0));
-                this.container.add(this.createStyleInfoContainer(-this.width / 2, 0, false));
-
-            }
 
         } else {
 
@@ -48,7 +37,34 @@ module.exports = class Card {
 
     }
 
-    drawBehind(showBack) {
+    drawBehind(showBack, shift) {
+        this.container.removeAll();
+
+
+        if (!showBack) {
+
+            const bg = this.scene.add.image(shift, -45, 'hit_card');
+            bg.displayHeight = this.height;
+            bg.displayWidth = this.width;
+            bg.setTint(0x777777);
+
+            this.container.add(bg);
+            this.container.add(this.createHitInfoContainer((-this.width / 2) + shift, -45, true).setScale(-1.0, -1.0));
+            this.container.add(this.createHitInfoContainer((this.width / 2) + shift, -45, true));
+
+
+        } else {
+
+            const bg = this.scene.add.image(0, 0, 'card_back');
+            bg.displayHeight = this.height;
+            bg.displayWidth = this.width;
+            this.container.add(bg);
+
+        }
+
+    }
+
+    drawBehindRight(showBack) {
         this.container.removeAll();
 
         if (!showBack) {

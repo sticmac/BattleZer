@@ -13,36 +13,52 @@ module.exports = class CardZone {
 
         this.selectedHitCard = 0;
         this.selectedStyleCard = 0;
-        this.showBack = true;
+        this.showBack = false;
         this.readyButton = null;
 
         this.hitCards = [];
         this.styleCards = [];
         for (let i = 0; i < hitCardsModels.length; i++) {
-            this.hitCards.push(new Card(hitCardsModels[i], 200, 0, cardWidth, cardHeight, scene, 'card_back'));
-            this.styleCards.push(new Card(styleCardsModels[i], cardWidth + 250, 0, cardWidth, cardHeight, scene, 'card_back'));
+            this.hitCards.push(new Card(hitCardsModels[i], 180, 0, cardWidth, cardHeight, scene, 'card_back'));
+            this.styleCards.push(new Card(styleCardsModels[i], 620, 0, cardWidth, cardHeight, scene, 'card_back'));
         }
         this.showTouch = 0;
+
+        this.shift = cardWidth / 2;
     }
 
 
     drawInterface() {
         this.container.removeAll();
-        let hitNextButton = this.scene.add.image(26, 0, 'arrow_left')
+        let hitPrevButton = this.scene.add.image(0, 0, 'arrow_left')
+            .setOrigin(0.5)
+            .setScale(0.5, 0.5);
+        hitPrevButton.setInteractive();
+        this.container.add(hitPrevButton);
+
+        let hitNextButton = this.scene.add.image(365, 0, 'arrow_right')
             .setOrigin(0.5)
             .setScale(0.5, 0.5);
         hitNextButton.setInteractive();
         this.container.add(hitNextButton);
 
 
-        let styleNextButton = this.scene.add.image((250 + 2 * this.cardWidth), 0, 'arrow_right')
+        let stylePrevButton = this.scene.add.image(440, 0, 'arrow_left')
+            .setOrigin(0.5)
+            .setScale(0.5, 0.5)
+        stylePrevButton.setInteractive();
+        this.container.add(stylePrevButton);
+
+
+        let styleNextButton = this.scene.add.image(800, 0, 'arrow_right')
             .setOrigin(0.5)
             .setScale(0.5, 0.5);
         styleNextButton.setInteractive();
         this.container.add(styleNextButton);
 
 
-        this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0,'ready').setScale(0.5,0.5);
+
+        this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0, 'ready').setScale(0.5, 0.5);
         this.readyButton.setInteractive();
         this.container.add(this.readyButton);
 
@@ -55,11 +71,19 @@ module.exports = class CardZone {
 
         this.container.add(this.addText(barX + barX / 2, barY, "click to show", 20));
 
-        this.readyButton.on('pointerout',() => {
-            this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0,'ready').setScale(0.5,0.5);
+        this.readyButton.on('pointerout', () => {
+            this.readyButton = this.scene.add.image(4 * this.cardWidth + 80, 0, 'ready').setScale(0.5, 0.5);
             this.container.add(this.readyButton)
         });
 
+
+        hitPrevButton.on('pointerdown', () => {
+            this.showPrevHit();
+        });
+
+        stylePrevButton.on('pointerdown', () => {
+            this.showPrevStyle()
+        });
 
         hitNextButton.on('pointerdown', () => {
             this.showNextHit();
@@ -71,7 +95,7 @@ module.exports = class CardZone {
 
         hideBar.on('pointerdown', () => {
             this.showTouch = Math.min(3, this.showTouch + 1);
-            if (this.showTouch === 3) { 
+            if (this.showTouch === 3) {
                 console.log("Touching!");
                 this.showBack = false;
                 this.flip()
@@ -80,7 +104,7 @@ module.exports = class CardZone {
 
         hideBar.on('pointerup', () => {
             this.showTouch = Math.max(0, this.showTouch - 1);
-            if (this.showTouch === 0) { 
+            if (this.showTouch === 0) {
                 console.log("untouch");
                 this.showBack = true;
                 this.flip()
@@ -100,25 +124,43 @@ module.exports = class CardZone {
     drawCards() {
         this.cardsContainer.removeAll();
 
-        let prevH = (this.selectedHitCard + 1) % this.hitCards.length;
-        let prevS = (this.selectedStyleCard + 1) % this.styleCards.length;
+        let nextH = (this.selectedHitCard + 1) % this.hitCards.length;
+        let nextS = (this.selectedStyleCard + 1) % this.styleCards.length;
+
+        let prevH = (this.selectedHitCard - 1 + this.hitCards.length) % this.hitCards.length;
+        let prevS = (this.selectedStyleCard - 1 + this.hitCards.length) % this.styleCards.length;
+
 
         this.hitCards[this.selectedHitCard].draw(this.showBack);
-        this.hitCards[prevH].drawBehind(this.showBack);
+        this.hitCards[prevH].drawBehind(this.showBack, (-this.shift));
+        this.hitCards[nextH].drawBehind(this.showBack, this.shift);
 
-        this.cardsContainer.add(this.hitCards[prevH].container);
-        this.cardsContainer.add(this.hitCards[this.selectedHitCard].container);
+        this.cardsContainer.add(this.hitCards[prevH].container.setScale(0.87));
+        this.cardsContainer.add(this.hitCards[nextH].container.setScale(0.87));
+        this.cardsContainer.add(this.hitCards[this.selectedHitCard].container.setScale(1));
 
 
         this.styleCards[this.selectedStyleCard].draw(this.showBack);
-        this.styleCards[prevS].drawBehind(this.showBack);
+        this.styleCards[prevS].drawBehind(this.showBack, (-this.shift));
+        this.styleCards[nextS].drawBehind(this.showBack, this.shift);
 
-        this.cardsContainer.add(this.styleCards[prevS].container);
-        this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container);
+        this.cardsContainer.add(this.styleCards[prevS].container.setScale(0.87));
+        this.cardsContainer.add(this.styleCards[nextS].container.setScale(0.87));
+        this.cardsContainer.add(this.styleCards[this.selectedStyleCard].container.setScale(1));
 
         this.container.add(this.cardsContainer);
     }
 
+
+    showPrevHit() {
+        this.selectedHitCard = (this.selectedHitCard - 1 + this.hitCards.length) % this.hitCards.length;
+        this.drawCards()
+    }
+
+    showPrevStyle() {
+        this.selectedStyleCard = (this.selectedStyleCard - 1 + this.hitCards.length) % this.styleCards.length;
+        this.drawCards();
+    }
 
     showNextHit() {
         this.selectedHitCard = (this.selectedHitCard + 1) % this.hitCards.length;
@@ -144,9 +186,9 @@ module.exports = class CardZone {
         let prevS = (this.selectedStyleCard + 1) % this.styleCards.length;
 
         this.hitCards[this.selectedHitCard].draw(this.showBack);
-        this.hitCards[prevH].drawBehind(this.showBack);
+        this.hitCards[prevH].drawBehind(this.showBack, (-this.shift));
 
         this.styleCards[this.selectedStyleCard].draw(this.showBack);
-        this.styleCards[prevS].drawBehind(this.showBack);
+        this.styleCards[prevS].drawBehind(this.showBack, (-this.shift));
     }
 }
