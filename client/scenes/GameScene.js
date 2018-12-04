@@ -97,7 +97,7 @@ module.exports = class GameScene extends Phaser.Scene {
                 this.scene_width / 2,
                 this.scene_height / 2,
                 () => {
-                    this.runRound();
+                    this.startRoundStep();
                 });
 
 
