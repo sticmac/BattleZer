@@ -17,7 +17,9 @@ module.exports = class StartRoundTransition {
     }
 
     draw() {
-        let text1 = this.scene.add.text(this.x, this.y + 70, this.data[this.currentPlayer].id + ' joue en 1er',
+
+        let msg = this.currentPlayer === 0 ?this.data[this.currentPlayer].id + ' joue en 1er' : 'Au tour de '+this.data[this.currentPlayer].id;
+        let text1 = this.scene.add.text(this.x, this.y + 70, msg,
             {
                 backgroundColor: "#fff",
                 padding: 20,
@@ -26,7 +28,7 @@ module.exports = class StartRoundTransition {
                 fontSize: 50
             }).setOrigin(0.5);
 
-        let text2 = this.scene.add.text(this.x, this.y - 70, this.data[this.currentPlayer].id + ' joue en 1er',
+        let text2 = this.scene.add.text(this.x, this.y - 70, msg,
             {
                 backgroundColor: "#fff",
                 padding: 20,

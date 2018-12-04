@@ -138,8 +138,18 @@ module.exports = class GameScene extends Phaser.Scene {
                 setTimeout(() => {
                     if (this.lastPlayedIndex + 1 < this.playersIds.length) { // if not present, too much rounds are launched
                         this.lastPlayedIndex++;
-                        console.log("next round " + this.lastPlayedIndex);
-                        this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);
+
+                        new StartRoundTransition(
+                            this,
+                            this.lastChosenAttacks,
+                            1,
+                            this.scene_width / 2,
+                            this.scene_height / 2,
+                            () => {
+                                this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);
+                            });
+                        //this.round.start(this.lastPlayedIndex, this.lastChosenAttacks);
+
                     }
                 }, 1000);
             } else { // last round finished
