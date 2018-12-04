@@ -14,7 +14,6 @@ module.exports = class StandaloneGameScene extends GameScene {
      */
     preload() {
         super.preload();
-        this.load.image('card_back', 'assets/card_back.jpg');
         this.load.image('arrow_left','assets/left_arrow.png');
         this.load.image('arrow_right','assets/right_arrow.png');
         this.load.image('ready','assets/ready.png');

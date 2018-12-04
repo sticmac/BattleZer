@@ -27,6 +27,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.load.image('bg', 'assets/bg.png');
         this.load.image('style_card', 'assets/style_card_template.png');
         this.load.image('hit_card', 'assets/hit_card_template.png');
+        this.load.image('card_back', 'assets/card_back.jpg');
     }
 
     /**
@@ -62,10 +63,6 @@ module.exports = class GameScene extends Phaser.Scene {
                 };
                 this.grid.addToken(element.id, this.players[element.id].token, element.position);
             }
-            this.socket.emit('send cards', {game: this.gameId});
-        });
-
-        this.socket.on("card distribution", (data) => {
 
             new ReadyTransition(this,
                 this.scene_width / 2,
@@ -75,7 +72,7 @@ module.exports = class GameScene extends Phaser.Scene {
                         5,
                         this.scene_width / 2,
                         this.scene_height / 2,
-                        () => this.choiceStep(data.players),
+                        () => this.socket.emit('send cards', {game: this.gameId}),
                         [
                             this.scene_width / 4,
                             this.scene_height * 7 / 8,
@@ -85,8 +82,9 @@ module.exports = class GameScene extends Phaser.Scene {
                     ));
         });
 
-        this.socket.on("start round", (data) => {
+        this.socket.on("card distribution", (data) => this.choiceStep(data.players));
 
+        this.socket.on("start round", (data) => {
 
             this.lastChosenAttacks = data.players;
 
@@ -99,8 +97,6 @@ module.exports = class GameScene extends Phaser.Scene {
                 () => {
                     this.startRoundStep();
                 });
-
-
 
             for (let i = 0; i < this.lastChosenAttacks.length; ++i) {
                 this.displayAttacksOfPlayer(i);
