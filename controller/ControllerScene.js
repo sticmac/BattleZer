@@ -89,8 +89,8 @@ module.exports = class ControllerScene extends Phaser.Scene {
                         value: choiceZone.grid.choice
                     }
                 });
+                choiceZone.undraw();
             }
-            choiceZone.undraw();
         });
     }
 
@@ -109,8 +109,8 @@ module.exports = class ControllerScene extends Phaser.Scene {
                         target: choiceZone.grid.choice
                     }
                 });
+                choiceZone.undraw();
             }
-            choiceZone.undraw();
         });
     }
 }
