@@ -14,9 +14,9 @@ module.exports = class StandaloneGameScene extends GameScene {
      */
     preload() {
         super.preload();
-        this.load.image('arrow_left','assets/left_arrow.png');
-        this.load.image('arrow_right','assets/right_arrow.png');
-        this.load.image('ready','assets/ready.png');
+        this.load.image('arrow_left', 'assets/left_arrow.png');
+        this.load.image('arrow_right', 'assets/right_arrow.png');
+        this.load.image('ready', 'assets/ready.png');
 
     }
 
@@ -24,12 +24,12 @@ module.exports = class StandaloneGameScene extends GameScene {
         this.game.input.addPointer(10);
 
         this.cardZones = [];
-        this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, this.scene_width / 8, this.scene_height * (14/16),
+        this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, 30, this.scene_height * (14 / 16),
             this.scene_width / 10, this.scene_height / 4, this));
         this.cardZones[0].flip();
         this.cardZones[0].draw();
 
-        this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, this.scene_width * (7/8), this.scene_height * (2/16),
+        this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, this.scene_width - 30, this.scene_height * (2 / 16),
             this.scene_width / 10, this.scene_height / 4, this));
         this.cardZones[1].flip();
         this.cardZones[1].draw();
@@ -37,17 +37,16 @@ module.exports = class StandaloneGameScene extends GameScene {
 
         let counter = 0;
 
-        for (let i = 0 ; i < this.cardZones.length ; ++i) {
+        for (let i = 0; i < this.cardZones.length; ++i) {
             this.cardZones[i].readyButton.on('pointerdown', () => {
-                //console.log('player ' + (i + 1) + ' picked : ');
-                //console.log(this.cardZones[i].hitCards[this.cardZones[i].selectedStyleCard].cardModel.title);
-                //console.log(this.cardZones[i].styleCards[this.cardZones[i].selectedHitCard].cardModel.title);
-                
+
+                this.cardZones[i].ready();
+
                 counter++;
 
                 if (counter === this.cardZones.length) {
                     const toSendPlayers = [];
-                    for (let i = 0 ; i < this.cardZones.length ; ++i) {
+                    for (let i = 0; i < this.cardZones.length; ++i) {
                         toSendPlayers.push({
                             id: players[i].id,
                             stylePick: this.cardZones[i].styleCards[this.cardZones[i].selectedStyleCard].cardModel,
@@ -59,7 +58,8 @@ module.exports = class StandaloneGameScene extends GameScene {
                         players: toSendPlayers
                     });
                 }
-                this.cardZones[i].readyButton.setVisible(false);
+
+                //this.cardZones[i].readyButton.setVisible(false);
             });
         }
     }
@@ -97,13 +97,13 @@ module.exports = class StandaloneGameScene extends GameScene {
 
         this.choiceZones = [];
 
-        this.choiceZones.push(new ChoiceZone(this.scene_width / 8, this.scene_height * (14/16),
+        this.choiceZones.push(new ChoiceZone(this.scene_width / 8, this.scene_height * (14 / 16),
             this.scene_width / 10, this.scene_height / 4, this, false));
 
-        this.choiceZones.push(new ChoiceZone(this.scene_width * (7/8), this.scene_height * (2/16),
+        this.choiceZones.push(new ChoiceZone(this.scene_width * (7 / 8), this.scene_height * (2 / 16),
             this.scene_width / 10, this.scene_height / 4, this, true));
 
-        this.choiceZones[1].container.setScale(-1.0,-1.0);
+        this.choiceZones[1].container.setScale(-1.0, -1.0);
 
         let i = 0;
         this.playersIds.forEach((id) => {
