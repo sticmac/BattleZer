@@ -21,36 +21,36 @@ module.exports = class StartRoundTransition {
         let msg = this.currentPlayer === 0 ?this.data[this.currentPlayer].id + ' joue en 1er' : 'Au tour de '+this.data[this.currentPlayer].id;
         let text1 = this.scene.add.text(this.x, this.y + 70, msg,
             {
-                backgroundColor: "#fff",
-                padding: 20,
-                color: "#1c5964",
+                backgroundColor: "#1c5964",
+                padding: 10,
+                color: "#fff",
                 fontFamily: 'Arial',
                 fontSize: 50
             }).setOrigin(0.5);
 
         let text2 = this.scene.add.text(this.x, this.y - 70, msg,
             {
-                backgroundColor: "#fff",
-                padding: 20,
-                color: "#1c5964",
+                backgroundColor: "#1c5964",
+                padding: 10,
+                color: "#fff",
                 fontFamily: 'Arial',
                 fontSize: 50
             }).setOrigin(0.5).setScale(-1);
 
-        let subtext1 = this.scene.add.text(this.x, this.y + 150, 'priorité : ' + this.data[0].attack.priority,
+        let subtext1 = this.scene.add.text(this.x, this.y + 145, 'priorité : ' + this.data[0].attack.priority,
             {
-                backgroundColor: "#fff",
-                padding: 20,
-                color: "#94343a",
+                backgroundColor: "#94343a",
+                padding: 10,
+                color: "#fff",
                 fontFamily: 'Arial',
                 fontSize: 50
             }).setOrigin(0.5);
 
-        let subtext2 = this.scene.add.text(this.x, this.y - 150, 'priorité : ' + this.data[0].attack.priority,
+        let subtext2 = this.scene.add.text(this.x, this.y - 145, 'priorité : ' + this.data[0].attack.priority,
             {
-                backgroundColor: "#fff",
-                padding: 20,
-                color: "#94343a",
+                backgroundColor: "#94343a",
+                padding: 10,
+                color: "#fff",
                 fontFamily: 'Arial',
                 fontSize: 50
             }).setOrigin(0.5).setScale(-1);

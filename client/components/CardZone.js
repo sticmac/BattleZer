@@ -30,27 +30,27 @@ module.exports = class CardZone {
 
     drawInterface() {
         this.container.removeAll();
-        let hitPrevButton = this.scene.add.image(16, 0, 'arrow_left')
+        let hitPrevButton = this.scene.add.image(16, 0, 'arrow_left_hit')
             .setOrigin(0.5)
             .setScale(0.5, 0.5);
         hitPrevButton.setInteractive();
         this.container.add(hitPrevButton);
 
-        let hitNextButton = this.scene.add.image(345, 0, 'arrow_right')
+        let hitNextButton = this.scene.add.image(345, 0, 'arrow_right_hit')
             .setOrigin(0.5)
             .setScale(0.5, 0.5);
         hitNextButton.setInteractive();
         this.container.add(hitNextButton);
 
 
-        let stylePrevButton = this.scene.add.image(457, 0, 'arrow_left')
+        let stylePrevButton = this.scene.add.image(457, 0, 'arrow_left_style')
             .setOrigin(0.5)
             .setScale(0.5, 0.5);
         stylePrevButton.setInteractive();
         this.container.add(stylePrevButton);
 
 
-        let styleNextButton = this.scene.add.image(783, 0, 'arrow_right')
+        let styleNextButton = this.scene.add.image(783, 0, 'arrow_right_style')
             .setOrigin(0.5)
             .setScale(0.5, 0.5);
         styleNextButton.setInteractive();

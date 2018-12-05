@@ -14,10 +14,11 @@ module.exports = class StandaloneGameScene extends GameScene {
      */
     preload() {
         super.preload();
-        this.load.image('arrow_left', 'assets/left_arrow.png');
-        this.load.image('arrow_right', 'assets/right_arrow.png');
+        this.load.image('arrow_left_hit', 'assets/hit_left.png');
+        this.load.image('arrow_right_hit', 'assets/hit_right.png');
+        this.load.image('arrow_left_style', 'assets/style_left.png');
+        this.load.image('arrow_right_style', 'assets/style_right.png');
         this.load.image('ready', 'assets/ready.png');
-
     }
 
     choiceStep(players) {

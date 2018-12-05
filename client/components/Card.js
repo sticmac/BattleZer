@@ -41,7 +41,7 @@ module.exports = class Card {
 
         if (!showBack) {
 
-            const bg = this.scene.add.image(shift, -45,  this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+            const bg = this.scene.add.image(shift, -45, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
             bg.displayHeight = this.height;
             bg.displayWidth = this.width;
             bg.setTint(0x777777);
@@ -65,23 +65,13 @@ module.exports = class Card {
         this.container.removeAll();
         this.container.rotation = angle;
 
-        if (this.cardModel.type === 'Coup') {
-            const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
-            bg.displayHeight = this.height;
-            bg.displayWidth = this.width;
+        const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
+        bg.displayHeight = this.height;
+        bg.displayWidth = this.width;
 
-            this.container.add(bg);
-            this.container.add(this.createInfoContainer(this.width / 2, 0, false));
+        this.container.add(bg);
+        this.container.add(this.createInfoContainer(this.width / 2, 0, false));
 
-        } else {
-            const bg = this.scene.add.image(0, 0, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
-            bg.displayHeight = this.height;
-            bg.displayWidth = this.width;
-
-            this.container.add(bg);
-            this.container.add(this.createInfoContainer(-this.width / 2, 0, false));
-
-        }
     }
 
 
@@ -89,14 +79,13 @@ module.exports = class Card {
 
         let color1;
         let color2;
-        if(this.cardModel.type === 'Coup'){
+        if (this.cardModel.type === 'Coup') {
             color1 = isBehind ? '#afafaf' : '#fff';
             color2 = isBehind ? '#9e665f' : '#e29288';
         } else {
             color1 = isBehind ? '#afafaf' : '#fff';
             color2 = isBehind ? '#59996a' : '#9ce3b1';
         }
-
 
 
         const infos = this.scene.add.container(x, y);
@@ -126,7 +115,7 @@ module.exports = class Card {
         infos.add(range);
 
 
-        const title = this.scene.add.text(-7, -this.height/2+23, this.cardModel.title,
+        const title = this.scene.add.text(-7, -this.height / 2 + 23, this.cardModel.title,
             {fontFamily: 'Impact', fontSize: 18, color: color2}).setOrigin(1);
         infos.add(title);
 
