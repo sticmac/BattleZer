@@ -53,12 +53,19 @@ module.exports = class GameScene extends Phaser.Scene {
                 const element = sentPlayers[i];
                 this.playersIds.push(element.id);
                 this.players[element.id] = new Player(
-                    new PlayerModel(element.id, element.position, element.health),
+                    20 + (element.team) * 1420,
+                    640 + (element.team) * (-360),
+                    this,
+                    new PlayerModel(element.id, element.position, element.health, element.team),
                     this.add.circle((this.scene_width / 9) / 2, 0, 30, colors[i]),
-                    new Bar(i * ((4 / 5) * this.scene_width - 5), ((1 - i) * (this.scene_height - 25)), this.scene_width / 5, 20, this),
+                    new Bar(400, 15, this.scene_width / 5, 20, this),
                     new ShowAttack(this.scene_width / 2, this.scene_height - ((i * 2 + 1) * this.scene_height / 4),
                         this.scene_width / 10, this.scene_height / 4, i == 1, this)
                 );
+                this.players[element.id].draw();
+                if (this.players[element.id].player.team === 1) {
+                    this.players[element.id].container.setScale(-1.0, -1.0);
+                }
                 this.grid.addToken(element.id, this.players[element.id].token, element.position);
             }
 
