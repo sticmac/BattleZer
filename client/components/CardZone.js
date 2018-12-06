@@ -6,6 +6,8 @@ module.exports = class CardZone {
     constructor(hitCardsModels, styleCardsModels, x, y, cardWidth, cardHeight, scene) {
         this.container = scene.add.container(x, y);
         this.cardsContainer = scene.add.container(0, 0);
+        this.leftSwipeContainer = scene.add.container(0, 0);
+        this.rightSwipeContainer = scene.add.container(0, 0);
         this.scene = scene;
 
         this.cardHeight = cardHeight;
@@ -25,6 +27,66 @@ module.exports = class CardZone {
         this.showTouch = 0;
 
         this.shift = cardWidth / 2;
+    }
+
+    setupSwipe(){
+
+        let hitarea = new Phaser.Geom.Circle(180,0, 180);
+        this.leftSwipeContainer.setInteractive(hitarea, Phaser.Geom.Circle.Contains);
+
+        let hitarea2 = new Phaser.Geom.Circle(620,0, 180);
+        this.rightSwipeContainer.setInteractive(hitarea2, Phaser.Geom.Circle.Contains);
+
+        /*
+        let bg = this.scene.add.graphics({fillStyle: {color: 0xcc7c1a, alpha: 0.3}});
+        this.leftSwipeContainer.add(bg);
+        bg.fillCircleShape(hitarea);
+
+        let bg2 = this.scene.add.graphics({fillStyle: {color: 0xcc7c1a, alpha: 0.3}});
+        this.leftSwipeContainer.add(bg2);
+        bg2.fillCircleShape(hitarea2);
+        */
+
+        let self = this;
+        this.container.add(this.leftSwipeContainer);
+        this.container.add(this.rightSwipeContainer);
+
+        this.leftSwipeContainer.on("pointerdown", (e) => {
+            let swipeTime = e.upTime - e.downTime;
+            let swipe = new Phaser.Geom.Point(e.upX - e.downX, e.upY - e.downY);
+            let swipeMagnitude = Phaser.Geom.Point.GetMagnitude(swipe);
+            let swipeNormal = new Phaser.Geom.Point(swipe.x / swipeMagnitude, swipe.y / swipeMagnitude);
+            if(swipeMagnitude > 20 && swipeTime < 1000 && ( Math.abs(swipeNormal.x) > 0.8)) {
+                if(swipeNormal.x > 0.8) {
+                    console.log('swipe right');
+                    self.showNextHit();
+                }
+                if(swipeNormal.x < -0.8) {
+                    console.log('swipe left');
+                    self.showPrevHit();
+                }
+
+            }
+        });
+
+        this.rightSwipeContainer.on("pointerdown", (e) => {
+            let swipeTime = e.upTime - e.downTime;
+            let swipe = new Phaser.Geom.Point(e.upX - e.downX, e.upY - e.downY);
+            let swipeMagnitude = Phaser.Geom.Point.GetMagnitude(swipe);
+            let swipeNormal = new Phaser.Geom.Point(swipe.x / swipeMagnitude, swipe.y / swipeMagnitude);
+            if(swipeMagnitude > 20 && swipeTime < 1000 && ( Math.abs(swipeNormal.x) > 0.8)) {
+                if(swipeNormal.x > 0.8) {
+                    console.log('swipe right');
+                    self.showNextStyle();
+                }
+                if(swipeNormal.x < -0.8) {
+                    console.log('swipe left');
+                    self.showPrevStyle();
+                }
+
+            }
+        });
+
     }
 
 
@@ -114,6 +176,12 @@ module.exports = class CardZone {
             }
         });
 
+
+
+
+
+
+
     }
 
     draw() {
@@ -121,6 +189,7 @@ module.exports = class CardZone {
 
         this.drawInterface();
         this.drawCards();
+        this.setupSwipe();
     }
 
 
