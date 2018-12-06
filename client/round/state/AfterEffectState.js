@@ -13,6 +13,7 @@ module.exports = class AfterEffectState extends RoundState {
         let status = 'Effet d\'après attaque';
 
         choice.draw(action, initPosition, status);
+        this.context.players[data.id].changeInfoContainer(choice.container);
         choice.readyButton.on('pointerdown', () => {
             if (choice.grid.choice !== null) {
                 choice.grid.actions.codes.forEach(c => {

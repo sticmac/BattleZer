@@ -36,7 +36,8 @@ module.exports = class Player {
 
     changeInfoContainer(element) {
         this.infoContainer.removeAll();
-        element.setScale((this.height - 50) / element.getBounds().height);
+        //element.setScale((this.height - 50) / element.getBounds().height);
+        element.setScale(this.width / element.getBounds().width);
         this.infoContainer.add(element);
     }
 }

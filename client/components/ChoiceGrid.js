@@ -2,7 +2,7 @@ module.exports = class ChoiceGrid {
 
     constructor(gridLength, scene, actions, position, range, reverse) {
         this.gridLength = gridLength;
-        this.gridContainer = scene.add.container(reverse ? 350 : 0, 20);
+        this.gridContainer = scene.add.container(reverse ? 500 : 0, 20);
         this.scene = scene;
         this.position = position;
         this.actions = actions;
