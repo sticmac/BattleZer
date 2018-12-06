@@ -39,6 +39,9 @@ module.exports = class StandaloneGameScene extends GameScene {
         let counter = 0;
 
         for (let i = 0; i < this.cardZones.length; ++i) {
+
+
+
             this.cardZones[i].readyButton.on('pointerdown', () => {
 
                 this.cardZones[i].ready();

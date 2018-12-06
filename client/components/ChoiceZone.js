@@ -1,4 +1,4 @@
-const ChoiceGrid = require('./ChoiceGrid');
+const ChoiceGrid = require('./ChoiceGrid2');
 
 module.exports = class ChoiceZone {
     constructor(x, y, width, height, scene, reverseGrid) {
@@ -15,8 +15,7 @@ module.exports = class ChoiceZone {
 
     draw(action, initPosition, status) {
         this.container.setVisible(true);
-        this.grid = new ChoiceGrid(9, this.scene, action, initPosition, action.range, this.reverseGrid);
-        this.container.add(this.grid.gridContainer);
+        this.grid = new ChoiceGrid(9, this.scene, action, initPosition, action.range);
 
         this.text1 = this.scene.add.text(0, -100, 'Choisis la cible pour l\'' + status, {
             fontSize: 28,
@@ -39,6 +38,7 @@ module.exports = class ChoiceZone {
 
     undraw() {
         this.container.setVisible(false)
+        this.grid.undraw();
         this.text1.destroy();
     }
 };
