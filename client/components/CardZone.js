@@ -93,12 +93,16 @@ module.exports = class CardZone {
         });
 
         hideBar.on('pointerdown', () => {
+            /*
             this.showTouch = Math.min(3, this.showTouch + 1);
             if (this.showTouch === 3) {
                 console.log("Touching!");
                 this.showBack = false;
                 this.flip()
             }
+            */
+            this.showBack = false;
+            this.flip()
         });
 
         hideBar.on('pointerup', () => {
@@ -197,7 +201,6 @@ module.exports = class CardZone {
     }
 
     ready(){
-        console.log("setting ready");
         this.readyButton.setBackgroundColor('#327e32');
         this.readyButton.setText('READY !')
     }
@@ -205,13 +208,18 @@ module.exports = class CardZone {
 
 
     flip() {
-        let prevH = (this.selectedHitCard + 1) % this.hitCards.length;
-        let prevS = (this.selectedStyleCard + 1) % this.styleCards.length;
+        let nextH = (this.selectedHitCard + 1) % this.hitCards.length;
+        let nextS = (this.selectedStyleCard + 1) % this.styleCards.length;
+
+        let prevH = (this.selectedHitCard - 1 + this.hitCards.length) % this.hitCards.length;
+        let prevS = (this.selectedStyleCard - 1 + this.hitCards.length) % this.styleCards.length;
 
         this.hitCards[this.selectedHitCard].draw(this.showBack);
         this.hitCards[prevH].drawBehind(this.showBack, (-this.shift));
+        this.hitCards[nextH].drawBehind(this.showBack, this.shift);
 
         this.styleCards[this.selectedStyleCard].draw(this.showBack);
         this.styleCards[prevS].drawBehind(this.showBack, (-this.shift));
+        this.styleCards[nextS].drawBehind(this.showBack, this.shift);
     }
-}
+};

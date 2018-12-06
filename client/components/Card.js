@@ -44,7 +44,7 @@ module.exports = class Card {
             const bg = this.scene.add.image(shift, -45, this.cardModel.type === 'Coup' ? 'hit_card' : 'style_card');
             bg.displayHeight = this.height;
             bg.displayWidth = this.width;
-            bg.setTint(0x777777);
+            bg.setTint(0x666666);
 
             this.container.add(bg);
             this.container.add(this.createInfoContainer((this.width / 2) + shift, -45, true));
@@ -52,9 +52,10 @@ module.exports = class Card {
 
         } else {
 
-            const bg = this.scene.add.image(0, 0, 'card_back');
+            const bg = this.scene.add.image(shift, -45, 'card_back');
             bg.displayHeight = this.height;
             bg.displayWidth = this.width;
+            bg.setTint(0x666666);
             this.container.add(bg);
 
         }
