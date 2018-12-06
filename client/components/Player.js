@@ -1,7 +1,9 @@
 module.exports = class Player {
-    constructor(x, y, scene, player, token, bar, showAttack) {
+    constructor(x, y, width, height, scene, player, token, bar, showAttack) {
         this.x = x;
         this.y = y;
+        this.width = width;
+        this.height = height;
         this.scene = scene;
         this.player = player;
         this.token = token;
@@ -9,11 +11,11 @@ module.exports = class Player {
         this.showAttack = showAttack;
 
         this.container = scene.add.container(x, y);
-        this.infoContainer = scene.add.container(0, 60);
+        this.infoContainer = scene.add.container(0, 75);
     }
 
     draw() {
-        const rect = this.scene.add.rectangle(0, 0, 720, 270, 0xffffff).setOrigin(0).setStrokeStyle(0x000000);
+        const rect = this.scene.add.rectangle(0, 0, this.width, this.height, 0xffffff).setOrigin(0).setStrokeStyle(0x000000);
         this.container.add(rect);
 
         this.container.add(this.bar.bar);
@@ -34,7 +36,7 @@ module.exports = class Player {
 
     changeInfoContainer(element) {
         this.infoContainer.removeAll();
-        element.setScale((270 - 50) / element.getBounds().height);
+        element.setScale((this.height - 50) / element.getBounds().height);
         this.infoContainer.add(element);
     }
 }
