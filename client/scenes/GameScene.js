@@ -116,6 +116,13 @@ module.exports = class GameScene extends Phaser.Scene {
     update() {
         //update each players according to their model
         this.playersIds.forEach((id) => {
+            let newHP = this.players[id].player.health;
+            let oldHP = this.players[id].bar.value;
+            let x = oldHP - newHP;
+            if(x !== 0){
+                this.grid.showDamage(this.players[id].player.position,x)
+            }
+
             this.players[id].bar.changeValue(this.players[id].player.health);
             this.players[id].bar.draw();
 

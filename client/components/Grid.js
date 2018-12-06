@@ -3,9 +3,9 @@ module.exports = class Grid {
         this.gridLength = gridLength;
         this.gridContainer = scene.add.container(0, scene.game.config.height / 2);
         this.scene = scene;
-        
+
         const gridCaseWidth = scene.game.config.width / this.gridLength;
-        for (let i = 0 ; i < gridLength ; i++) {
+        for (let i = 0; i < gridLength; i++) {
             const container = scene.add.container(i * (parseInt(scene.game.config.width / gridLength) + 5), 0);
             /*const rect = scene.add.rectangle(0, 0,
                     parseInt(gridCaseWidth), parseInt(scene.game.config.height / 3), 0xdddddd)
@@ -14,7 +14,7 @@ module.exports = class Grid {
             */
             this.gridContainer.add(container);
         }
-        
+
         this.tokens = {};
     }
 
@@ -36,11 +36,26 @@ module.exports = class Grid {
         return this.tokens[key].position;
     }
 
+    showDamage(position, i) {
+        let text = i < 0 ? '+ ' + i : '- ' + i;
+        let hit = this.scene.add.text(30, -180, text + ' PV 😱', {
+            backgroundColor: i < 0 ? "#028c27" : "#ff1b2f",
+            padding: 20,
+            color: "#fff",
+            fontFamily: 'Arial',
+            fontSize: 30
+        }).setOrigin(0.5);
+        this.gridContainer.list[position].add(hit);
+        setTimeout(() => {
+            this.gridContainer.list[position].remove(hit);
+        }, 1000)
+    }
+
     _moveToken(token, oldPosition, position) {
         if (oldPosition !== undefined) {
             this.gridContainer.list[oldPosition].remove(token);
         }
-        if (this.gridContainer.list[position].list.length > 0 ) { // there is already a token
+        if (this.gridContainer.list[position].list.length > 0) { // there is already a token
             token.setY(token.y - this.scene.game.config.height / 12);
             this.gridContainer.list[position].list[0].setY(this.gridContainer.list[position].list[0].y + this.scene.game.config.height / 12);
         }
