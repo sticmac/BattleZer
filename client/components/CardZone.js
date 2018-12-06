@@ -68,13 +68,12 @@ module.exports = class CardZone {
         this.container.add(this.readyButton);
 
 
-        let barX = 0;
-        let barY = -(this.cardHeight / 2) - 50;
-        let hideBar = this.scene.add.rectangle(barX, barY, this.cardWidth * 3, 40, 0xffd852).setOrigin(0, 0);
+        let barY = -(this.cardHeight / 2) - 80;
+        let hideBar = this.scene.add.rectangle(10, barY, 780, 70, 0x41AD8A).setOrigin(0, 0);
         hideBar.setInteractive();
         this.container.add(hideBar);
 
-        this.container.add(this.addText(barX + barX / 2, barY, "click to show", 20));
+        this.container.add(this.addText(423, -(this.cardHeight / 2) - 60, "touch to show cards", 20).setOrigin(0.5));
 
 
         hitPrevButton.on('pointerdown', () => {
@@ -169,31 +168,23 @@ module.exports = class CardZone {
 
 
     showPrevHit() {
-        /*
-        let nextH = (this.selectedHitCard + 1) % this.hitCards.length;
-        let nextS = (this.selectedStyleCard + 1) % this.styleCards.length;
-
-        let prevH = (this.selectedHitCard - 1 + this.hitCards.length) % this.hitCards.length;
-        let prevS = (this.selectedStyleCard - 1 + this.hitCards.length) % this.styleCards.length;
-         */
-
-        this.selectedHitCard = (this.selectedHitCard - 1 + this.hitCards.length) % this.hitCards.length;
+        this.selectedHitCard = (this.selectedHitCard + 1 + this.hitCards.length) % this.hitCards.length;
 
         this.drawCards()
     }
 
     showPrevStyle() {
-        this.selectedStyleCard = (this.selectedStyleCard - 1 + this.hitCards.length) % this.styleCards.length;
+        this.selectedStyleCard = (this.selectedStyleCard + 1 + this.hitCards.length) % this.styleCards.length;
         this.drawCards();
     }
 
     showNextHit() {
-        this.selectedHitCard = (this.selectedHitCard + 1) % this.hitCards.length;
+        this.selectedHitCard = (this.selectedHitCard - 1 + this.hitCards.length) % this.hitCards.length;
         this.drawCards()
     }
 
     showNextStyle() {
-        this.selectedStyleCard = (this.selectedStyleCard + 1) % this.styleCards.length;
+        this.selectedStyleCard = (this.selectedStyleCard - 1 + this.hitCards.length) % this.styleCards.length;
         this.drawCards();
     }
 

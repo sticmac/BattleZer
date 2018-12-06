@@ -17,10 +17,22 @@ module.exports = class DeckTransition {
 
     draw() {
         this.container.add(this.scene.add.text(this.deckX, this.deckY+ 170, 'Distribution des cartes',
-            {backgroundColor: "#fff", padding: 20, color: "#f00", fontFamily: 'Arial', fontSize: 50}).setOrigin(0.5));
+            {
+                backgroundColor: "#1c5964",
+                padding: 10,
+                color: "#fff",
+                fontFamily: 'Arial',
+                fontSize: 50
+            }).setOrigin(0.5));
 
         this.container.add(this.scene.add.text(this.deckX, this.deckY - 170, 'Distribution des cartes',
-            {backgroundColor: "#fff", padding: 20, color: "#f00", fontFamily: 'Arial', fontSize: 50}).setOrigin(0.5).setScale(-1));
+            {
+                backgroundColor: "#1c5964",
+                padding: 10,
+                color: "#fff",
+                fontFamily: 'Arial',
+                fontSize: 50
+            }).setOrigin(0.5).setScale(-1));
 
 
 

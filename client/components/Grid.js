@@ -38,7 +38,7 @@ module.exports = class Grid {
 
     showDamage(position, i) {
         let text = i < 0 ? '+ ' + i : '- ' + i;
-        let hit = this.scene.add.text(30, -180, text + ' PV 😱', {
+        let hit = this.scene.add.text(30, -180, text + ' PV '+this.randomEmoji(), {
             backgroundColor: i < 0 ? "#028c27" : "#ff1b2f",
             padding: 20,
             color: "#fff",
@@ -67,5 +67,10 @@ module.exports = class Grid {
                 element.list[0].setY(0);
             }
         });
+    }
+
+    randomEmoji(){
+        let emojis = ['😱','😂','🤯','🤭','😎','😭'];
+        return emojis[Math.floor(Math.random() * 6)];
     }
 }
