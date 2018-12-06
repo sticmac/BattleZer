@@ -9,6 +9,7 @@ module.exports = class Player {
         this.showAttack = showAttack;
 
         this.container = scene.add.container(x, y);
+        this.infoContainer = scene.add.container(0, 60);
     }
 
     draw() {
@@ -28,5 +29,12 @@ module.exports = class Player {
         .setWordWrapWidth(200)
         .setMaxLines(1);
         this.container.add(name);
+        this.container.add(this.infoContainer);
+    }
+
+    changeInfoContainer(element) {
+        this.infoContainer.removeAll();
+        element.setScale((270 - 50) / element.getBounds().height);
+        this.infoContainer.add(element);
     }
 }
