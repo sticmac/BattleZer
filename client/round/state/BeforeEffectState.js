@@ -15,7 +15,7 @@ module.exports = class BeforeEffectState extends RoundState {
         let status = 'Effet d\'avant attaque';
 
         choice.draw(action, initPosition, status);
-        this.context.players[data.id].changeInfoContainer(choice.container);
+        this.context.players[data.id].changeInteractContainer(choice.container);
         choice.readyButton.on('pointerdown', () => {
             if (choice.grid.choice !== null) {
                 choice.grid.actions.codes.forEach(c => {

@@ -29,13 +29,13 @@ module.exports = class StandaloneGameScene extends GameScene {
             164, 230, this));
         this.cardZones[0].flip();
         this.cardZones[0].draw();
-        this.players[this.playersIds[0]].changeInfoContainer(this.cardZones[0].container);
+        this.players[this.playersIds[0]].changeInteractContainer(this.cardZones[0].container);
 
         this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, 20, 160,
             164, 230, this));
         this.cardZones[1].flip();
         this.cardZones[1].draw();
-        this.players[this.playersIds[1]].changeInfoContainer(this.cardZones[1].container);
+        this.players[this.playersIds[1]].changeInteractContainer(this.cardZones[1].container);
 
         let counter = 0;
 
