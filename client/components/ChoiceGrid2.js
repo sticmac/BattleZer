@@ -52,13 +52,10 @@ module.exports = class ChoiceGrid2 {
             rect.setInteractive();
 
             rect.on('pointerdown', () => {
-                if(this.rectChoice) {
-                    this.rectChoice.setStrokeStyle(6,color,1)
-                    this.rectChoice.setFillStyle(0xFF0000,0.1)
-
-                }
                 if(valid) {
                     if (this.rectChoice) {
+                        this.rectChoice.setStrokeStyle(6,color,1);
+                        this.rectChoice.setFillStyle()
                         if (this.choice === this.position) {
                             this.rectChoice.setStrokeStyle(6,0x32CD32,1)
                         } else {
@@ -68,8 +65,7 @@ module.exports = class ChoiceGrid2 {
                     this.choice = i;
                     this.rectChoice = this.gridContainer.list[i].list[0];
                     this.rectChoice.setStrokeStyle(6,0xA50000,1);
-                    this.rectChoice.setFillStyle(0xff0000);
-                    this.rectChoice.setAlpha(0.4)
+                    this.rectChoice.setFillStyle(0xff0000,0.3);
                 }
             });
 
