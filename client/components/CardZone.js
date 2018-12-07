@@ -69,7 +69,7 @@ module.exports = class CardZone {
 
 
         let barY = -(this.cardHeight / 2) - 80;
-        let hideBar = this.scene.add.rectangle(10, barY, 780, 70, 0x41AD8A).setOrigin(0, 0);
+        let hideBar = this.scene.add.rectangle(10, barY, 780, 50, 0x41AD8A).setOrigin(0, 0);
         hideBar.setInteractive();
         this.container.add(hideBar);
 
