@@ -54,7 +54,7 @@ module.exports = class GameScene extends Phaser.Scene {
                 this.playersIds.push(element.id);
                 this.players[element.id] = new Player(
                     20 + (element.team) * (this.game.config.width - 50),
-                    this.game.config.height * (1/3) + 20 + (1 - element.team) * (this.game.config.height * (1/3) - 40),
+                    this.game.config.height * (1/3) + (1 - element.team) * (this.game.config.height * (1/3)),
                     this.game.config.width / 2 - 50,
                     this.game.config.height * (1/3),
                     this,
