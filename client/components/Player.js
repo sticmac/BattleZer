@@ -41,7 +41,13 @@ module.exports = class Player {
 
     changeInteractContainer(element) {
         this.interactContainer.removeAll();
-        element.setScale(this.width / element.getBounds().width);
+        const bounds = element.getBounds();
+
+        if (bounds.width > this.width) {
+            const ratio = this.width / bounds.width;
+            element.setScale(ratio);
+        }
+
         this.interactContainer.add(element);
     }
 }
