@@ -31,10 +31,10 @@ module.exports = class CardZone {
 
     setupSwipe(){
 
-        let hitarea = new Phaser.Geom.Circle(180,0, 180);
+        let hitarea = new Phaser.Geom.Circle(180,0, 150);
         this.leftSwipeContainer.setInteractive(hitarea, Phaser.Geom.Circle.Contains);
 
-        let hitarea2 = new Phaser.Geom.Circle(620,0, 180);
+        let hitarea2 = new Phaser.Geom.Circle(620,0, 150);
         this.rightSwipeContainer.setInteractive(hitarea2, Phaser.Geom.Circle.Contains);
 
         /*
@@ -46,6 +46,7 @@ module.exports = class CardZone {
         this.leftSwipeContainer.add(bg2);
         bg2.fillCircleShape(hitarea2);
         */
+
 
         let self = this;
         this.container.add(this.leftSwipeContainer);
