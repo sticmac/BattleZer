@@ -2,10 +2,8 @@ const Phaser = require('phaser');
 const PlayerModel = require('../model/PlayerModel');
 const Grid = require('../components/Grid');
 const Bar = require('../components/Bar');
-const CardZone = require('../components/CardZone');
+const Player = require('../components/Player');
 const ShowAttack = require('../components/ShowAttack');
-const DisplayText = require('../components/DisplayText');
-const Round = require('../round/Round');
 const io = require('socket.io-client');
 const DeckTransition = require('../transitions/Distribution');
 const ReadyTransition = require('../transitions/Ready');
@@ -54,13 +52,22 @@ module.exports = class GameScene extends Phaser.Scene {
             for (let i = 0; i < sentPlayers.length; i++) {
                 const element = sentPlayers[i];
                 this.playersIds.push(element.id);
-                this.players[element.id] = {
-                    player: new PlayerModel(element.id, element.position, element.health),
-                    token: this.add.circle((this.scene_width / 9) / 2, 0, 30, colors[i]),
-                    bar: new Bar(i * ((4 / 5) * this.scene_width - 5), ((1 - i) * (this.scene_height - 25)), this.scene_width / 5, 20, this),
-                    showAttack: new ShowAttack(this.scene_width / 2, this.scene_height - ((i * 2 + 1) * this.scene_height / 4),
+                this.players[element.id] = new Player(
+                    20 + (element.team) * (this.game.config.width - 50),
+                    this.game.config.height * (1/3) + (1 - element.team) * (this.game.config.height * (1/3)),
+                    this.game.config.width / 2 - 50,
+                    this.game.config.height * (1/3),
+                    this,
+                    new PlayerModel(element.id, element.position, element.health, element.team),
+                    this.add.circle((this.scene_width / 9) / 2, 0, 30, colors[i]),
+                    new Bar(400, 15, this.scene_width / 5, 20, this),
+                    new ShowAttack(this.scene_width / 2, this.scene_height - ((i * 2 + 1) * this.scene_height / 4),
                         this.scene_width / 10, this.scene_height / 4, i == 1, this)
-                };
+                );
+                this.players[element.id].draw();
+                if (this.players[element.id].player.team === 1) {
+                    this.players[element.id].container.setScale(-1.0, -1.0);
+                }
                 this.grid.addToken(element.id, this.players[element.id].token, element.position);
             }
 

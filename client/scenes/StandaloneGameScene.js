@@ -25,20 +25,24 @@ module.exports = class StandaloneGameScene extends GameScene {
         this.game.input.addPointer(10);
 
         this.cardZones = [];
-        this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, 30, this.scene_height * (14 / 16),
-            this.scene_width / 10, this.scene_height / 4, this));
+        this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, 0, 160,
+            164, 230, this));
         this.cardZones[0].flip();
         this.cardZones[0].draw();
+        this.players[this.playersIds[0]].changeInteractContainer(this.cardZones[0].container);
 
-        this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, this.scene_width - 30, this.scene_height * (2 / 16),
-            this.scene_width / 10, this.scene_height / 4, this));
+        this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, 0, 160,
+            164, 230, this));
         this.cardZones[1].flip();
         this.cardZones[1].draw();
-        this.cardZones[1].container.setScale(-1.0, -1.0);
+        this.players[this.playersIds[1]].changeInteractContainer(this.cardZones[1].container);
 
         let counter = 0;
 
         for (let i = 0; i < this.cardZones.length; ++i) {
+
+
+
             this.cardZones[i].readyButton.on('pointerdown', () => {
 
                 this.cardZones[i].ready();
@@ -98,13 +102,11 @@ module.exports = class StandaloneGameScene extends GameScene {
 
         this.choiceZones = [];
 
-        this.choiceZones.push(new ChoiceZone(this.scene_width / 8, this.scene_height * (14 / 16),
+        this.choiceZones.push(new ChoiceZone(150, 100,
             this.scene_width / 10, this.scene_height / 4, this, false));
 
-        this.choiceZones.push(new ChoiceZone(this.scene_width * (7 / 8), this.scene_height * (2 / 16),
+        this.choiceZones.push(new ChoiceZone(150, 100,
             this.scene_width / 10, this.scene_height / 4, this, true));
-
-        this.choiceZones[1].container.setScale(-1.0, -1.0);
 
         let i = 0;
         this.playersIds.forEach((id) => {

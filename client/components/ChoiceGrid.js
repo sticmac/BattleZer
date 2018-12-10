@@ -2,7 +2,7 @@ module.exports = class ChoiceGrid {
 
     constructor(gridLength, scene, actions, position, range, reverse) {
         this.gridLength = gridLength;
-        this.gridContainer = scene.add.container(reverse ? 350 : 0, 20);
+        this.gridContainer = scene.add.container(reverse ? 500 : 0, 20);
         this.scene = scene;
         this.position = position;
         this.actions = actions;
@@ -35,7 +35,6 @@ module.exports = class ChoiceGrid {
             rect.setInteractive();
             rect.on('pointerdown', () => {
                 if(valid) {
-                    console.log(i);
                     if (this.rectChoice) {
                         if (this.choice === this.position) {
                             this.rectChoice.setFillStyle(0x32CD32);
