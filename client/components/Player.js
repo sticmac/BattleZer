@@ -21,10 +21,8 @@ module.exports = class Player {
 
         this.infoContainer.add(this.bar.bar);
 
-        const thumb = this.scene.add.circle(20, 20, this.token.radius / 1.5, this.token.fillColor);
-        thumb.setOrigin(0,0);
-        this.infoContainer.add(thumb);
-        
+        this.infoContainer.add(this.token);
+
         const name = this.scene.add.text(175, 20, this.player.id.charAt(0).toUpperCase() + this.player.id.slice(1), {
             color: "#000",
             fontFamily: "Arial Black",
