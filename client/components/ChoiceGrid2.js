@@ -12,6 +12,13 @@ module.exports = class ChoiceGrid2 {
         this.rectChoice = null;
 
         this.draw();
+
+        this.scene.events.on('gameover', this.gameoverhandler, this);
+    }
+
+    gameoverhandler(){
+        console.log('received game over event');
+        this.undraw();
     }
 
     draw() {

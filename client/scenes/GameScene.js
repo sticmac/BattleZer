@@ -8,6 +8,7 @@ const io = require('socket.io-client');
 const DeckTransition = require('../transitions/Distribution');
 const ReadyTransition = require('../transitions/Ready');
 const StartRoundTransition = require('../transitions/StartRound');
+const GameOverTransition = require('../transitions/GameOver');
 
 module.exports = class GameScene extends Phaser.Scene {
     constructor(name) {
@@ -26,6 +27,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.load.image('style_card', 'assets/style_card_template3.png');
         this.load.image('hit_card', 'assets/hit_card_template3.png');
         this.load.image('card_back', 'assets/card_back.jpg');
+        this.load.image('game_over','assets/gameover.jpg')
     }
 
     /**
@@ -54,9 +56,9 @@ module.exports = class GameScene extends Phaser.Scene {
                 this.playersIds.push(element.id);
                 this.players[element.id] = new Player(
                     20 + (element.team) * (this.game.config.width - 50),
-                    this.game.config.height * (1/3) + (1 - element.team) * (this.game.config.height * (1/3)),
+                    this.game.config.height * (1 / 3) + (1 - element.team) * (this.game.config.height * (1 / 3)),
                     this.game.config.width / 2 - 50,
-                    this.game.config.height * (1/3),
+                    this.game.config.height * (1 / 3),
                     this,
                     new PlayerModel(element.id, element.position, element.health, element.team),
                     this.add.circle((this.scene_width / 9) / 2, 0, 30, colors[i]),
@@ -112,6 +114,15 @@ module.exports = class GameScene extends Phaser.Scene {
 
         this.socket.on("end round", (data) => this.choiceStep(data.players));
 
+        this.socket.on("game over", (data) => {
+            this.events.emit('gameover');
+            new GameOverTransition(
+                this,
+                this.scene_width / 2,
+                this.scene_height / 2,
+                data )
+        });
+
         this.socket.on("chat message", (data) => {
             console.info(data)
         });
@@ -126,8 +137,8 @@ module.exports = class GameScene extends Phaser.Scene {
             let newHP = this.players[id].player.health;
             let oldHP = this.players[id].bar.value;
             let x = oldHP - newHP;
-            if(x !== 0){
-                this.grid.showDamage(this.players[id].player.position,x)
+            if (x !== 0) {
+                this.grid.showDamage(this.players[id].player.position, x)
             }
 
             this.players[id].bar.changeValue(this.players[id].player.health);
