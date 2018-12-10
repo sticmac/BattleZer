@@ -16,7 +16,7 @@ module.exports = class Player {
     }
 
     draw() {
-        const rect = this.scene.add.rectangle(0, 0, this.width, this.height, 0xffffff).setOrigin(0).setStrokeStyle(0x000000);
+        const rect = this.scene.add.rectangle(0, 0, this.width, this.height, 0xffffff, 0.5).setOrigin(0).setStrokeStyle(0x000000);
         this.container.add(rect);
 
         this.infoContainer.add(this.bar.bar);
