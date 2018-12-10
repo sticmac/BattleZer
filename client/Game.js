@@ -6,7 +6,7 @@ const Phaser = require('phaser');
 module.exports = class Game {
     constructor() {
         let height = window.innerHeight * window.devicePixelRatio;
-        let width = height*16/10;
+        let width = height*16/9;
         const config = {
             type: Phaser.AUTO,
             width:width,
