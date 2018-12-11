@@ -25,6 +25,7 @@ module.exports = class Card {
             this.container.add(bg);
             this.container.add(this.createInfoContainer(this.width / 2, 0, false));
 
+            this.drawEffects();
         } else {
             const bg = this.scene.add.image(0, 0, 'card_back');
             bg.displayHeight = this.height;
@@ -49,6 +50,7 @@ module.exports = class Card {
             this.container.add(bg);
             this.container.add(this.createInfoContainer((this.width / 2) + shift, -45, true));
 
+            this.drawEffects();
 
         } else {
 
@@ -75,6 +77,20 @@ module.exports = class Card {
 
     }
 
+    drawEffects() {
+        // effects
+        if (this.cardModel.before) {
+            const before = this.scene.add.text(0, 40, this.cardModel.before,
+                { fontFamily: 'Arial Black', fontSize: 15, color: '#fff' }).setOrigin(0.5);
+            this.container.add(before);
+        }
+
+        if (this.cardModel.after) {
+            const after = this.scene.add.text(0, 60, this.cardModel.after,
+                { fontFamily: 'Arial Black', fontSize: 15, color: '#fff' }).setOrigin(0.5);
+            this.container.add(after);
+        }
+    }
 
     createInfoContainer(x, y, isBehind) {
 
