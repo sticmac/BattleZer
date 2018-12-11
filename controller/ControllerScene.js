@@ -9,10 +9,12 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('style_card','assets/style_card_template.png');
-        this.load.image('hit_card','assets/hit_card_template.png');
-        this.load.image('arrow_left','assets/left_arrow.png');
-        this.load.image('arrow_right','assets/right_arrow.png');
+        this.load.image('style_card', 'assets/style_card_template3.png');
+        this.load.image('hit_card', 'assets/hit_card_template3.png');
+        this.load.image('arrow_left_hit', 'assets/hit_left.png');
+        this.load.image('arrow_right_hit', 'assets/hit_right.png');
+        this.load.image('arrow_left_style', 'assets/style_left.png');
+        this.load.image('arrow_right_style', 'assets/style_right.png');
         this.load.image('ready','assets/ready.png');
     }
 
@@ -51,7 +53,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     choiceAttack(player) {
-        this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200, this.game.config.width / 1920, this);
+        this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200, 164, 230, this);
         this.cardZone.draw();
         this.cardZone.readyButton.on('pointerdown', () => {
             console.log('player ' + this.playerId + ' picked : ');
