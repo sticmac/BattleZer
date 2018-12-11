@@ -9,15 +9,20 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('style_card','assets/style_card_template.png');
-        this.load.image('hit_card','assets/hit_card_template.png');
-        this.load.image('arrow_left','assets/left_arrow.png');
-        this.load.image('arrow_right','assets/right_arrow.png');
+        this.load.image('style_card', 'assets/style_card_template3.png');
+        this.load.image('hit_card', 'assets/hit_card_template3.png');
+        this.load.image('arrow_left_hit', 'assets/hit_left.png');
+        this.load.image('arrow_right_hit', 'assets/hit_right.png');
+        this.load.image('arrow_left_style', 'assets/style_left.png');
+        this.load.image('arrow_right_style', 'assets/style_right.png');
         this.load.image('ready','assets/ready.png');
+        this.load.image('token', 'assets/token.png');
     }
 
     create() {
         this.socket = io();
+
+        const colors = [0x2222ee, 0xee2222];
 
         this.socket.on("chat message", (data) => {
             console.info(data)
@@ -25,6 +30,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
         this.socket.on("ready to start", (data) => {
             this.player = data.player;
+            this.drawInterface(this.player);
         });
 
         this.socket.on("card distribution", (data) => {
@@ -51,7 +57,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     choiceAttack(player) {
-        this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200, this.game.config.width / 1920, this);
+        this.cardZone = new CardZone(player.hitCards, player.styleCards, 20, 200, 164, 230, this);
         this.cardZone.draw();
         this.cardZone.readyButton.on('pointerdown', () => {
             console.log('player ' + this.playerId + ' picked : ');
@@ -112,5 +118,15 @@ module.exports = class ControllerScene extends Phaser.Scene {
                 choiceZone.undraw();
             }
         });
+    }
+
+    drawInterface(player) {
+        const colors = [0x2222ee, 0xee2222];
+        this.add.image(30, 30, 'token').setTint(colors[player.team]).setScale(0.7);
+
+        this.add.text(175, 20, this.player.id.charAt(0).toUpperCase() + this.player.id.slice(1), {
+            color: "#fff",
+            fontFamily: "Arial Black",
+        }).setAlign('center');
     }
 }

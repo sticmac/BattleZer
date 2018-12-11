@@ -30,14 +30,7 @@ module.exports = class ShowAttack {
         cards[1].drawWithAngle(0.15);
         this.container.add(cards[0].container);
         this.container.add(cards[1].container);
-
-        /*for (let i = 0 ; i < cards.length ; i++) {
-            cards[i].drawWithAngle(0.5);
-            this.container.add(cards[i].container);
-        }*/
-
-
-
+        
         if (this.reverse) {
             this.container.setScale(-1.0);
         }

@@ -28,6 +28,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.load.image('hit_card', 'assets/hit_card_template3.png');
         this.load.image('card_back', 'assets/card_back.jpg');
         this.load.image('game_over','assets/gameover.jpg')
+        this.load.image('token', 'assets/token.png');
     }
 
     /**
@@ -56,23 +57,26 @@ module.exports = class GameScene extends Phaser.Scene {
                 this.playersIds.push(element.id);
                 this.players[element.id] = new Player(
                     20 + (element.team) * (this.game.config.width - 50),
-                    this.game.config.height * (1 / 3) + (1 - element.team) * (this.game.config.height * (1 / 3)),
+                    this.game.config.height * (1/3) + (1 - element.team) * (this.game.config.height * (1/3)),
                     this.game.config.width / 2 - 50,
-                    this.game.config.height * (1 / 3),
+                    this.game.config.height * (1/3),
                     this,
                     new PlayerModel(element.id, element.position, element.health, element.team),
-                    this.add.circle((this.scene_width / 9) / 2, 0, 30, colors[i]),
+                    this.add.image(30, 30, 'token').setTint(colors[i]).setScale(0.7),
                     new Bar(400, 15, this.scene_width / 5, 20, this),
                     new ShowAttack(this.scene_width / 2, this.scene_height - ((i * 2 + 1) * this.scene_height / 4),
                         this.scene_width / 10, this.scene_height / 4, i == 1, this)
                 );
                 this.players[element.id].draw();
+                const token = this.add.image(this.scene_width / 18, 0, 'token').setTint(colors[i]);
                 if (this.players[element.id].player.team === 1) {
                     this.players[element.id].container.setScale(-1.0, -1.0);
+                    token.setScale(-1.0, -1.0);
                 }
-                this.grid.addToken(element.id, this.players[element.id].token, element.position);
+                this.grid.addToken(element.id, token, element.position);
             }
 
+            //transition to next step
             new ReadyTransition(this,
                 this.scene_width / 2,
                 this.scene_height / 2,

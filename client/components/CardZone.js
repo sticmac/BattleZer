@@ -37,17 +37,6 @@ module.exports = class CardZone {
         let hitarea2 = new Phaser.Geom.Circle(620,0, 150);
         this.rightSwipeContainer.setInteractive(hitarea2, Phaser.Geom.Circle.Contains);
 
-        /*
-        let bg = this.scene.add.graphics({fillStyle: {color: 0xcc7c1a, alpha: 0.3}});
-        this.leftSwipeContainer.add(bg);
-        bg.fillCircleShape(hitarea);
-
-        let bg2 = this.scene.add.graphics({fillStyle: {color: 0xcc7c1a, alpha: 0.3}});
-        this.leftSwipeContainer.add(bg2);
-        bg2.fillCircleShape(hitarea2);
-        */
-
-
         let self = this;
         this.container.add(this.leftSwipeContainer);
         this.container.add(this.rightSwipeContainer);
@@ -156,14 +145,6 @@ module.exports = class CardZone {
         });
 
         hideBar.on('pointerdown', () => {
-            /*
-            this.showTouch = Math.min(3, this.showTouch + 1);
-            if (this.showTouch === 3) {
-                console.log("Touching!");
-                this.showBack = false;
-                this.flip()
-            }
-            */
             this.showBack = false;
             this.flip()
         });
@@ -176,13 +157,6 @@ module.exports = class CardZone {
                 this.flip()
             }
         });
-
-
-
-
-
-
-
     }
 
     draw() {
