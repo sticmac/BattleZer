@@ -140,7 +140,7 @@
     ],
     "before": "",
     "during": "",
-    "after": "déplacement",
+    "after": "Déplacement 5",
     "flavor": "téma le style bro\n"
   },
   {
@@ -156,7 +156,7 @@
         "value": 5
       }
     ],
-    "before": "déplacement",
+    "before": "Déplacement 5",
     "during": "",
     "after": "",
     "flavor": "\n"
@@ -176,7 +176,7 @@
     ],
     "before": "",
     "during": "",
-    "after": "déplacement",
+    "after": "Déplacement 2",
     "flavor": "\n"
   },
   {
@@ -192,7 +192,7 @@
         "value": 2
       }
     ],
-    "before": "déplacement",
+    "before": "Déplacement 2",
     "during": "",
     "after": "",
     "flavor": "un ptit coup de speed"
