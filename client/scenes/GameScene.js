@@ -101,6 +101,9 @@ module.exports = class GameScene extends Phaser.Scene {
 
             this.lastChosenAttacks = data.players;
 
+            this.startRoundStep();
+
+            /*
             new StartRoundTransition(
                 this,
                 data.players,
@@ -111,9 +114,11 @@ module.exports = class GameScene extends Phaser.Scene {
                     this.startRoundStep();
                 });
 
+                */
             for (let i = 0; i < this.lastChosenAttacks.length; ++i) {
                 this.displayAttacksOfPlayer(i);
             }
+
         });
 
         this.socket.on("end round", (data) => this.choiceStep(data.players));

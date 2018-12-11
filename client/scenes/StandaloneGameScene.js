@@ -3,6 +3,7 @@ const CardZone = require('../components/CardZone');
 const Round = require('../round/Round');
 const ChoiceZone = require('../components/ChoiceZone');
 const io = require('socket.io-client');
+const StartRoundTransition = require('../transitions/StartRound');
 
 module.exports = class StandaloneGameScene extends GameScene {
     constructor() {
@@ -40,7 +41,6 @@ module.exports = class StandaloneGameScene extends GameScene {
         let counter = 0;
 
         for (let i = 0; i < this.cardZones.length; ++i) {
-
 
 
             this.cardZones[i].readyButton.on('pointerdown', () => {
@@ -83,7 +83,20 @@ module.exports = class StandaloneGameScene extends GameScene {
             setTimeout(() => {
                 if (this.lastPlayedIndex + 1 <= this.playersIds.length) { // if not present, too much rounds are launched
                     console.log("next round " + this.lastPlayedIndex);
-                    this.round.start(this.lastPlayedIndex++, this.lastChosenAttacks);
+
+
+                    new StartRoundTransition(
+                        this,
+                        this.lastChosenAttacks,
+                        this.lastPlayedIndex,
+                        this.scene_width / 2,
+                        this.scene_height / 2,
+                        () => {
+                            this.round.start(this.lastPlayedIndex++, this.lastChosenAttacks);
+                        });
+
+                    //this.round.start(this.lastPlayedIndex++, this.lastChosenAttacks);
+
                 }
             }, 1000);
         } else { // last round finished
@@ -121,8 +134,8 @@ module.exports = class StandaloneGameScene extends GameScene {
 
     }
 
-    showGameOver(data){
-        if(this.round) this.round.gameover();
+    showGameOver(data) {
+        if (this.round) this.round.gameover();
         super.showGameOver(data);
     }
 };

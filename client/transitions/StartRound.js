@@ -11,7 +11,6 @@ module.exports = class StartRoundTransition {
         this.currentPlayer = currentPlayer;
 
         this.data = data;
-        console.log('DATA', data);
         this.draw();
 
     }
