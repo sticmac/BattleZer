@@ -37,7 +37,7 @@ module.exports = class Grid {
 
     showDamage(position, i) {
         let text = i < 0 ? '+ ' + i : '- ' + i;
-        let hit = this.scene.add.text(30, -180, text + ' PV '+this.randomEmoji(), {
+        let hit = this.scene.add.text(30, -180, text + ' PV ', {
             backgroundColor: i < 0 ? "#028c27" : "#ff1b2f",
             padding: 20,
             color: "#fff",

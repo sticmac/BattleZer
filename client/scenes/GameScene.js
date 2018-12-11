@@ -27,7 +27,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.load.image('style_card', 'assets/style_card_template3.png');
         this.load.image('hit_card', 'assets/hit_card_template3.png');
         this.load.image('card_back', 'assets/card_back.jpg');
-        this.load.image('game_over','assets/gameover.jpg')
+        this.load.image('game_over','assets/gameover.png'),
         this.load.image('token', 'assets/token.png');
     }
 
@@ -65,7 +65,7 @@ module.exports = class GameScene extends Phaser.Scene {
                     this.add.image(30, 30, 'token').setTint(colors[i]).setScale(0.7),
                     new Bar(400, 15, this.scene_width / 5, 20, this),
                     new ShowAttack(this.scene_width / 2, this.scene_height - ((i * 2 + 1) * this.scene_height / 4),
-                        this.scene_width / 10, this.scene_height / 4, i == 1, this)
+                        this.scene_width / 10, this.scene_height / 4, i === 1, this)
                 );
                 this.players[element.id].draw();
                 const token = this.add.image(this.scene_width / 18, 0, 'token').setTint(colors[i]);
@@ -119,12 +119,7 @@ module.exports = class GameScene extends Phaser.Scene {
         this.socket.on("end round", (data) => this.choiceStep(data.players));
 
         this.socket.on("game over", (data) => {
-            this.events.emit('gameover');
-            new GameOverTransition(
-                this,
-                this.scene_width / 2,
-                this.scene_height / 2,
-                data )
+            this.showGameOver(data);
         });
 
         this.socket.on("chat message", (data) => {
@@ -168,6 +163,15 @@ module.exports = class GameScene extends Phaser.Scene {
 
         this.players[id].showAttack.setHitCard(this.lastChosenAttacks[i].hitCard);
         this.players[id].showAttack.setStyleCard(this.lastChosenAttacks[i].styleCard);
+    }
+
+    showGameOver(data){
+        this.events.emit('gameover');
+        new GameOverTransition(
+            this,
+            this.scene_width / 2,
+            this.scene_height / 2,
+            data )
     }
 
     startRoundStep() {

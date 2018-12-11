@@ -15,6 +15,7 @@ module.exports = class DistributedGameScene extends GameScene {
         super.create();
 
         this.socket.on("update players", (update) => this.cbUpdate(update));
+
     }
 
     runRound() {
@@ -37,4 +38,6 @@ module.exports = class DistributedGameScene extends GameScene {
             player.player.position = playerUpdate.position;
         });
     }
+
+
 }

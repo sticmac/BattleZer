@@ -93,6 +93,7 @@ module.exports = class StandaloneGameScene extends GameScene {
             });
             this.roundStep = false;
         }
+
     }
 
     startRoundStep() {
@@ -115,6 +116,13 @@ module.exports = class StandaloneGameScene extends GameScene {
         });
         this.roundStep = true;
 
+
         this.runRound();
+
+    }
+
+    showGameOver(data){
+        if(this.round) this.round.gameover();
+        super.showGameOver(data);
     }
 };

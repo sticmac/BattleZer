@@ -46,4 +46,9 @@ module.exports = class Round {
     reset() {
         this.finished = false;
     }
+
+    gameover(){
+       this.choiceZones = null;
+        this.state.next = null;
+    }
 }

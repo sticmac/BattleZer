@@ -15,4 +15,5 @@ module.exports = class RoundState {
     next() {
         throw new Error("No next state");
     }
+
 }

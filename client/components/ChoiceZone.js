@@ -11,6 +11,7 @@ module.exports = class ChoiceZone {
         this.readyButton = null;
         this.reverseGrid = reverseGrid;
         this.grid = null;
+
     }
 
     draw(action, initPosition, status) {
@@ -58,7 +59,7 @@ module.exports = class ChoiceZone {
 
 
         //this.readyButton = this.scene.add.image(600, 20, 'ready').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
-        this.readyButton = this.scene.add.text(150, 25, "👉 Ready 👈", {
+        this.readyButton = this.scene.add.text(150, 25, "→ Ready ←", {
             backgroundColor: "#b45f1b",
             padding: 10,
             color: "#fff",
@@ -73,7 +74,7 @@ module.exports = class ChoiceZone {
 
     undraw() {
         this.container.setVisible(false);
-        this.grid.undraw();
+        if(this.grid) this.grid.undraw();
         this.text1.destroy();
         this.text2.destroy();
     }

@@ -21,6 +21,7 @@ module.exports = class ChoiceGrid2 {
         this.undraw();
     }
 
+
     draw() {
 
         this.gridContainer.removeAll();
@@ -62,7 +63,7 @@ module.exports = class ChoiceGrid2 {
                 if(valid) {
                     if (this.rectChoice) {
                         this.rectChoice.setStrokeStyle(6,color,1);
-                        this.rectChoice.setFillStyle()
+                        this.rectChoice.setFillStyle();
                         if (this.choice === this.position) {
                             this.rectChoice.setStrokeStyle(6,0x32CD32,1)
                         } else {
