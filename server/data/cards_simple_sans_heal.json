@@ -306,7 +306,7 @@
     "title": "salvateur",
     "type": "Style",
     "priority": 6,
-    "power": 1,
+    "power": 0,
     "range": 2,
     "actions": [
       {
@@ -319,5 +319,5 @@
     "during": "",
     "after": "Soin 2",
     "flavor": "\n"
-  }
+  },
 ]

@@ -27,8 +27,10 @@ module.exports = class GameScene extends Phaser.Scene {
         this.load.image('style_card', 'assets/style_card_template3.png');
         this.load.image('hit_card', 'assets/hit_card_template3.png');
         this.load.image('card_back', 'assets/card_back.jpg');
-        this.load.image('game_over','assets/gameover.png'),
+        this.load.image('game_over','assets/gameover.png');
         this.load.image('token', 'assets/token.png');
+        this.load.image('run_icon','assets/run.png');
+        this.load.image('heal_icon','assets/heal.png');
     }
 
     /**

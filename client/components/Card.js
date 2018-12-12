@@ -79,17 +79,44 @@ module.exports = class Card {
 
     drawEffects() {
         // effects
+
         if (this.cardModel.before) {
-            const before = this.scene.add.text(0, 40, this.cardModel.before,
-                { fontFamily: 'Arial Black', fontSize: 15, color: '#fff' }).setOrigin(0.5);
-            this.container.add(before);
+            if (this.cardModel.actions[0].action === 'movement') {
+                this.container.add(this.scene.add.image(-22, 60, 'run_icon').setScale(0.3).setOrigin(0.5));
+                this.container.add(this.scene.add.text(18, 60, ' + ' + this.cardModel.actions[0].value, {
+                    fontFamily: 'Arial',
+                    fontSize: 26,
+                    color: '#9ce3b1'
+                }).setOrigin(0.5))
+            } else if (this.cardModel.actions[0].action === 'heal') {
+                this.container.add(this.scene.add.image(-22, 60, 'heal_icon').setScale(0.3).setOrigin(0.5));
+                this.container.add(this.scene.add.text(18, 60, ' + ' + this.cardModel.actions[0].value, {
+                    fontFamily: 'Arial',
+                    fontSize: 26,
+                    color: '#9ce3b1'
+                }).setOrigin(0.5))
+            }
         }
 
         if (this.cardModel.after) {
-            const after = this.scene.add.text(0, 60, this.cardModel.after,
-                { fontFamily: 'Arial Black', fontSize: 15, color: '#fff' }).setOrigin(0.5);
-            this.container.add(after);
+            if (this.cardModel.actions[0].action === 'movement') {
+                this.container.add(this.scene.add.image(-22, 60, 'run_icon').setScale(0.3).setOrigin(0.5));
+                this.container.add(this.scene.add.text(18, 60, ' + ' + this.cardModel.actions[0].value, {
+                    fontFamily: 'Arial',
+                    fontSize: 26,
+                    color: '#9ce3b1'
+                }).setOrigin(0.5))
+            } else if (this.cardModel.actions[0].action === 'heal') {
+                this.container.add(this.scene.add.image(-22, 60, 'heal_icon').setScale(0.3).setOrigin(0.5));
+                this.container.add(this.scene.add.text(18, 60, ' + ' + this.cardModel.actions[0].value, {
+                    fontFamily: 'Arial',
+                    fontSize: 26,
+                    color: '#9ce3b1'
+                }).setOrigin(0.5))
+            }
         }
+
+
     }
 
     createInfoContainer(x, y, isBehind) {
