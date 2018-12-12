@@ -17,7 +17,7 @@ module.exports = class ListCardZone extends CardZone {
     drawInterface() {
         this.container.removeAll();
 
-        this.readyButton = this.scene.add.text((this.hitCards.length + 1) * this.cardWidth, this.cardHeight / 2, 'READY ?', {
+        this.readyButton = this.scene.add.text((this.hitCards.length + 1) * this.cardWidth - 45, this.cardHeight / 2, 'READY ?', {
             backgroundColor: "#cc7c1a",
             padding: 10,
             color: "#fff",
@@ -52,20 +52,16 @@ module.exports = class ListCardZone extends CardZone {
     }
 
     chooseHit(cardIndex) {
-        const oldHitContainer = this.hitCards[this.selectedHitCard].container;
-        oldHitContainer.setPosition(oldHitContainer.x, 0);
+        this.hitCards[this.selectedHitCard].moveY(0);
 
         this.selectedHitCard = cardIndex;
-        const newHitContainer = this.hitCards[this.selectedHitCard].container;
-        newHitContainer.setPosition(newHitContainer.x, -20);
+        this.hitCards[this.selectedHitCard].moveY(-20);
     }
 
     chooseStyle(cardIndex) {
-        const oldStyleContainer = this.styleCards[this.selectedStyleCard].container;
-        oldStyleContainer.setPosition(oldStyleContainer.x, this.cardHeight + 30);
+        this.styleCards[this.selectedStyleCard].moveY(this.cardHeight + 30);
 
         this.selectedStyleCard = cardIndex;
-        const newStyleContainer = this.styleCards[this.selectedStyleCard].container;
-        newStyleContainer.setPosition(newStyleContainer.x, this.cardHeight + 10);
+        this.styleCards[this.selectedStyleCard].moveY(this.cardHeight + 10);
     }
 }

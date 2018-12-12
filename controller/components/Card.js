@@ -13,7 +13,6 @@ module.exports = class Card {
 
     }
 
-
     draw() {
         this.container.removeAll();
 
@@ -70,6 +69,15 @@ module.exports = class Card {
                 { fontFamily: 'Arial Black', fontSize: 15, color: '#fff' }).setOrigin(0.5);
             this.container.add(after);
         }
+    }
+
+    moveY(y) {
+        this.scene.tweens.add({
+            targets: this.container,
+            y: y,
+            ease: 'Power1',
+            duration: 500
+        });
     }
 
     createInfoContainer(x, y, isBehind) {
