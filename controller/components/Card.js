@@ -24,6 +24,8 @@ module.exports = class Card {
         this.container.add(bg);
         this.container.add(this.createInfoContainer(this.width / 2, 0, false));
 
+        this.container.setSize(this.width, this.height);
+
         this.drawEffects();
     }
 

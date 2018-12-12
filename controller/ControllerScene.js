@@ -1,5 +1,6 @@
 const Phaser = require('phaser');
 const SliderCardZone = require('./components/SliderCardZone');
+const ListCardZone = require('./components/ListCardZone');
 const ChoiceZone = require('./components/ChoiceZone');
 const io = require('socket.io-client');
 
@@ -57,7 +58,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
     }
 
     choiceAttack(player) {
-        this.cardZone = new SliderCardZone(player.hitCards, player.styleCards, 20, 200, 164, 230, this);
+        this.cardZone = new ListCardZone(player.hitCards, player.styleCards, 20, 200, 164, 230, this);
         this.cardZone.draw();
         this.cardZone.readyButton.on('pointerdown', () => {
             console.log('player ' + this.playerId + ' picked : ');
