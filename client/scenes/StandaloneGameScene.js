@@ -117,10 +117,10 @@ module.exports = class StandaloneGameScene extends GameScene {
         this.choiceZones = [];
 
         this.choiceZones.push(new ChoiceZone(150, 100,
-            this.scene_width / 10, this.scene_height / 4, this, false));
+            this.scene_width / 10, this.scene_height / 4, this, false, this.mode));
 
         this.choiceZones.push(new ChoiceZone(150, 100,
-            this.scene_width / 10, this.scene_height / 4, this, true));
+            this.scene_width / 10, this.scene_height / 4, this, true, this.mode));
 
         let i = 0;
         this.playersIds.forEach((id) => {

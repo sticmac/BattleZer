@@ -1,7 +1,8 @@
-const ChoiceGrid = require('./ChoiceGrid2');
+const ChoiceGrid = require('./ChoiceGrid');
+const ChoiceGrid2 = require('./ChoiceGrid2');
 
 module.exports = class ChoiceZone {
-    constructor(x, y, width, height, scene, reverseGrid) {
+    constructor(x, y, width, height, scene, reverseGrid, mode) {
         this.container = scene.add.container(x, y);
         this.x = x;
         this.y = y;
@@ -11,15 +12,24 @@ module.exports = class ChoiceZone {
         this.readyButton = null;
         this.reverseGrid = reverseGrid;
         this.grid = null;
+        this.mode = mode;
 
     }
 
     draw(action, initPosition, status) {
         this.container.setVisible(true);
-        this.grid = new ChoiceGrid(9, this.scene, action, initPosition, action.range);
+
+        if(this.mode === 0){
+            this.grid = new ChoiceGrid(9, this.scene, action, initPosition, action.range, this.reverseGrid);
+            this.container.add(this.grid.gridContainer)
+
+        } else {
+            this.grid = new ChoiceGrid2(9, this.scene, action, initPosition, action.range);
+        }
+
 
         console.log('action',action);
-        this.text1 = this.scene.add.text(150, -100, status.toUpperCase(), {
+        this.text1 = this.scene.add.text(250, -110, status.toUpperCase(), {
             fontSize: 32,
             fontFamily:'Arial Black',
             fontWeight:'bold',
@@ -47,7 +57,7 @@ module.exports = class ChoiceZone {
         }
 
 
-        this.text2 = this.scene.add.text(150, -50, txt, {
+        this.text2 = this.scene.add.text(250, -60, txt, {
             fontSize: 32,
             fontFamily:'Arial Black',
             color: '#fff',
@@ -58,8 +68,7 @@ module.exports = class ChoiceZone {
         this.container.add(this.text2);
 
 
-        //this.readyButton = this.scene.add.image(600, 20, 'ready').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
-        this.readyButton = this.scene.add.text(150, 25, "→ Ready ←", {
+        this.readyButton = this.scene.add.text(250, this.mode === 0 ? 105 : 25, "→ Ready ←", {
             backgroundColor: "#b45f1b",
             padding: 10,
             color: "#fff",

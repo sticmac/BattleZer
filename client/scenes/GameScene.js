@@ -45,6 +45,12 @@ module.exports = class GameScene extends Phaser.Scene {
 
         this.grid = new Grid(9, this);
 
+        /**
+         * 0 = Private Choice Grid
+         * 1 = Public Choice Grid
+         **/
+        this.mode = 0;
+
         const colors = [0x2222ee, 0xee2222];
         this.players = {};
         this.playersIds = [];
@@ -105,18 +111,6 @@ module.exports = class GameScene extends Phaser.Scene {
 
             this.startRoundStep();
 
-            /*
-            new StartRoundTransition(
-                this,
-                data.players,
-                0,
-                this.scene_width / 2,
-                this.scene_height / 2,
-                () => {
-                    this.startRoundStep();
-                });
-
-                */
             for (let i = 0; i < this.lastChosenAttacks.length; ++i) {
                 this.displayAttacksOfPlayer(i);
             }
