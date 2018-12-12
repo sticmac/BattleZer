@@ -69,7 +69,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
                 player: {
                     id: this.playerId,
                     stylePick: this.cardZone.styleCards[this.cardZone.selectedStyleCard].cardModel,
-                    hitPick: this.cardZone.hitCards[this.cardZone.selectedStyleCard].cardModel
+                    hitPick: this.cardZone.hitCards[this.cardZone.selectedHitCard].cardModel
                 }
             });
 
