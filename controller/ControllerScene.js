@@ -18,6 +18,8 @@ module.exports = class ControllerScene extends Phaser.Scene {
         this.load.image('arrow_right_style', 'assets/style_right.png');
         this.load.image('ready','assets/ready.png');
         this.load.image('token', 'assets/token.png');
+        this.load.image('run_icon','assets/run.png');
+        this.load.image('heal_icon','assets/heal.png');
     }
 
     create() {
