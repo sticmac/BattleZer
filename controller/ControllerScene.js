@@ -62,6 +62,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
     choiceAttack(player) {
         this.cardZone = new ListCardZone(player.hitCards, player.styleCards, 20, 200, 164, 230, this);
         this.cardZone.draw();
+        window.navigator.vibrate(500);
         this.cardZone.readyButton.on('pointerdown', () => {
             console.log('player ' + this.playerId + ' picked : ');
             console.log(this.cardZone.hitCards[this.cardZone.selectedStyleCard].cardModel.title);
@@ -86,6 +87,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
     applyEffects(effects, status) {
         console.log("apply effects")
+        window.navigator.vibrate(200);
         const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, this.player.team % 2 != 0);
         choiceZone.draw(effects[0], this.player.position, status);
         choiceZone.readyButton.on("pointerdown", () => {
