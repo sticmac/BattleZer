@@ -11,6 +11,7 @@ module.exports = class Round {
         this.finished = false;
         this.state = new BeforeEffectState(this, this.game, this.socket);
         this.attack = attack;
+        this.socket.to(this.attack.id).emit('start round');
         if (this.state.canRun(this.attack)) {
             this.state.run(this.attack, this.socket);
         } else {

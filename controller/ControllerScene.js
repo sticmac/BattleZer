@@ -46,7 +46,7 @@ module.exports = class ControllerScene extends Phaser.Scene {
             this.player.position = data.position;
         });
 
-        this.socket.on("start round", (data) => this.startRound(data));
+        this.socket.on("start round", () => this.startRound());
 
         this.socket.on("before effects", (data) => this.applyEffects(data.effects, "Effet d'avant attaque"));
 
@@ -81,13 +81,12 @@ module.exports = class ControllerScene extends Phaser.Scene {
         });
     }
 
-    startRound(data) {
-        console.log(data);
+    startRound() {
+        window.navigator.vibrate(200);
     }
 
     applyEffects(effects, status) {
         console.log("apply effects")
-        window.navigator.vibrate(200);
         const choiceZone = new ChoiceZone(20, 200, 1920, 1080, this, this.player.team % 2 != 0);
         choiceZone.draw(effects[0], this.player.position, status);
         choiceZone.readyButton.on("pointerdown", () => {
