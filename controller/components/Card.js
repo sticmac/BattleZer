@@ -79,15 +79,15 @@ module.exports = class Card {
 
         if (this.cardModel.after) {
             if (this.cardModel.actions[0].action === 'movement') {
-                this.container.add(this.scene.add.image(-22, 60, 'run_icon').setScale(0.3).setOrigin(0.5));
-                this.container.add(this.scene.add.text(18, 60, ' + ' + this.cardModel.actions[0].value, {
+                this.container.add(this.scene.add.image(-22, 80, 'run_icon').setScale(0.3).setOrigin(0.5));
+                this.container.add(this.scene.add.text(18, 80, ' + ' + this.cardModel.actions[0].value, {
                     fontFamily: 'Arial',
                     fontSize: 26,
                     color: '#9ce3b1'
                 }).setOrigin(0.5))
             } else if (this.cardModel.actions[0].action === 'heal') {
-                this.container.add(this.scene.add.image(-22, 60, 'heal_icon').setScale(0.3).setOrigin(0.5));
-                this.container.add(this.scene.add.text(18, 60, ' + ' + this.cardModel.actions[0].value, {
+                this.container.add(this.scene.add.image(-22, 80, 'heal_icon').setScale(0.3).setOrigin(0.5));
+                this.container.add(this.scene.add.text(18, 80, ' + ' + this.cardModel.actions[0].value, {
                     fontFamily: 'Arial',
                     fontSize: 26,
                     color: '#9ce3b1'

@@ -1,5 +1,6 @@
 const GameScene = require('./GameScene');
 const Round = require('../round/Round');
+const StartRoundTransition = require('../transitions/StartRound');
 
 module.exports = class DistributedGameScene extends GameScene {
     constructor() {
@@ -26,9 +27,18 @@ module.exports = class DistributedGameScene extends GameScene {
         if (this.round === null) {
             this.round = new Round(this.gameId, this.players, this.socket);
         }
-        this.round.start(0, this.lastChosenAttacks);
-        this.lastPlayedIndex = 0; // player 0 starts
-        this.roundStep = true;
+
+        new StartRoundTransition(
+            this,
+            this.lastChosenAttacks,
+            this.lastPlayedIndex,
+            this.scene_width / 2,
+            this.scene_height / 2,
+            () => {
+                this.round.start(this.lastPlayedIndex++, this.lastChosenAttacks);
+                this.lastPlayedIndex = 0; // player 0 starts
+                this.roundStep = true;
+            });
     }
 
     cbUpdate(update) {
