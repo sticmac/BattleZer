@@ -47,7 +47,7 @@ module.exports = class StandaloneGameScene extends GameScene {
         for (let i = 0; i < this.cardZones.length; ++i) {
 
 
-            this.cardZones[i].readyButton.on('pointerdown', () => {
+            this.cardZones[i].readyButton.once('pointerdown', () => {
 
                 this.cardZones[i].ready();
 
@@ -68,7 +68,6 @@ module.exports = class StandaloneGameScene extends GameScene {
                     });
                 }
 
-                //this.cardZones[i].readyButton.setVisible(false);
             });
         }
     }
