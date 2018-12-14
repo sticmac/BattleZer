@@ -3,7 +3,7 @@ const Card = require('./Card.js');
 module.exports = class CardZone {
 
 
-    constructor(hitCardsModels, styleCardsModels, x, y, cardWidth, cardHeight, scene) {
+    constructor(hitCardsModels, styleCardsModels, x, y, cardWidth, cardHeight, scene, reverse) {
         this.container = scene.add.container(x, y);
         this.cardsContainer = scene.add.container(0, 0);
         this.leftSwipeContainer = scene.add.container(0, 0);
@@ -13,6 +13,7 @@ module.exports = class CardZone {
         this.cardHeight = cardHeight;
         this.cardWidth = cardWidth;
 
+        this.reverse = reverse;
         this.selectedHitCard = 0;
         this.selectedStyleCard = 0;
         this.showBack = true;
@@ -29,12 +30,12 @@ module.exports = class CardZone {
         this.shift = cardWidth / 2;
     }
 
-    setupSwipe(){
+    setupSwipe() {
 
-        let hitarea = new Phaser.Geom.Circle(180,0, 150);
+        let hitarea = new Phaser.Geom.Circle(180, 0, 150);
         this.leftSwipeContainer.setInteractive(hitarea, Phaser.Geom.Circle.Contains);
 
-        let hitarea2 = new Phaser.Geom.Circle(620,0, 150);
+        let hitarea2 = new Phaser.Geom.Circle(620, 0, 150);
         this.rightSwipeContainer.setInteractive(hitarea2, Phaser.Geom.Circle.Contains);
 
         let self = this;
@@ -46,14 +47,16 @@ module.exports = class CardZone {
             let swipe = new Phaser.Geom.Point(e.upX - e.downX, e.upY - e.downY);
             let swipeMagnitude = Phaser.Geom.Point.GetMagnitude(swipe);
             let swipeNormal = new Phaser.Geom.Point(swipe.x / swipeMagnitude, swipe.y / swipeMagnitude);
-            if(swipeMagnitude > 20 && swipeTime < 1000 && ( Math.abs(swipeNormal.x) > 0.8)) {
-                if(swipeNormal.x > 0.8) {
+            if (swipeMagnitude > 20 && swipeTime < 1000 && (Math.abs(swipeNormal.x) > 0.8)) {
+                if (swipeNormal.x > 0.8) {
                     console.log('swipe right');
-                    self.showNextHit();
+                    if (this.reverse) self.showPrevHit();
+                    else self.showNextHit();
                 }
-                if(swipeNormal.x < -0.8) {
+                if (swipeNormal.x < -0.8) {
                     console.log('swipe left');
-                    self.showPrevHit();
+                    if (this.reverse) self.showNextHit();
+                    else self.showPrevHit();
                 }
 
             }
@@ -64,14 +67,18 @@ module.exports = class CardZone {
             let swipe = new Phaser.Geom.Point(e.upX - e.downX, e.upY - e.downY);
             let swipeMagnitude = Phaser.Geom.Point.GetMagnitude(swipe);
             let swipeNormal = new Phaser.Geom.Point(swipe.x / swipeMagnitude, swipe.y / swipeMagnitude);
-            if(swipeMagnitude > 20 && swipeTime < 1000 && ( Math.abs(swipeNormal.x) > 0.8)) {
-                if(swipeNormal.x > 0.8) {
+            if (swipeMagnitude > 20 && swipeTime < 1000 && (Math.abs(swipeNormal.x) > 0.8)) {
+                if (swipeNormal.x > 0.8) {
                     console.log('swipe right');
-                    self.showNextStyle();
+                    if (this.reverse) self.showPrevStyle();
+                    else
+                        self.showNextStyle();
                 }
-                if(swipeNormal.x < -0.8) {
+                if (swipeNormal.x < -0.8) {
                     console.log('swipe left');
-                    self.showPrevStyle();
+                    if (this.reverse) self.showNextStyle();
+                    else
+                        self.showPrevStyle();
                 }
 
             }
@@ -203,7 +210,7 @@ module.exports = class CardZone {
             fontSize: 20
         }).setOrigin(0.5));
 
-        this.cardsContainer.add(this.scene.add.text(450, 70, (this.selectedStyleCard+ 1) + '/5', {
+        this.cardsContainer.add(this.scene.add.text(450, 70, (this.selectedStyleCard + 1) + '/5', {
             backgroundColor: "#137A2B",
             padding: 5,
             color: "#fff",
@@ -244,11 +251,10 @@ module.exports = class CardZone {
         });
     }
 
-    ready(){
+    ready() {
         this.readyButton.setBackgroundColor('#327e32');
         this.readyButton.setText('READY !')
     }
-
 
 
     flip() {
