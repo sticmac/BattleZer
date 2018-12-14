@@ -87,21 +87,32 @@ module.exports = class ControllerScene extends Phaser.Scene {
 
     applyEffects(effects, status) {
         console.log("apply effects")
-        const choiceZone = new ChoiceZone(80, 200, 1920, 1080, this, this.player.team % 2 != 0);
-        choiceZone.draw(effects[0], this.player.position, status);
-        choiceZone.readyButton.on("pointerdown", () => {
-            if (choiceZone.grid.choice !== null) {
-                this.socket.emit('player effect', {
-                    game: window.gameId,
-                    attack: {
-                        player: this.playerId,
-                        action: choiceZone.grid.actions.action,
-                        value: choiceZone.grid.choice
-                    }
-                });
-                choiceZone.undraw();
-            }
-        });
+        if (effects[0].action === "heal") { //Works only with one effects per turn
+            this.socket.emit('player effect', {
+                game: window.gameId,
+                attack: {
+                    player: this.playerId,
+                    action: effects[0].action,
+                    value: effects[0].value
+                }
+            });
+        } else {
+            const choiceZone = new ChoiceZone(80, 200, 1920, 1080, this, this.player.team % 2 != 0);
+            choiceZone.draw(effects[0], this.player.position, status);
+            choiceZone.readyButton.on("pointerdown", () => {
+                if (choiceZone.grid.choice !== null) {
+                    this.socket.emit('player effect', {
+                        game: window.gameId,
+                        attack: {
+                            player: this.playerId,
+                            action: choiceZone.grid.actions.action,
+                            value: choiceZone.grid.choice
+                        }
+                    });
+                    choiceZone.undraw();
+                }
+            });
+        }
     }
 
     applyAttack(attack) {
