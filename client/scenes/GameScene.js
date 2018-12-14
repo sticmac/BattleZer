@@ -49,7 +49,7 @@ module.exports = class GameScene extends Phaser.Scene {
          * 0 = Private Choice Grid
          * 1 = Public Choice Grid
          **/
-        this.mode = 0;
+        this.mode;
 
         const colors = [0x2222ee, 0xee2222];
         this.players = {};

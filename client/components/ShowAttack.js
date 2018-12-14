@@ -26,8 +26,8 @@ module.exports = class ShowAttack {
         ];
 
 
-        cards[0].drawWithAngle(-0.15);
-        cards[1].drawWithAngle(0.15);
+        cards[0].drawWithAngle(-0.05);
+        cards[1].drawWithAngle(0.05);
         this.container.add(cards[0].container);
         this.container.add(cards[1].container);
         
