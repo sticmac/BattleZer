@@ -31,13 +31,13 @@ module.exports = class StandaloneGameScene extends GameScene {
 
         this.cardZones = [];
         this.cardZones.push(new CardZone(players[0].hitCards, players[0].styleCards, 0, 160,
-            164, 230, this));
+            164, 230, this, false));
         this.cardZones[0].flip();
         this.cardZones[0].draw();
         this.players[this.playersIds[0]].changeInteractContainer(this.cardZones[0].container);
 
         this.cardZones.push(new CardZone(players[1].hitCards, players[1].styleCards, 0, 160,
-            164, 230, this));
+            164, 230, this, true));
         this.cardZones[1].flip();
         this.cardZones[1].draw();
         this.players[this.playersIds[1]].changeInteractContainer(this.cardZones[1].container);
