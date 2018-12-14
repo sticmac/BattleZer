@@ -10,6 +10,10 @@ module.exports = class StandaloneGameScene extends GameScene {
         super("standalone");
     }
 
+    init(data){
+        this.mode = data.mode;
+    }
+
     /**
      * Preload resources
      */
